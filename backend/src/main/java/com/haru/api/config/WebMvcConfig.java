@@ -46,12 +46,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * 발급 시도 시 사용되도록
      ****************************************************************************************/
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-        interceptorRegistry.addInterceptor(tokenInterceptor).addPathPatterns("/api/user/refresh");
+        interceptorRegistry.addInterceptor(tokenInterceptor).addPathPatterns("/api/users/refresh");
     }
 
     /****************************************************************************************
      * RestDocs API 문서 index.html 뷰 컨트롤러
-     * https://i7a406.p.ssafy.io/docs -> https://i7a406.p.ssafy.io/docs/index.html 으로 매핑하기 위함
+     * https://k7a204.p.ssafy.io/docs -> https://k7a204.p.ssafy.io/docs/index.html 으로 매핑하기 위함
      ****************************************************************************************/
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

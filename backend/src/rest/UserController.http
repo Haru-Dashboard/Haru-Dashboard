@@ -1,0 +1,13 @@
+### 유저 로그인
+POST {{apiUrl}}/users/login
+Content-Type: application/json;charset=UTF-8
+
+{
+  "email": "haru@gmail.com",
+  "password": "1234"
+}
+
+> {%
+client.global.set("authorizationToken", "Bearer " + response.body.accessToken);
+client.log("Auth Token : " + client.global.get("authorizationToken"));
+%}

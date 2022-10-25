@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### ssafy-web.log ###
+ssafy-web.log
