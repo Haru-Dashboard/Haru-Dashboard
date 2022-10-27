@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  theme: {
+  purge : [
+    "./public/index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme : {
     extend: {
       fontFamily: {
         mont: ['Montserrat', 'sans-serif'],
@@ -63,19 +66,17 @@ module.exports = {
       colors: {
         "light-black-500": "#090E18",
         "pink-100": "#DFBBB1",
-        "blue-400" : "#122C53",
-        "blue-300" : "#49649E",
-        "blue-200" : "#5CB8F1",
-        "light-brown-200" : "#C08E6D",
-        "red-100" : "#BE4F47",
+        "blue-400": "#122C53",
+        "blue-300": "#49649E",
+        "blue-200": "#5CB8F1",
+        "light-brown-200": "#C08E6D",
+        "red-100": "#BE4F47",
         "purple-500": "#58485C",
-        "purple-400" : "#927695",
+        "purple-400": "#927695",
       },
-      animation: {
-      },
-      keyframes: {
-      },
+      animation: {},
+      keyframes: {},
     },
   },
-  plugins: [],
-};
+  plugins : [],
+}
