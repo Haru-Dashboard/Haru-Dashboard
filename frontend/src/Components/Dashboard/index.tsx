@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Todo from '../Widgets/Todo';
 
 const DashBoard = () => {
   const [screenWidth, setScreenWidth] = useState(0)
@@ -9,8 +10,8 @@ const DashBoard = () => {
     const screenWidth = window.screen.width;
     const screenHeight = window.screen.height;
 
-    setScreenWidth(screenWidth*0.8)
-    setScreenHeight(screenHeight*0.7)
+    setScreenWidth(Math.ceil(screenWidth*0.8))
+    setScreenHeight(Math.ceil(screenHeight*0.65))
   })
   return (<div className='default-full-bg'>
     {/* 
@@ -19,7 +20,9 @@ const DashBoard = () => {
     */}
     <div className='main-board'
       style={{height: `${screenHeight}px`, width: `${screenWidth}px`}}>
-
+      {/* todo widget */}
+      <Todo screenWidth={screenWidth} screenHeight={screenHeight}/>
+      {/* <p>{screenHeight}, {screenWidth}</p> */}
     </div>
   </div>);
 };
