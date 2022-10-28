@@ -38,3 +38,7 @@ out/
 
 ### ssafy-web.log ###
 ssafy-web.log
+
+### yml ###
+application-aws.yml
+application-secret.yml
