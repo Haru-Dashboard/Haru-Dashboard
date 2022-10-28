@@ -25,6 +25,6 @@
     }
   ],
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "geolocation"],
   "host_permissions": ["<all_urls>"]
 }
