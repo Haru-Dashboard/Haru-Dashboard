@@ -1,7 +1,18 @@
-### 파일 등록
+### 파일 등록 + 내용 등록
 POST {{apiUrl}}/files
-Content-Type: multipart/form-data;
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="form"
+Content-Type: application/json
+
+ {
+      "title": "테스트"
+ }
+
+--WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Type: image/png
 
 < ./../main/resources/dummy/image.png
 

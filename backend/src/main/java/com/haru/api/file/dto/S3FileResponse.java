@@ -28,14 +28,14 @@ public class S3FileResponse {
         private String originName;
         private String name;
         private String extension;
-        private String base64Str;
+        private String imageUrl;
         public static S3FileResponse.GetImage build(S3File file, String base64Str) {
             return GetImage.builder()
                     .id(file.getId())
                     .name(file.getName())
                     .extension(file.getExtension())
                     .originName(file.getOriginName())
-                    .base64Str(base64Str)
+                    .imageUrl(base64Str)
                     .build();
         }
 
