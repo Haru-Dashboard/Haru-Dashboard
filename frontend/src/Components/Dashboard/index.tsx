@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
 const DashBoard = () => {
-  const [screenWidth, setScreenWidth] = useState(0)
-  const [screenHeight, setScreenHeight] = useState(0)
+  const [screenHeight, setScreenHeight] = useState(0);
 
-  useEffect(()=>{
-    // full screen width
-    const screenWidth = window.screen.width;
+  useEffect(() => {
     const screenHeight = window.screen.height;
+    setScreenHeight(screenHeight * 0.65);
+  });
 
-    setScreenWidth(screenWidth*0.8)
-    setScreenHeight(screenHeight*0.7)
-  })
-  return (<div className='default-full-bg'>
-    {/* 
-      main board 
-      - add widget component inside div
-    */}
-    <div className='main-board'
-      style={{height: `${screenHeight}px`, width: `${screenWidth}px`}}>
-
+  return (
+    <div
+      className="main-board w-100"
+      style={{
+        height: `${screenHeight}px`,
+      }}>
+      {/* 
+        main board 
+        - add widget component inside div
+      */}
     </div>
-  </div>);
+  );
 };
 
 export default DashBoard;
