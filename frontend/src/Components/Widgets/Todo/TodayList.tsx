@@ -4,10 +4,16 @@ import FilterBar from './FilterBar';
 
 const todayList = () => {
   return (
-    <div style={{height: '60%'}}>
-      <div className='d-flex justify-content-between'>
-        <SmallTitle title="Today" color="#49649E"/>
-        <FilterBar />
+    <div style={{height: '55%'}}>
+      <div className='container'>
+        <div className="row justify-content-between my-2">
+          <div className="col-3">
+            <SmallTitle title="Today" color="#49649E"/>
+          </div>
+          <div className="col-4">
+            <FilterBar />
+          </div>
+        </div>
       </div>
       <div className='sub-board mx-3' style={{height: '80%'}}></div>     
     </div>

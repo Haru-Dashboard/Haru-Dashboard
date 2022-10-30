@@ -1,5 +1,5 @@
 import React from 'react';
-import { screenType } from '../../../App';
+import { screenType } from '../../../Utils/Common';
 import BigTitle from '../../Common/Title/BigTitle';
 import RoutineList from './RoutineList';
 import TodayList from './TodayList';

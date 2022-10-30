@@ -4,7 +4,7 @@ const SmallTitle = (props: any) => {
   return (
     <div className='small-title'>
       {/*  */}
-      <p className='mt-1 ms-4 mb-0' style={{color: `${props.color}`}}>{props.title}</p>
+      <p className='ms-4 my-0' style={{color: `${props.color}`}}>{props.title}</p>
     </div>
   );
 };

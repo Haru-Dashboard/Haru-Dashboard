@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { screenType } from '../../../Utils/Common';
 import SearchBar from './SearchBar';
 import Time from './Time';
 import User from './User';
 import Weather from './Weather';
 
-const Basic = () => {
+const Basic = ({width, height}: screenType) => {
   return (
     <>
       <Weather />

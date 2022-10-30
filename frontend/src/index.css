@@ -53,6 +53,54 @@ html {
 .w-100 {
   width: 100%;
 }
+.w-80 {
+  width: 80%;
+}
 .w-70 {
   width: 70%;
+}
+.w-50 {
+  width: 50%;
+}
+
+/* dropdown */
+/* fade in */
+
+@keyframes slide-fade-in-dropdown-animation {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-fade-in-dropdown {
+  overflow: hidden;
+}
+
+.slide-fade-in-dropdown > ul {
+  animation: slide-fade-in-dropdown-animation .4s ease;
+}
+
+/* fade out */
+
+@keyframes slide-fade-out-dropdown-animation {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.slide-fade-out-dropdown {
+  overflow: hidden;
+}
+
+.slide-fade-out-dropdown > ul {
+  animation: slide-fade-out-dropdown-animation 0.4s ease;
+  animation-fill-mode: forwards;
 }

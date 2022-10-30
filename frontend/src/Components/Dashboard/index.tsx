@@ -1,6 +1,6 @@
 import React from 'react';
 import GridBox from './GridBox';
-import { screenType } from '../../App';
+import { screenType } from '../../Utils/Common';
 import Todo from '../Widgets/Todo';
 
 const DashBoard = ({ width, height }: screenType) => {

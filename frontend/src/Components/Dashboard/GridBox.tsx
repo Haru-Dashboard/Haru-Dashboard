@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GridLayout from 'react-grid-layout';
-import { screenType } from '../../App';
+import { screenType } from '../../Utils/Common';
 
 const GridBox = ({ width, height }: screenType) => {
   const [layout, setLayout] = useState([
