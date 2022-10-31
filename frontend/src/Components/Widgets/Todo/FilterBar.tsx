@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import Dropdown from './Dropdown';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 const FilterBar = () => {
   const [clickedFilter, setClickedFilter] = useState('전체')
