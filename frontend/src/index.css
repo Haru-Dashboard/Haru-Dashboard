@@ -32,3 +32,8 @@ html {
 .w-70 {
   width: 70%;
 }
+
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(256, 256, 256, 0.6);
+  font-weight: lighter;
+}
