@@ -1,13 +1,14 @@
 package com.haru.api.project.domain.entity;
 
 import com.haru.api.common.entity.BaseEntity;
+import com.haru.api.project.dto.ProjectLinkRequest;
 import lombok.*;
 
 import javax.persistence.*;
 
 
-@Getter
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
@@ -28,4 +29,16 @@ public class ProjectLink extends BaseEntity {
     @Column(nullable = false)
     private String link;
 
+    private void setProject(Project project){
+        project.getProjectLinks().add(this);
+        this.project = project;
+    }
+    public static ProjectLink create(ProjectLinkRequest.Create request, Project project) {
+        ProjectLink projectLink = ProjectLink.builder()
+                .name(request.getName())
+                .link(request.getUrl())
+                .build();
+        projectLink.setProject(project);
+        return projectLink;
+    }
 }

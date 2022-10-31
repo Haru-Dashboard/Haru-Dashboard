@@ -2,11 +2,12 @@ package com.haru.api.project.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haru.api.file.dto.S3FileResponse;
-import com.haru.api.file.entity.S3File;
 import com.haru.api.project.domain.entity.Project;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectResponse {
     @Getter
@@ -36,16 +37,22 @@ public class ProjectResponse {
         private LocalDate startDate;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
         private LocalDate endDate;
-        private S3FileResponse.GetImage image;
-        public static ProjectResponse.GetProject build(Project project, S3File file, String base64Str) {
-            return GetProject.builder()
+        private List<ProjectLinkResponse.GetProjectLink> projectLinks;
+        private List<ProjectLabelResponse.GetProjectLabel> projectLabels;
+        private S3FileResponse.GetImage imageInfo;
+        public static ProjectResponse.GetProject build(Project project, S3FileResponse.GetImage imageInfo) {
+            GetProjectBuilder builder = GetProject.builder()
                     .id(project.getId())
                     .title(project.getTitle())
                     .content(project.getContent())
                     .startDate(project.getStartDate())
                     .endDate(project.getEndDate())
-                    .image(S3FileResponse.GetImage.build(file, base64Str))
-                    .build();
+                    .projectLinks(project.getProjectLinks().stream().map(ProjectLinkResponse.GetProjectLink::build).collect(Collectors.toList()))
+                    .projectLabels(project.getProjectLabels().stream().map(ProjectLabelResponse.GetProjectLabel::build).collect(Collectors.toList()));
+            if(project.getFile() != null) {
+                builder.imageInfo(imageInfo);
+            }
+            return builder().build();
         }
     }
 }

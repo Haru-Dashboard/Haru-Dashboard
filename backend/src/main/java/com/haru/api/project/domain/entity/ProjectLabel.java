@@ -23,4 +23,16 @@ public class ProjectLabel extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+
+    private void setProject(Project project){
+        project.getProjectLabels().add(this);
+        this.project = project;
+    }
+    public static ProjectLabel create(String name, Project project){
+        ProjectLabel projectLabel = ProjectLabel.builder()
+                .name(name)
+                .build();
+        projectLabel.setProject(project);
+        return projectLabel;
+    }
 }
