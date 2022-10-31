@@ -29,13 +29,22 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-bar">
+    <div className="search-bar w-50 pb-2 d-flex align-items-end">
       <form
+        className="w-100 h-75"
         action="http://www.google.com/search"
         method="get"
         onSubmit={onSubmit}>
-        {/* Note: GET http://www.google.com/search?q={query} */}
-        <input type="text" onChange={onChange} name="q" value={query} />
+        {/* Note: GET https://www.google.com/search?q={query} */}
+        <input
+          className="w-100 h-100 border border-0 rounded-pill px-3"
+          type="text"
+          onChange={onChange}
+          name="q"
+          value={query}
+          placeholder="search google or type a url"
+          style={{ backgroundColor: 'rgb(256, 256, 256, 0.3)' }}
+        />
       </form>
     </div>
   );
