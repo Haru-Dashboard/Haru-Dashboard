@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import GridBox from './GridBox';
+import { screenType } from '../../App';
 
-const DashBoard = () => {
-  const [screenHeight, setScreenHeight] = useState(0);
-
-  useEffect(() => {
-    const screenHeight = window.screen.height;
-    setScreenHeight(screenHeight * 0.65);
-  });
-
+const DashBoard = ({ width, height }: screenType) => {
   return (
     <div
-      className="main-board w-100"
+      className="main-board w-100 d-flex"
       style={{
-        height: `${screenHeight}px`,
+        height: `${height}px`,
       }}>
-      {/* 
-        main board 
-        - add widget component inside div
-      */}
+      {/* FIXME: div 대신 TODO로 바꿔야 함 */}
+      <div style={{ width: width * 0.25 }}></div>
+      <GridBox width={width * 0.75} height={height} />
     </div>
   );
 };
