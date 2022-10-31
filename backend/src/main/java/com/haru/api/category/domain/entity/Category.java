@@ -18,4 +18,10 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
+
+    public static Category create(String name) {
+        return Category.builder()
+                .name(name)
+                .build();
+    }
 }

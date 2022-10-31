@@ -7,6 +7,7 @@ import com.haru.api.user.domain.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -38,10 +39,10 @@ public class Todo extends BaseEntity {
     private Byte sat;
     private Byte sun;
 
-    public static Todo create(TodoRequest.Create request, User user) {
+    public static Todo create(TodoRequest.Create request, Category category, User user) {
         return Todo.builder()
                 .user(user)
-                .category(request.getCategory())
+                .category(category)
                 .title(request.getTitle())
                 .mon(request.getMon())
                 .tue(request.getTue())
@@ -51,5 +52,21 @@ public class Todo extends BaseEntity {
                 .sat(request.getSat())
                 .sun(request.getSun())
                 .build();
+    }
+
+    public void update(TodoRequest.Update request, Category category) {
+        this.category = category;
+        this.title = request.getTitle();
+        this.mon = request.getMon();
+        this.tue = request.getTue();
+        this.wed = request.getWed();
+        this.thu = request.getThu();
+        this.fri = request.getFri();
+        this.sat = request.getSat();
+        this.sun = request.getSun();
+    }
+
+    public void delete() {
+        this.setDeletedAt(LocalDateTime.now());
     }
 }

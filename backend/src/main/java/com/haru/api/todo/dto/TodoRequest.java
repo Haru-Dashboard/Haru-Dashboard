@@ -1,6 +1,5 @@
 package com.haru.api.todo.dto;
 
-import com.haru.api.category.domain.entity.Category;
 import com.haru.api.user.domain.entity.User;
 import lombok.*;
 
@@ -11,7 +10,7 @@ public class TodoRequest {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Create {
         private User user;
-        private Category category;
+        private String category;
         private String title;
         private Byte mon;
         private Byte tue;
@@ -27,7 +26,7 @@ public class TodoRequest {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Update {
-        private Category category;
+        private String category;
         private String title;
         private Byte mon;
         private Byte tue;
