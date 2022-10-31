@@ -12,7 +12,6 @@ const FilterBar = () => {
     // localStorage에서 카테고리들 받아오기
     const localCategories = localStorage.getItem('category')
     if (localCategories) {
-      // console.log('categories in local storage when created=', localCategories, typeof(localCategories));
       setFilterList(JSON.parse(localCategories))
     }
   }, [])
@@ -20,33 +19,24 @@ const FilterBar = () => {
   const searchCategory = (e : React.KeyboardEvent<HTMLInputElement>) =>{
     const keyword = e.target as HTMLInputElement
     const category= localStorage.getItem('category')
-    console.log(keyword.value);
-    console.log(e.key);
-    console.log(category, typeof(category));
     
-    // console.log('searchResult=', searchResult);
-    
-    
+    // 입력한 검색어 state에 저장
     setSearchedword(keyword.value)
 
-    // 검색 결과 초기화
-    // setSearchResult([''])
     filterList.map((data: string)=> {
       if (data.includes(searchedWord) && !searchResult.includes(data)) {
         setSearchResult(searchResult.concat(data))
       }
     })
-    // console.log(e.key);
+
     if(e.key==='Enter'){
       // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
-      // console.log('hello enter');
-      
       if (searchedWord.trim() && !filterList.includes(searchedWord)) {
         // console.log('into if');
         // state에 저장
         setFilterList(filterList.concat(searchedWord))
 
-        //localStorage에 저장
+        // localStorage에 저장
         if (category) {
           const arr = JSON.parse(category)
           // console.log('arr=',arr, typeof(arr)); //object

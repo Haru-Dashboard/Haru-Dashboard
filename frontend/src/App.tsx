@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import Container from "react-bootstrap/Container"
 import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
+import CreateTodoModal from './Components/Widgets/Todo/CreateTodoModal';
 
 
 function App() {
@@ -17,9 +17,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className="mx-auto" style={{ width: screenWidth * 0.8 }}>
-        <Basic width={screenWidth * 0.8} height={screenHeight * 0.12} />
-        <Dashboard width={screenWidth * 0.8} height={screenHeight * 0.6} />
+      <div className="mx-auto" style={{ width: screenWidth * 0.7 }}>
+        <Basic width={screenWidth * 0.7} height={screenHeight * 0.12} />
+        <Dashboard width={screenWidth * 0.7} height={screenHeight * 0.6}/>
       </div>
     </div>
   );
