@@ -1,0 +1,24 @@
+### Todo 등록
+POST {{apiUrl}}/todos
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+    "category": "algorithm",
+    "title": "boj 1422",
+    "mon": 1,
+    "tue": 1,
+    "wed": 1,
+    "thu": 1,
+    "fri": 1,
+    "sat": 1,
+    "sun": 1
+}
+
+### Todo 전체 조회
+GET {{apiUrl}}/todos
+Authorization: {{authorizationToken}}
+
+### Todo 상세 조회
+GET {{apiUrl}}/todos/1
+Authorization: {{authorizationToken}}

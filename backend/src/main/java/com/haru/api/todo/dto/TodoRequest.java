@@ -9,7 +9,6 @@ public class TodoRequest {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Create {
-        private User user;
         private String category;
         private String title;
         private Byte mon;
