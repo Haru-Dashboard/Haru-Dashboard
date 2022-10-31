@@ -1,6 +1,6 @@
 import React from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import FilterBar from './FilterBar';
+import RoutineFilterBar from './FilterBar/TodayFilterBar';
 
 const routineList = () => {
   return (
@@ -11,7 +11,7 @@ const routineList = () => {
           <SmallTitle title="Routine" color="#5BB7F0"/>
         </div>
         <div className="col-4">
-          <FilterBar />
+          <RoutineFilterBar />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import FilterBar from './FilterBar';
+import TodayFilterBar from './FilterBar/TodayFilterBar';
 
 const todayList = () => {
   return (
@@ -11,7 +11,7 @@ const todayList = () => {
             <SmallTitle title="Today" color="#49649E"/>
           </div>
           <div className="col-4">
-            <FilterBar />
+            <TodayFilterBar />
           </div>
         </div>
       </div>
