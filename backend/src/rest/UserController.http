@@ -3,8 +3,7 @@ POST {{apiUrl}}/users/login
 Content-Type: application/json;charset=UTF-8
 
 {
-  "email": "haru@gmail.com",
-  "password": "1234"
+  "email": "haru@gmail.com"
 }
 
 > {%
