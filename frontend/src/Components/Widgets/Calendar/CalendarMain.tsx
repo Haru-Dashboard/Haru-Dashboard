@@ -40,7 +40,7 @@ export default function CalendarMain({ width, height }: screenType) {
     const weekDateThisMonth = weekDates.map((index) => (
       <Col
         className={
-          'dateColum ' +
+          'date-column ' +
           ((index + startDayOfThisMonth) % 7 == 1
             ? 'sunday'
             : (index + startDayOfThisMonth) % 7 == 0
@@ -49,12 +49,14 @@ export default function CalendarMain({ width, height }: screenType) {
             ? 'holiday'
             : 'nomarday')
         }>
-        <div className="dateColumnDates">{index}</div>
-        <div className="dateColumeMain"></div>
+        <div className="date-column-dates">{index}</div>
+        <div className="date-colume-content"></div>
       </Col>
     ));
     return (
-      <Row className="calendarDatesRow" style={{ height: (height * 13) / 100 }}>
+      <Row
+        className="calendar-dates-row"
+        style={{ height: (height * 13) / 100 }}>
         {weekDateThisMonth}
       </Row>
     );
@@ -68,22 +70,22 @@ export default function CalendarMain({ width, height }: screenType) {
     const weekDatePastMonth = weekDatesPast.map((index) => (
       <Col
         className={
-          'dateColum pastMonth ' +
+          'date-column pastmonth ' +
           ((index - dateOfLastMonth + startDayOfThisMonth - 1) % 7 == 0
             ? 'sunday'
             : checkHolidays(index)
             ? 'holiday'
             : '')
         }>
-        <div className="dateColumnDates">{index}</div>
-        <div className="dateColumeMain"></div>
+        <div className="date-column-dates">{index}</div>
+        <div className="date-colume-content"></div>
       </Col>
     ));
     const weekDates = numbers.slice(0, 7 - startDayOfThisMonth);
     const weekDateThisMonth = weekDates.map((index) => (
       <Col
         className={
-          'dateColum ' +
+          'date-column ' +
           ((index + startDayOfThisMonth) % 7 == 1
             ? 'sunday'
             : (index + startDayOfThisMonth) % 7 == 0
@@ -92,12 +94,14 @@ export default function CalendarMain({ width, height }: screenType) {
             ? 'holiday'
             : 'nomarday')
         }>
-        <div className="dateColumnDates">{index}</div>
-        <div className="dateColumeMain"></div>
+        <div className="date-column-dates">{index}</div>
+        <div className="date-colume-content"></div>
       </Col>
     ));
     return (
-      <Row className="calendarDatesRow" style={{ height: (height * 13) / 100 }}>
+      <Row
+        className="calendar-dates-row"
+        style={{ height: (height * 13) / 100 }}>
         {weekDatePastMonth}
         {weekDateThisMonth}
       </Row>
@@ -111,7 +115,7 @@ export default function CalendarMain({ width, height }: screenType) {
       const weekDateThisMonthOver = weekDatesOver.map((index) => (
         <Col
           className={
-            'dateColumOver ' +
+            'date-colum-dateover ' +
             ((index + startDayOfThisMonth) % 7 == 1
               ? 'sunday'
               : (index + startDayOfThisMonth) % 7 == 0
@@ -120,16 +124,16 @@ export default function CalendarMain({ width, height }: screenType) {
               ? 'holiday'
               : 'nomarday')
           }>
-          <div className="dateColumnDatesOver">
+          <div className="date-column-dates-dateover">
             {index - 7}/{index}
           </div>
-          <div className="dateColumeMain"></div>
+          <div className="date-colume-content"></div>
         </Col>
       ));
       const weekDateThisMonth = weekDates.map((index) => (
         <Col
           className={
-            'dateColum ' +
+            'date-column ' +
             ((index + startDayOfThisMonth) % 7 == 1
               ? 'sunday'
               : (index + startDayOfThisMonth) % 7 == 0
@@ -138,13 +142,13 @@ export default function CalendarMain({ width, height }: screenType) {
               ? 'holiday'
               : 'nomarday')
           }>
-          <div className="dateColumnDates">{index}</div>
-          <div className="dateColumeMain"></div>
+          <div className="date-column-dates">{index}</div>
+          <div className="date-colume-content"></div>
         </Col>
       ));
       return (
         <Row
-          className="calendarDatesRow"
+          className="calendar-dates-row"
           style={{ height: (height * 13) / 100 }}>
           {weekDateThisMonthOver}
           {weekDateThisMonth}
@@ -155,7 +159,7 @@ export default function CalendarMain({ width, height }: screenType) {
       const weekDateThisMonth = weekDates.map((index) => (
         <Col
           className={
-            'dateColum ' +
+            'date-column ' +
             ((index + startDayOfThisMonth) % 7 == 1
               ? 'sunday'
               : (index + startDayOfThisMonth) % 7 == 0
@@ -164,15 +168,15 @@ export default function CalendarMain({ width, height }: screenType) {
               ? 'holiday'
               : 'nomarday')
           }>
-          <div className="dateColumnDates">{index}</div>
-          <div className="dateColumeMain"></div>
+          <div className="date-column-dates">{index}</div>
+          <div className="date-colume-content"></div>
         </Col>
       ));
       let weekDatesNext = numbers.slice(0, startDate - dateOfThisMonth + 6);
       const weekDateNextMonth = weekDatesNext.map((index) => (
         <Col
           className={
-            'dateColum ' +
+            'date-column ' +
             ((index + startDayOfNextMonth) % 7 == 1
               ? 'sunday'
               : (index + startDayOfNextMonth) % 7 == 0
@@ -181,13 +185,13 @@ export default function CalendarMain({ width, height }: screenType) {
               ? 'holiday'
               : 'nomarday')
           }>
-          <div className="dateColumnDates">{index}</div>
-          <div className="dateColumeMain"></div>
+          <div className="date-column-dates">{index}</div>
+          <div className="date-colume-content"></div>
         </Col>
       ));
       return (
         <Row
-          className="calendarDatesRow"
+          className="calendar-dates-row"
           style={{ height: (height * 13) / 100 }}>
           {weekDateThisMonth}
           {weekDateNextMonth}
@@ -196,21 +200,21 @@ export default function CalendarMain({ width, height }: screenType) {
     }
   };
   return (
-    <div className="calendarMainContainer">
-      <div className="calendarWeekends">
+    <div className="calendar-maincontainer">
+      <div className="calendar-weekends">
         <Container>
           <Row>
-            <Col className="calendarWeekendsInner sunday">Sun</Col>
-            <Col className="calendarWeekendsInner">Mon</Col>
-            <Col className="calendarWeekendsInner">Tue</Col>
-            <Col className="calendarWeekendsInner">Wed</Col>
-            <Col className="calendarWeekendsInner">Thu</Col>
-            <Col className="calendarWeekendsInner">Fri</Col>
-            <Col className="calendarWeekendsInner saturday">Sat</Col>
+            <Col className="calendar-Weekends-content sunday">Sun</Col>
+            <Col className="calendar-Weekends-content">Mon</Col>
+            <Col className="calendar-Weekends-content">Tue</Col>
+            <Col className="calendar-Weekends-content">Wed</Col>
+            <Col className="calendar-Weekends-content">Thu</Col>
+            <Col className="calendar-Weekends-content">Fri</Col>
+            <Col className="calendar-Weekends-content saturday">Sat</Col>
           </Row>
         </Container>
       </div>
-      <div className="calendarDates">
+      <div className="calendar-dates">
         <Container>
           {firstWeekDay(weekStartDay[0])}
           {weeksDay(weekStartDay[1])}
