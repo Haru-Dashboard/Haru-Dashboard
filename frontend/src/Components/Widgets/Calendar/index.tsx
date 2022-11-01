@@ -14,28 +14,31 @@ function Calendar({ width, height }: screenType) {
 
   return (
     <div className="calendar board">
-      <div className="calendarCalendar">
-        <div className="calendarTitle ">
+      <div className="calendar-back">
+        <div className="calendar-title ">
           <div className="d-flex">
-            <img src="img/calendarImg.png" className="calendarTitleIconImg" />
-            <div className="calendartitleTitle">Calendar</div>
+            <img
+              src="img/calendarImg.png"
+              className="calendar-title-icon-img"
+            />
+            <div className="calendar-title-titles">Calendar</div>
           </div>
         </div>
 
-        <div className="calendarHead">
-          <div className="calendarImports d-flex">
-            <div className="calendarMonthYear">
-              <div className="calendarYear">{thisYear}</div>
-              <div className="calendarMonth">{thisMonthString}</div>
+        <div className="calendar-head">
+          <div className="calendar-head-flex">
+            <div className="calendar-monthyear">
+              <div className="calendar-year">{thisYear}</div>
+              <div className="calendar-month">{thisMonthString}</div>
             </div>
-            <div className="titleOfCalendar">{titleOfCalendar}</div>
+            <div className="calendar-subtitle">{titleOfCalendar}</div>
           </div>
         </div>
-        <div className="calendarMain">
+        <div className="calendar-main">
           <CalendarMain width={width} height={height} />
         </div>
       </div>
-      <div className="claendarControl"></div>
+      <div className="claendar-control"></div>
     </div>
   );
 }
