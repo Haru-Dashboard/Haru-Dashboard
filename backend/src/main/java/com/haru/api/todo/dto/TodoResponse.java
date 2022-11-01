@@ -27,26 +27,26 @@ public class TodoResponse {
         private Long todoId;
         private String category;
         private String title;
-        private Byte mon;
-        private Byte tue;
-        private Byte wed;
-        private Byte thu;
-        private Byte fri;
-        private Byte sat;
-        private Byte sun;
+        private boolean mon;
+        private boolean tue;
+        private boolean wed;
+        private boolean thu;
+        private boolean fri;
+        private boolean sat;
+        private boolean sun;
 
         public static TodoResponse.GetOne toEntity(Todo todo) {
             return GetOne.builder()
                     .todoId(todo.getId())
                     .category(todo.getCategory().getName())
                     .title(todo.getTitle())
-                    .mon(todo.getMon())
-                    .tue(todo.getTue())
-                    .wed(todo.getWed())
-                    .thu(todo.getThu())
-                    .fri(todo.getFri())
-                    .sat(todo.getSat())
-                    .sun(todo.getSun())
+                    .mon(todo.isMon())
+                    .tue(todo.isTue())
+                    .wed(todo.isWed())
+                    .thu(todo.isThu())
+                    .fri(todo.isFri())
+                    .sat(todo.isSat())
+                    .sun(todo.isSun())
                     .build();
         }
     }

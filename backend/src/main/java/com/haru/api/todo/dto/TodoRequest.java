@@ -11,13 +11,13 @@ public class TodoRequest {
     public static class Create {
         private String category;
         private String title;
-        private Byte mon;
-        private Byte tue;
-        private Byte wed;
-        private Byte thu;
-        private Byte fri;
-        private Byte sat;
-        private Byte sun;
+        private Boolean mon;
+        private Boolean tue;
+        private Boolean wed;
+        private Boolean thu;
+        private Boolean fri;
+        private Boolean sat;
+        private Boolean sun;
     }
 
     @Getter
@@ -27,12 +27,12 @@ public class TodoRequest {
     public static class Update {
         private String category;
         private String title;
-        private Byte mon;
-        private Byte tue;
-        private Byte wed;
-        private Byte thu;
-        private Byte fri;
-        private Byte sat;
-        private Byte sun;
+        private Boolean mon;
+        private Boolean tue;
+        private Boolean wed;
+        private Boolean thu;
+        private Boolean fri;
+        private Boolean sat;
+        private Boolean sun;
     }
 }

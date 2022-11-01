@@ -6,13 +6,13 @@ Content-Type: application/json;charset=UTF-8
 {
     "category": "algorithm",
     "title": "boj 1422",
-    "mon": 1,
-    "tue": 1,
-    "wed": 1,
-    "thu": 1,
-    "fri": 1,
-    "sat": 1,
-    "sun": 1
+    "mon": false,
+    "tue": true,
+    "wed": true,
+    "thu": true,
+    "fri": true,
+    "sat": true,
+    "sun": true
 }
 
 ### Todo 전체 조회
@@ -20,24 +20,20 @@ GET {{apiUrl}}/todos?day=
 Authorization: {{authorizationToken}}
 
 ### Todo 상세 조회
-GET {{apiUrl}}/todos/3
+GET {{apiUrl}}/todos/7
 Authorization: {{authorizationToken}}
 
 ### Todo 수정
-PUT {{apiUrl}}/todos/4
+PATCH {{apiUrl}}/todos/8
 Authorization: {{authorizationToken}}
 Content-Type: application/json;charset=UTF-8
 
 {
   "category": "programmers",
   "title": "kakao2021-1",
-  "mon": 0,
-  "tue": 0,
-  "wed": 1,
-  "thu": 1,
-  "fri": 1,
-  "sat": 0,
-  "sun": 0
+  "mon": false,
+  "tue": false,
+  "wed": true
 }
 
 ### Todo 삭제

@@ -19,25 +19,25 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
         BooleanBuilder builder = new BooleanBuilder();
         switch (day) {
             case "mon":
-                builder.and(todo.mon.eq((byte) 1));
+                builder.and(todo.mon.eq(true));
                 break;
             case "tue":
-                builder.and(todo.tue.eq((byte) 1));
+                builder.and(todo.tue.eq(true));
                 break;
             case "wed":
-                builder.and(todo.wed.eq((byte) 1));
+                builder.and(todo.wed.eq(true));
                 break;
             case "thu":
-                builder.and(todo.thu.eq((byte) 1));
+                builder.and(todo.thu.eq(true));
                 break;
             case "fri":
-                builder.and(todo.fri.eq((byte) 1));
+                builder.and(todo.fri.eq(true));
                 break;
             case "sat":
-                builder.and(todo.sat.eq((byte) 1));
+                builder.and(todo.sat.eq(true));
                 break;
             case "sun":
-                builder.and(todo.sun.eq((byte) 1));
+                builder.and(todo.sun.eq(true));
                 break;
             default:
                 break;
