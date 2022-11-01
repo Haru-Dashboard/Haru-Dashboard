@@ -2,7 +2,7 @@ package com.haru.api.schedule.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ScheduleRequest {
     @Getter
@@ -12,8 +12,8 @@ public class ScheduleRequest {
     public static class CreateOrUpdate {
         private String title;
         private String content;
-        private LocalDate startDate;
-        private LocalDate endDate;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
         private int color;
     }
 }
