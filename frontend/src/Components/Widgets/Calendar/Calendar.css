@@ -1,0 +1,166 @@
+.board{
+    background-color: rgb(256, 256, 256, 0.3);
+    margin: auto;
+}
+.calendar{
+    width: 100%;
+    height:100%;        
+    border-radius: 3rem;
+    display: flex;
+    color: white;
+}
+.calendarCalendar{
+    width: 70%;
+    height:100%;   
+}
+.claendarControl{
+    width: 30;
+    height:100%;    
+}
+.calendarTitle{
+    width: 55.38%;
+    height: 17.25%;  
+    margin-left:8%;
+
+}
+.calendarHead{
+    width: 100%;
+    height: 9.9%;
+}
+.calendarMain{
+    height: 72.85%;
+}
+.calendarTitleIconImg{
+    margin-top: 2.38%;
+    width: 17.57%;
+    height: 100%;
+}
+.calendartitleTitle{
+    margin-left: 4.5%;
+    height: 100%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.titleCalendar{
+    font-size: 2rem;
+    
+}
+.calendarImports{
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight:bold;
+}
+.calendarMonthYear{
+    margin-left: 7.1%;
+    width: 25%;
+    display: flex;
+}
+.calendarYear{
+    width: 50%;
+}
+.calendarMonth{
+}
+.titleOfCalendar{
+    width: 65%;
+    text-align: right;
+}
+.calendarMainContainer{
+    margin-left: 6.15%;
+    width: 87.7%;
+    height: 91%;
+}
+.calendarWeekends{
+    height: 7%;
+    font-size: 0.6rem;
+}
+.calendarDates{
+
+}
+.calendarDatesRow{
+}
+
+
+.calendarWeekendsInner{
+    text-align: center;
+    width: 14.2857%;
+    height:10%;
+}
+.sunday{
+    color:red !important;
+}
+.saturday{
+    color:blue !important;
+}
+.holiday{
+    color:red ;
+}
+.pastMonth{
+    color:grey;
+
+}
+.nextMonth{
+    color:grey;
+}
+
+
+.dateColum{
+    height: 90%;
+    margin-left: 2%;
+    background-color: rgb(256, 256, 256, 0.2);
+
+    border-radius: 0.5rem;
+}
+
+
+.dateColumOver{
+    height: 90%;
+    margin-left: 2%;
+    width: 0px;
+    background-color: rgb(256, 256, 256, 0.2);
+
+    border-radius: 0.5rem;
+}
+
+.dateColumnDates{
+    position: relative;
+    font-size:0.7rem;
+    left:-60%;
+    text-align: left;
+}
+
+
+.dateColumnDatesOver{
+    position: relative;
+    width: 10%;
+    font-size: 0.1rem !important;;
+    left:-60%;
+    text-align: left;
+}
+.dateColumeMain{
+
+}
+
+
+.calendarDatesoverPosition{
+    width: 1.3rem;
+    height: 1.3rem;
+    position: relative;
+}
+.calendarSlashUp{
+    position:absolute;
+    text-align: left;
+
+}
+.calendarSlash{
+    position:absolute;
+    text-align: center;
+    left:0.5rem;
+    top: 0.rem;
+}
+.calendarSlashDown{
+    position:absolute;
+    text-align: right;
+    left:0.6rem;
+    top: 0.6rem;
+
+}
