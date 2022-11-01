@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import { screenType } from '../../App';
+import Calendar from '../Widgets/Calendar';
 
 const GridBox = ({ width, height }: screenType) => {
   const [layout, setLayout] = useState([
@@ -21,7 +22,7 @@ const GridBox = ({ width, height }: screenType) => {
       isDraggable={false}
       isResizable={false}>
       <div className="p-1" key="0">
-        Calendar
+        <Calendar width={width} height={height / 2} />
       </div>
       <div className="p-1" key="1">
         Bookmark
