@@ -7,7 +7,6 @@ import com.haru.api.todo.domain.entity.Todo;
 import com.haru.api.todo.domain.repository.TodoRepository;
 import com.haru.api.todo.dto.TodoRequest;
 import com.haru.api.todo.dto.TodoResponse;
-import com.haru.api.todo.exception.TodoDeletedException;
 import com.haru.api.todo.exception.TodoNotFoundException;
 import com.haru.api.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +27,9 @@ public class TodoService {
     public List<TodoResponse.GetOne> getList(String day, User user) {
         List<Todo> todos;
         if (StringUtils.hasText(day)) {
-            todos = todoRepository.findAllByUserAndDay(user.getId(), day);
+            todos = todoRepository.findAllByUserAndDay(user, day);
         } else {
-            todos = todoRepository.findAllByUser(user.getId());
+            todos = todoRepository.findAllByUser(user);
         }
         return todos.stream().map(TodoResponse.GetOne::toEntity).collect(Collectors.toList());
     }
@@ -38,7 +37,6 @@ public class TodoService {
     public TodoResponse.GetOne getOne(Long todoId, User user) {
         Todo todo = todoRepository.findById(todoId).orElseThrow(TodoNotFoundException::new);
         if (!Objects.equals(user.getId(), todo.getUser().getId())) throw new PermissionException();
-        if (todo.getDeletedAt() != null) throw new TodoDeletedException();
         return TodoResponse.GetOne.toEntity(todo);
     }
 
@@ -63,8 +61,7 @@ public class TodoService {
     public TodoResponse.OnlyId delete(Long todoId, User user) {
         Todo todo = todoRepository.findById(todoId).orElseThrow(TodoNotFoundException::new);
         if (!Objects.equals(user.getId(), todo.getUser().getId())) throw new PermissionException();
-        if (todo.getDeletedAt() != null) throw new TodoDeletedException();
-        todo.delete();
+        todoRepository.delete(todo);
         return TodoResponse.OnlyId.toEntity(todo);
     }
 }

@@ -66,7 +66,4 @@ public class Todo extends BaseEntity {
         this.sun = request.getSun();
     }
 
-    public void delete() {
-        this.setDeletedAt(LocalDateTime.now());
-    }
 }

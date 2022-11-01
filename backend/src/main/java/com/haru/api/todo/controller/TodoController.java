@@ -15,7 +15,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @GetMapping
-    public ResponseEntity<?> getList(@RequestParam(required = false) String day, @CurrentUser CustomUserDetails customUserDetails) {
+    public ResponseEntity<?> getList(@RequestParam(name = "day", required = false) String day, @CurrentUser CustomUserDetails customUserDetails) {
         return ResponseEntity.ok(todoService.getList(day, customUserDetails.getUser()));
     }
 

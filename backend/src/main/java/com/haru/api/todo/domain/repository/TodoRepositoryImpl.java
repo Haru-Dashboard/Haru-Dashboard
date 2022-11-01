@@ -1,6 +1,7 @@
 package com.haru.api.todo.domain.repository;
 
 import com.haru.api.todo.domain.entity.Todo;
+import com.haru.api.user.domain.entity.User;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Todo> findAllByUserAndDay(Long user, String day) {
+    public List<Todo> findAllByUserAndDay(User user, String day) {
         BooleanBuilder builder = new BooleanBuilder();
         switch (day) {
             case "mon":
@@ -42,7 +43,8 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
                 break;
         }
         return jpaQueryFactory.selectFrom(todo)
-                .where(builder)
+                .where(todo.user.eq(user),
+                    builder)
                 .fetch();
     }
 }

@@ -16,9 +16,30 @@ Content-Type: application/json;charset=UTF-8
 }
 
 ### Todo 전체 조회
-GET {{apiUrl}}/todos
+GET {{apiUrl}}/todos?day=
 Authorization: {{authorizationToken}}
 
 ### Todo 상세 조회
-GET {{apiUrl}}/todos/1
+GET {{apiUrl}}/todos/3
+Authorization: {{authorizationToken}}
+
+### Todo 수정
+PUT {{apiUrl}}/todos/4
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "category": "programmers",
+  "title": "kakao2021-1",
+  "mon": 0,
+  "tue": 0,
+  "wed": 1,
+  "thu": 1,
+  "fri": 1,
+  "sat": 0,
+  "sun": 0
+}
+
+### Todo 삭제
+DELETE {{apiUrl}}/todos/1
 Authorization: {{authorizationToken}}
