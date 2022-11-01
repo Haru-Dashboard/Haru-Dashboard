@@ -20,7 +20,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
           )}
           {!isToday && (
             // todo routine
-            <div>todo routine</div>
+            <div>todo routine...</div>
           )}
         </Modal.Body>
         <Modal.Footer>
