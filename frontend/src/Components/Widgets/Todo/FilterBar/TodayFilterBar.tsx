@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 // import Dropdown from './Dropdown';
 import { Dropdown } from 'react-bootstrap';
 
-const FilterBar = () => {
+export type todayFilterBar = {
+  handleCategory : (clicked: string) => void;
+}
+
+const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
   const [clickedFilter, setClickedFilter] = useState('전체')
   const [filterList, setFilterList] = useState([''])
   const [searchedWord, setSearchedword] = useState('')
@@ -16,16 +20,17 @@ const FilterBar = () => {
     }
   }, [])
 
+  // category를 검색하고 localStorage에 없으면 저장하는 함수
   const searchCategory = (e : React.KeyboardEvent<HTMLInputElement>) =>{
     const keyword = e.target as HTMLInputElement
     const category= localStorage.getItem('category')
     
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value)
-
+    
     filterList.map((data: string)=> {
       if (data.includes(searchedWord) && !searchResult.includes(data)) {
-        setSearchResult(searchResult.concat(data))
+        return setSearchResult(searchResult.concat(data))
       }
     })
 
@@ -36,16 +41,16 @@ const FilterBar = () => {
         // state에 저장
         setFilterList(filterList.concat(searchedWord))
 
-        // localStorage에 저장
+        // localStorage에 저장하기
+        // localStorage에 저장된 category가 있는 경우
         if (category) {
           const arr = JSON.parse(category)
           // console.log('arr=',arr, typeof(arr)); //object
           arr.push(searchedWord.trim())
           // console.log('pushed arr= ', arr);
-          
           localStorage.setItem('category', JSON.stringify(arr))
         } else {
-          localStorage.setItem('category', JSON.stringify(searchedWord))
+          localStorage.setItem('category', JSON.stringify([searchedWord]))
 
         }
         setSearchedword('')
@@ -53,6 +58,14 @@ const FilterBar = () => {
       
     }
     
+  }
+
+  // 클릭된 category를 state에 저장하고, parent에 보냄
+  const fetchClicked = (clicked: string) => {
+    // state에 저장하기
+    setClickedFilter(clicked)
+    // parent로 clicked 보냄
+    handleCategory(clicked)
   }
 
   return (
@@ -84,9 +97,9 @@ const FilterBar = () => {
         {!searchedWord.trim() && (
           <div>
             {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
-            {filterList.map((filter)=>{
-              return <Dropdown.Item href="#/action-1"
-                onClick={e=> setClickedFilter(filter)}>{filter}</Dropdown.Item>
+            {filterList.map((filter: string, idx: number)=>{
+              return <Dropdown.Item href="#/action-1" key={idx}
+                onClick={e=> fetchClicked(filter)}>{filter}</Dropdown.Item>
             })}
           </div>
         )}
@@ -96,14 +109,15 @@ const FilterBar = () => {
             {searchResult && (
               <div>
                 {/* filterList의 요소 중에서 searchedWord와 겹치는 게 있으면 searchResult 배열에 담기 */}
-                {searchResult.map((data: string)=> {
+                {searchResult.map((data: string, idx: number)=> {
                   if (data.includes(searchedWord)) {
-                    return <Dropdown.Item href="#/action-1"
-                    onClick={e=> setClickedFilter(data)}>{data}</Dropdown.Item>
+                    return <Dropdown.Item href="#/action-1" key={idx}
+                    onClick={e=> fetchClicked(data)}>{data}</Dropdown.Item>
                   }
-            })}
+                })}
               </div>
             )} 
+            {/* 여기 작동 안함 */}
               {!searchResult && (
                 <Dropdown.Item href="#/action-1">검색결과없다</Dropdown.Item>
               )}
@@ -117,4 +131,4 @@ const FilterBar = () => {
   );
 };
 
-export default FilterBar;
+export default TodayFilterBar;

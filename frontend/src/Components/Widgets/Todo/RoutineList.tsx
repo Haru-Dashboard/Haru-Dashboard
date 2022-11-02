@@ -1,13 +1,13 @@
 import React from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import RoutineFilterBar from './FilterBar/TodayFilterBar';
+import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 
 const routineList = () => {
   return (
   <div style={{height: '40%'}}>
     <div className='container'>
       <div className="row justify-content-between my-2">
-        <div className="col">
+        <div className="ms-4 col">
           <SmallTitle title="Routine" color="#5BB7F0"/>
         </div>
         <div className="col-4">

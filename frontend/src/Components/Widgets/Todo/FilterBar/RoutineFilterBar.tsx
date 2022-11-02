@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 // import Dropdown from './Dropdown';
 import { Dropdown } from 'react-bootstrap';
 
-const FilterBar = () => {
+const RoutineFilterBar = () => {
   const [clickedFilter, setClickedFilter] = useState('전체')
   const [filterList, setFilterList] = useState([''])
   const [searchedWord, setSearchedword] = useState('')
   const [searchResult, setSearchResult] = useState([''])
 
-  useEffect(()=> {
+  useEffect(()=> {    
     // localStorage에서 카테고리들 받아오기
     const localCategories = localStorage.getItem('category')
     if (localCategories) {
@@ -17,6 +17,7 @@ const FilterBar = () => {
   }, [])
 
   const searchCategory = (e : React.KeyboardEvent<HTMLInputElement>) =>{
+    console.log(filterList);
     const keyword = e.target as HTMLInputElement
     const category= localStorage.getItem('category')
     
@@ -30,6 +31,7 @@ const FilterBar = () => {
     })
 
     if(e.key==='Enter'){
+      
       // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
       if (searchedWord.trim() && !filterList.includes(searchedWord)) {
         // console.log('into if');
@@ -45,7 +47,7 @@ const FilterBar = () => {
           
           localStorage.setItem('category', JSON.stringify(arr))
         } else {
-          localStorage.setItem('category', JSON.stringify(searchedWord))
+          localStorage.setItem('category', JSON.stringify([searchedWord]))
 
         }
         setSearchedword('')
@@ -81,29 +83,30 @@ const FilterBar = () => {
         </Dropdown.Header>
 
         {/* 검색창이 빈 경우 */}
-        {!searchedWord.trim() && (
+        {/* {!searchedWord.trim() && (
           <div>
-            {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
-            {filterList.map((filter)=>{
-              return <Dropdown.Item href="#/action-1"
+            <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item>
+            {filterList.map((filter: string, idx: number)=>{
+              return <Dropdown.Item href="#/action-1" key={idx}
                 onClick={e=> setClickedFilter(filter)}>{filter}</Dropdown.Item>
             })}
           </div>
-        )}
+        )} */}
         {/* 검색창에 문자가 있는 경우 */}
         {searchedWord.trim() && (
           <div>
             {searchResult && (
               <div>
                 {/* filterList의 요소 중에서 searchedWord와 겹치는 게 있으면 searchResult 배열에 담기 */}
-                {searchResult.map((data: string)=> {
+                {searchResult.map((data: string, idx: number)=> {
                   if (data.includes(searchedWord)) {
-                    return <Dropdown.Item href="#/action-1"
+                    return <Dropdown.Item href="#/action-1" key={idx}
                     onClick={e=> setClickedFilter(data)}>{data}</Dropdown.Item>
                   }
-            })}
+                })}
               </div>
             )} 
+            {/* 여기 작동 안함 */}
               {!searchResult && (
                 <Dropdown.Item href="#/action-1">검색결과없다</Dropdown.Item>
               )}
@@ -117,4 +120,4 @@ const FilterBar = () => {
   );
 };
 
-export default FilterBar;
+export default RoutineFilterBar;
