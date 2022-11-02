@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface BtnPlusProps {
   onClick?: React.MouseEventHandler;
@@ -12,17 +14,13 @@ const BtnPlus = ({ onClick }: BtnPlusProps) => {
       // TODO: 상대 크기로 변경
       style={{
         backgroundColor: 'white',
-        width: '36px',
-        height: '36px',
+        width: '32px',
+        height: '32px',
         border: 'none',
         borderRadius: '15px',
       }}
       onClick={onClick}>
-      <p
-        className="text-center m-0 fw-bolder"
-        style={{ color: 'rgb(73, 100, 158)' }}>
-        +
-      </p>
+      <FontAwesomeIcon icon={faPlus} color="rgb(73, 100, 158)" />
     </button>
   );
 };
