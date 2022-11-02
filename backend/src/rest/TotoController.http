@@ -1,0 +1,41 @@
+### Todo 등록
+POST {{apiUrl}}/todos
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+    "category": "algorithm",
+    "title": "boj 1422",
+    "mon": false,
+    "tue": true,
+    "wed": true,
+    "thu": true,
+    "fri": true,
+    "sat": true,
+    "sun": true
+}
+
+### Todo 전체 조회
+GET {{apiUrl}}/todos?day=
+Authorization: {{authorizationToken}}
+
+### Todo 상세 조회
+GET {{apiUrl}}/todos/7
+Authorization: {{authorizationToken}}
+
+### Todo 수정
+PATCH {{apiUrl}}/todos/8
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "category": "programmers",
+  "title": "kakao2021-1",
+  "mon": false,
+  "tue": false,
+  "wed": true
+}
+
+### Todo 삭제
+DELETE {{apiUrl}}/todos/1
+Authorization: {{authorizationToken}}
