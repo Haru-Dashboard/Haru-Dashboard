@@ -4,17 +4,23 @@ import SearchBar from './SearchBar';
 import Time from './Time';
 import User from './User';
 import Weather from './Weather';
+import Settings from './Settings';
 
-const Basic = ({width, height}: screenType) => {
+import { screenType } from '../../../App';
+
+const Basic = ({ width, height }: screenType) => {
   return (
-    <>
-      <Weather />
-      <div className="d-flex justify-content-between">
+    <div style={{ height: height }}>
+      <div className="d-flex justify-content-between" style={{ height: '35%' }}>
+        <Weather />
+        <Settings />
+      </div>
+      <div className="d-flex flex-row" style={{ height: '65%' }}>
         <Time />
         <SearchBar />
         <User />
       </div>
-    </>
+    </div>
   );
 };
 
