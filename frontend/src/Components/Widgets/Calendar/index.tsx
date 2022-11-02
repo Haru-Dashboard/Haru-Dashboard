@@ -1,5 +1,5 @@
 import React from 'react';
-import { screenType } from '../../../App';
+import { screenType } from '../../../Utils/Common';
 import CalendarMain from './CalendarMain';
 import './Calendar.css';
 
