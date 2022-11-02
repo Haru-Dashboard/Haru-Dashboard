@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import { screenType } from '../../App';
 import Calendar from '../Widgets/Calendar';
+import ITNews from '../Widgets/ITNews';
 
 const GridBox = ({ width, height }: screenType) => {
   const [layout, setLayout] = useState([
@@ -31,7 +32,7 @@ const GridBox = ({ width, height }: screenType) => {
         In Progress
       </div>
       <div className="p-1" key="3">
-        IT News
+        <ITNews />
       </div>
     </GridLayout>
   );
