@@ -4,10 +4,8 @@ import './CardComponent.css';
 //Basic use
 export type CardInputs = {
   cardContent: JSX.Element;
-  cardWidth: number;
-  cardHeight: number;
-  cardWidthUnit: string;
-  cardHeightUnit: string;
+  cardWidth: string;
+  cardHeight: string;
 };
 //Defalut Size Version, need to make it as overload
 export type CardInputsDefalut = {
@@ -17,17 +15,15 @@ export type CardInputsDefalut = {
 //CardComponent Base
 export default function CardComponent({
   cardContent, //<div> ......all kinds of elements here......</div>
-  cardWidth, //width
-  cardWidthUnit, //px, %,rem
-  cardHeight, //height
-  cardHeightUnit, //px % rem
+  cardWidth, //width+ /px, %,rem
+  cardHeight, //height+/px, %,rem
 }: CardInputs) {
   return (
     <div
       className="card-component cardcomponent-card"
       style={{
-        width: cardWidth + '' + cardWidthUnit,
-        height: cardHeight + '' + cardHeightUnit,
+        width: cardWidth,
+        height: cardHeight,
       }}>
       {cardContent}
     </div>

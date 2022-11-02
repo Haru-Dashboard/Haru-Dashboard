@@ -1,7 +1,6 @@
 import React from 'react';
 import CardComponent from '../../Common/CardComponent';
 import './ITNews.css';
-import '../Calendar/Calendar.css';
 
 const content = <div>내용</div>;
 export default function ITNews() {
@@ -17,10 +16,8 @@ export default function ITNews() {
         <div className="news-main ">
           <CardComponent
             cardContent={content}
-            cardWidth={100}
-            cardHeight={100}
-            cardWidthUnit={'%'}
-            cardHeightUnit={'%'}
+            cardWidth={'100%'}
+            cardHeight={'100%'}
           />
         </div>
         <div></div>
