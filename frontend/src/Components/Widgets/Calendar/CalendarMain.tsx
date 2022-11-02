@@ -36,9 +36,10 @@ export default function CalendarMain({ width, height }: screenType) {
   const startLastMonth = weekStartDay[0] === 1;
 
   const weeksDay = function (startDate: number) {
-    let weekDates = numbers.slice(startDate - 1, startDate + 6);
+    const weekDates = numbers.slice(startDate - 1, startDate + 6);
     const weekDateThisMonth = weekDates.map((index) => (
       <Col
+        key={index}
         className={
           'date-column ' +
           ((index + startDayOfThisMonth) % 7 == 1
@@ -69,6 +70,7 @@ export default function CalendarMain({ width, height }: screenType) {
     );
     const weekDatePastMonth = weekDatesPast.map((index) => (
       <Col
+        key={index}
         className={
           'date-column pastmonth ' +
           ((index - dateOfLastMonth + startDayOfThisMonth - 1) % 7 == 0
@@ -84,6 +86,7 @@ export default function CalendarMain({ width, height }: screenType) {
     const weekDates = numbers.slice(0, 7 - startDayOfThisMonth);
     const weekDateThisMonth = weekDates.map((index) => (
       <Col
+        key={index}
         className={
           'date-column ' +
           ((index + startDayOfThisMonth) % 7 == 1
@@ -114,6 +117,7 @@ export default function CalendarMain({ width, height }: screenType) {
       const weekDates = numbers.slice(dateOfThisMonth - 7, startDate + 6);
       const weekDateThisMonthOver = weekDatesOver.map((index) => (
         <Col
+          key={index}
           className={
             'date-colum-dateover ' +
             ((index + startDayOfThisMonth) % 7 == 1
@@ -132,6 +136,7 @@ export default function CalendarMain({ width, height }: screenType) {
       ));
       const weekDateThisMonth = weekDates.map((index) => (
         <Col
+          key={index}
           className={
             'date-column ' +
             ((index + startDayOfThisMonth) % 7 == 1
@@ -155,9 +160,10 @@ export default function CalendarMain({ width, height }: screenType) {
         </Row>
       );
     } else {
-      let weekDates = numbers.slice(startDate - 1, dateOfThisMonth);
+      const weekDates = numbers.slice(startDate - 1, dateOfThisMonth);
       const weekDateThisMonth = weekDates.map((index) => (
         <Col
+          key={index}
           className={
             'date-column ' +
             ((index + startDayOfThisMonth) % 7 == 1
@@ -172,9 +178,10 @@ export default function CalendarMain({ width, height }: screenType) {
           <div className="date-colume-content"></div>
         </Col>
       ));
-      let weekDatesNext = numbers.slice(0, startDate - dateOfThisMonth + 6);
+      const weekDatesNext = numbers.slice(0, startDate - dateOfThisMonth + 6);
       const weekDateNextMonth = weekDatesNext.map((index) => (
         <Col
+          key={index}
           className={
             'date-column ' +
             ((index + startDayOfNextMonth) % 7 == 1
