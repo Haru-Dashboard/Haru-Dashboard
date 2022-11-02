@@ -14,7 +14,7 @@ public class ScheduleResponse {
     public static class OnlyId {
         private Long id;
 
-        public ScheduleResponse.OnlyId toEntity(Schedule schedule) {
+        public static ScheduleResponse.OnlyId toEntity(Schedule schedule) {
             return OnlyId.builder()
                     .id(schedule.getId())
                     .build();
@@ -35,7 +35,7 @@ public class ScheduleResponse {
         private LocalDateTime endDate;
         private int color;
 
-        public ScheduleResponse.GetSchedule toEntity(Schedule schedule) {
+        public static ScheduleResponse.GetSchedule toEntity(Schedule schedule) {
             return GetSchedule.builder()
                     .id(schedule.getId())
                     .title(schedule.getTitle())

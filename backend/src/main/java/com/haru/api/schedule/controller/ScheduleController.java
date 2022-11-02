@@ -18,8 +18,8 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponse.GetSchedule>> getScheduleList(@RequestParam(name = "month") String month, @CurrentUser CustomUserDetails customUserDetails) {
-        return ResponseEntity.ok(scheduleService.getScheduleList(month, customUserDetails.getUser()));
+    public ResponseEntity<List<ScheduleResponse.GetSchedule>> getScheduleList(@RequestParam(name = "year") String year, @RequestParam(name = "month") String month, @CurrentUser CustomUserDetails customUserDetails) {
+        return ResponseEntity.ok(scheduleService.getScheduleList(year, month, customUserDetails.getUser()));
     }
 
     @GetMapping("/{scheduleId}")

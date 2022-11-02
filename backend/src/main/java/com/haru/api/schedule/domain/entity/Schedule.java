@@ -40,7 +40,7 @@ public class Schedule extends BaseEntity {
     @ColumnDefault("0")
     private int color;
 
-    public Schedule create(ScheduleRequest.CreateOrUpdate request, User user){
+    public static Schedule create(ScheduleRequest.CreateOrUpdate request, User user){
         return Schedule.builder()
             .user(user)
             .title(request.getTitle())
