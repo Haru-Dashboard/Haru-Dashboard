@@ -1,21 +1,43 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import './CardComponent.css';
 
-export default function CardComponent() {
+//Basic use
+export type CardInputs = {
+  cardContent: JSX.Element;
+  cardWidth: number;
+  cardHeight: number;
+  cardWidthUnit: string;
+  cardHeightUnit: string;
+};
+//Defalut Size Version, need to make it as overload
+export type CardInputsDefalut = {
+  cardContent: JSX.Element;
+};
+
+//CardComponent Base
+export default function CardComponent({
+  cardContent, //<div> ......all kinds of elements here......</div>
+  cardWidth, //width
+  cardWidthUnit, //px, %,rem
+  cardHeight, //height
+  cardHeightUnit, //px % rem
+}: CardInputs) {
   return (
-    <div className="CardComponent">
-      <Card style={{ width: '8rem', marginLeft: '1rem' }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
+    <div
+      className="card-component cardcomponent-card"
+      style={{
+        width: cardWidth + '' + cardWidthUnit,
+        height: cardHeight + '' + cardHeightUnit,
+      }}>
+      {cardContent}
+    </div>
+  );
+}
+//CardComponent Default Size Version
+export function CardComponentDefault({ cardContent }: CardInputsDefalut) {
+  return (
+    <div className="card-component-defult cardcomponent-card">
+      {cardContent}
     </div>
   );
 }
