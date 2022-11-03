@@ -3,6 +3,7 @@ import GridLayout from 'react-grid-layout';
 import { screenType } from '../../App';
 import Calendar from '../Widgets/Calendar';
 import ITNews from '../Widgets/ITNews';
+import Bookmark from '../Widgets/Bookmark';
 
 const GridBox = ({ width, height }: screenType) => {
   const [layout, setLayout] = useState([
@@ -26,7 +27,15 @@ const GridBox = ({ width, height }: screenType) => {
         <Calendar width={width} height={height / 2} />
       </div>
       <div className="p-1" key="1">
-        Bookmark
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgb(256, 256, 256, 0.1)',
+            borderRadius: '3.5rem',
+          }}>
+          <Bookmark />
+        </div>
       </div>
       <div className="p-1" key="2">
         In Progress
