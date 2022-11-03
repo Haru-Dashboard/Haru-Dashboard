@@ -40,7 +40,7 @@ public class Schedule extends BaseEntity {
     @ColumnDefault("0")
     private int color;
 
-    public static Schedule create(ScheduleRequest.CreateOrUpdate request, User user){
+    public static Schedule create(ScheduleRequest.CreateOrUpdate request, User user) {
         return Schedule.builder()
             .user(user)
             .title(request.getTitle())
@@ -55,5 +55,7 @@ public class Schedule extends BaseEntity {
         if (request.getTitle() != null) this.title = request.getTitle();
         if (request.getContent() != null) this.content = request.getContent();
         if (request.getStartDate() != null) this.startDate = request.getStartDate();
+        if (request.getEndDate() != null) this.endDate = request.getEndDate();
+        if (request.getColor() != null) this.color = request.getColor();
     }
 }

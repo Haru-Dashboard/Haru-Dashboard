@@ -14,6 +14,6 @@ public class ScheduleRequest {
         private String content;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
-        private int color;
+        private Integer color;
     }
 }

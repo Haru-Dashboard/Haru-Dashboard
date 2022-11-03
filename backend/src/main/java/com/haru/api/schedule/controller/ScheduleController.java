@@ -18,7 +18,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponse.GetSchedule>> getScheduleList(@RequestParam(name = "year") String year, @RequestParam(name = "month") String month, @CurrentUser CustomUserDetails customUserDetails) {
+    public ResponseEntity<List<ScheduleResponse.GetSchedule>> getScheduleList(@RequestParam(name = "year") Integer year, @RequestParam(name = "month") Integer month, @CurrentUser CustomUserDetails customUserDetails) {
         return ResponseEntity.ok(scheduleService.getScheduleList(year, month, customUserDetails.getUser()));
     }
 

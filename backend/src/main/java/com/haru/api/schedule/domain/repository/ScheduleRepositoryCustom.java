@@ -6,5 +6,5 @@ import com.haru.api.user.domain.entity.User;
 import java.util.List;
 
 public interface ScheduleRepositoryCustom {
-    List<Schedule> findAllByUserAndYearAndMonth(String year, String month, User user);
+    List<Schedule> findAllByUserAndYearAndMonth(Integer year, Integer month, User user);
 }

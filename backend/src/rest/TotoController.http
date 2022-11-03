@@ -24,7 +24,7 @@ GET {{apiUrl}}/todos/7
 Authorization: {{authorizationToken}}
 
 ### Todo 수정
-PATCH {{apiUrl}}/todos/8
+PATCH {{apiUrl}}/todos/9
 Authorization: {{authorizationToken}}
 Content-Type: application/json;charset=UTF-8
 
