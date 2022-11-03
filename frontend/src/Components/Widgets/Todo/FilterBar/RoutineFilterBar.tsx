@@ -75,23 +75,23 @@ const RoutineFilterBar = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu align={{ lg: 'start' }}>
-        <Dropdown.Header>
+        {/* <Dropdown.Header>
           <input type="text" 
             maxLength={6} 
             placeholder={'카테고리를 입력하세요'}
             onKeyUp={e=> searchCategory(e)}/>
-        </Dropdown.Header>
+        </Dropdown.Header> */}
 
         {/* 검색창이 빈 경우 */}
-        {/* {!searchedWord.trim() && (
+        {!searchedWord.trim() && (
           <div>
-            <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item>
+            {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
             {filterList.map((filter: string, idx: number)=>{
               return <Dropdown.Item href="#/action-1" key={idx}
                 onClick={e=> setClickedFilter(filter)}>{filter}</Dropdown.Item>
             })}
           </div>
-        )} */}
+        )}
         {/* 검색창에 문자가 있는 경우 */}
         {searchedWord.trim() && (
           <div>

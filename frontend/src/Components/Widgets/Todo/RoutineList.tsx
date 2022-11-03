@@ -4,7 +4,7 @@ import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 
 const routineList = () => {
   return (
-  <div style={{height: '40%'}}>
+  <div style={{height: '35%', fontSize: '0.8rem'}}>
     <div className='container'>
       <div className="row justify-content-between my-2">
         <div className="ms-4 col">

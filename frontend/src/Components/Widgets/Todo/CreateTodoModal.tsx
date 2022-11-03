@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
@@ -6,42 +6,40 @@ import SmallTitle from '../../Common/Title/SmallTitle';
 
 const createTodoModal = ({ handleClose, show }: any) => {
   const [isToday, setIsToday] = useState(true)
-  const [ todayList, setTodayList ] = useState([{}])
-  const [ clickedCategory, setClickedCategory ] = useState('')
+  // const [ todayList, setTodayList ] = useState([{}])
+  const [ clickedCategory, setClickedCategory ] = useState('전체')
   const [ writtenContent, setWrittenContent ] = useState('')
 
-  useEffect(()=> {
-    // localStorage에서 작성된 todo 가져오기
-    // const localToday = localStorage.getItem('today')
-    // if (localToday) {
-    //   setTodayList(JSON.parse(localToday))
-    // }
-  }, [])
-
+ 
   // 사용자가 생성한 todo를 localStorage에 저장하기
+  // TODO: arr.length를 기준으로 인덱스 생성 시 todo들이 무작위로 삭제되고 새로 생성될 때 인덱스가 겹치는 문제 발생 가능
   const saveAtLocal = () => {
-    console.log('saveAtLocal func');
     // localStorage에서 작성된 todo 가져오기
     const localToday = localStorage.getItem('today')
     
     // 이미 작성된 것이 있으면 배열 형태로 파싱해서 state에 저장하기
     if (localToday) {
-      // setTodayList(JSON.parse(localToday))
-      // setTodayList(todayList.concat({
-      //   category: clickedCategory,content: writtenContent
-      // }))
       const arr = JSON.parse(localToday)
-      arr.push({category: `${clickedCategory}`, content: `${writtenContent}`})
+      const tid = arr.length
+      
+      // localStorage에 저장하기
+      arr.push({
+        id: `${tid}`, 
+        category: `${clickedCategory}`, 
+        content: `${writtenContent}`,
+      })
       localStorage.setItem('today', JSON.stringify(arr))
     } else {
     // localStorage에 저장된 category가 없는 경우; 새로 category를 만들어 줌
       localStorage.setItem('today', JSON.stringify([{
-        category: clickedCategory,content: writtenContent
+        id: 0, 
+        category: clickedCategory, 
+        content: writtenContent,
       }]))
     }
   }
 
-  // filterBar 컴포넌트에서 넘어온 데이터 state에 저장하기
+  // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
   const handleCategory = (clicked: string) =>{
     setClickedCategory(clicked)
   }
@@ -86,7 +84,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
               <div className='d-flex justify-content-between'>
                 <TodayFilterBar handleCategory={handleCategory}/>
                 <input type="text"
-                placeholder='메모'
+                placeholder='오늘의 할 일'
                 onChange={e => setWrittenContent(e.target.value)}
                 className='ms-5 w-100 border border-0' />
               </div>

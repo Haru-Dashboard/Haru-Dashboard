@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// import Dropdown from './Dropdown';
 import { Dropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
 export type todayFilterBar = {
   handleCategory : (clicked: string) => void;
@@ -12,9 +13,10 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
   const [searchedWord, setSearchedword] = useState('')
   const [searchResult, setSearchResult] = useState([''])
 
+
+  const localCategories = localStorage.getItem('category')
   useEffect(()=> {
     // localStorage에서 카테고리들 받아오기
-    const localCategories = localStorage.getItem('category')
     if (localCategories) {
       setFilterList(JSON.parse(localCategories))
     }
@@ -68,6 +70,20 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
     handleCategory(clicked)
   }
 
+  // 선택한 category 삭제하기
+  const onClickDelete = (idx: number) => {
+    // console.log(idx); // ok
+    if(localCategories) {
+      // 리스트 전체
+      const list = JSON.parse(localCategories)
+      
+      list.splice(idx, 1)
+      // console.log(list);
+      localStorage.setItem('category', JSON.stringify(list)) // ok
+      setFilterList(list)
+    }
+  }
+
   return (
     <div>
       {/* 
@@ -85,6 +101,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
         {clickedFilter}
       </Dropdown.Toggle>
 
+      {/* TODO: align 수정 */}
       <Dropdown.Menu align={{ lg: 'start' }}>
         <Dropdown.Header>
           <input type="text" 
@@ -98,8 +115,15 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
           <div>
             {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
             {filterList.map((filter: string, idx: number)=>{
-              return <Dropdown.Item href="#/action-1" key={idx}
-                onClick={e=> fetchClicked(filter)}>{filter}</Dropdown.Item>
+              return <div className='d-flex justify-content-between align-items-center'>
+                  <Dropdown.Item href="#/action-1" key={idx}
+                    className='py-0'
+                    onClick={e=> fetchClicked(filter)}>{filter}</Dropdown.Item>
+                  <FontAwesomeIcon icon={faSquareMinus} color="#FA5252"
+                    onClick={e=> onClickDelete(idx)}
+                    key={idx}
+                    className='col-1 py-0 ps-0 pe-2'/>
+                </div>
             })}
           </div>
         )}
@@ -117,7 +141,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
                 })}
               </div>
             )} 
-            {/* 여기 작동 안함 */}
+            {/* TODO: 여기 작동 안함 */}
               {!searchResult && (
                 <Dropdown.Item href="#/action-1">검색결과없다</Dropdown.Item>
               )}
