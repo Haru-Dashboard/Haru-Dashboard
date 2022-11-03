@@ -6,7 +6,6 @@ import User from './User';
 import Weather from './Weather';
 import Settings from './Settings';
 
-
 const Basic = ({ width, height }: screenType) => {
   return (
     <div style={{ height: height }}>
