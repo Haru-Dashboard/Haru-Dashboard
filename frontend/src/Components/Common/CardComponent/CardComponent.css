@@ -1,14 +1,12 @@
-.card-component{
-
+.card-component {
 }
-.card-component-default{
-
+.card-component-default {
 }
-.cardcomponent-card{
-    width: 100%;
-    height: 100%;
-    background-color: rgb(256, 256, 256, 0.3);
-    border-radius: 1rem;
+.cardcomponent-card {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(256, 256, 256, 0.3);
+  border-radius: 1rem;
 }
-.cardcomponent-card-body{
+.cardcomponent-card-body {
 }

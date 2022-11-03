@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const TodoAlertModal = ({handleClose, show}: any) => {
+const TodoAlertModal = ({ handleClose, show }: any) => {
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
