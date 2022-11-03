@@ -1,0 +1,35 @@
+### Schedule 등록
+POST {{apiUrl}}/schedules
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "title" : "싸피 안 가는 날",
+  "content" : "좋아요",
+  "startDate" : "2022-08-11T00:00",
+  "endDate" : "2022-12-11T23:59",
+  "color" : 4
+}
+
+### Schedule 상세 조회
+GET {{apiUrl}}/schedules/4
+Authorization: {{authorizationToken}}
+
+### Schedule 월별 조회
+GET {{apiUrl}}/schedules?year=2022&month=11
+Authorization: {{authorizationToken}}
+
+### Schedule 수정
+PATCH {{apiUrl}}/schedules/4
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "startDate" : "2022-08-11T00:00",
+  "endDate" : "2022-11-11T23:59",
+  "color" : 1
+}
+
+### Schedule 삭제
+DELETE {{apiUrl}}/schedules/4
+Authorization: {{authorizationToken}}
