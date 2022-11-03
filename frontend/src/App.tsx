@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
-import CreateTodoModal from './Components/Widgets/Todo/CreateTodoModal';
 
 
 function App() {
