@@ -26,7 +26,6 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
             .fetch();
     }
 
-    // 날짜 필터
     private BooleanExpression searchDateFilter(Integer year, Integer month) {
         if (year == null) year = LocalDate.now().getYear();
         if (month == null) month = LocalDate.now().getMonthValue();
