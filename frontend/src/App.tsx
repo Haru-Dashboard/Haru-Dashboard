@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import Container from "react-bootstrap/Container"
 import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
 
-export type screenType = {
-  width: number;
-  height: number;
-};
 
 function App() {
   const [screenWidth, setScreenWidth] = useState(0);
@@ -23,7 +18,7 @@ function App() {
     <div className="App">
       <div className="mx-auto" style={{ width: screenWidth * 0.7 }}>
         <Basic width={screenWidth * 0.7} height={screenHeight * 0.12} />
-        <Dashboard width={screenWidth * 0.7} height={screenHeight * 0.6} />
+        <Dashboard width={screenWidth * 0.7} height={screenHeight * 0.6}/>
       </div>
     </div>
   );

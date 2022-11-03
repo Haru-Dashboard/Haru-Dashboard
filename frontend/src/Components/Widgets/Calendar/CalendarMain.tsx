@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { screenType } from '../../../App';
+import { screenType } from '../../../Utils/Common';
 
 export default function CalendarMain({ width, height }: screenType) {
   //공용변수
