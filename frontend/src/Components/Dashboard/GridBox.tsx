@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GridLayout from 'react-grid-layout';
-import { screenType } from '../../App';
+import { screenType } from '../../Utils/Common';
 import Calendar from '../Widgets/Calendar';
 import ITNews from '../Widgets/ITNews';
 import Bookmark from '../Widgets/Bookmark';
