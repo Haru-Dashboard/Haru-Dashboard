@@ -1,0 +1,24 @@
+### 프로젝트 등록
+POST {{apiUrl}}/projects
+Authorization: {{authorizationToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: application/json, image/*
+
+--WebAppBoundary
+Content-Disposition: form-data; name="form"
+Content-Type: application/json
+
+ {
+      "title": "테스트프로젝트",
+      "content": "테스트용입니다.",
+      "labels" : ["프로젝트", "BE"],
+      "links" : [{"name" : "github", "url": "link"}, {"name" : "jira", "url": "link"}],
+      "startDate" : "2022-10-30",
+      "endDate" : "2022-10-31"
+ }
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Type: image/png
+
+< ./../main/resources/dummy/image.png
