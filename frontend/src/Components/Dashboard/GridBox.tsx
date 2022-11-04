@@ -41,7 +41,15 @@ const GridBox = ({ width, height }: screenType) => {
         In Progress
       </div>
       <div className="p-1" key="3">
-        <ITNews />
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgb(256, 256, 256, 0.1)',
+            borderRadius: '3.5rem',
+          }}>
+          <ITNews />
+        </div>
       </div>
     </GridLayout>
   );
