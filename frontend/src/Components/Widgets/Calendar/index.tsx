@@ -3,6 +3,7 @@ import { screenType } from '../../../Utils/Common';
 import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
+import { Authentication } from '../../../API/Authentication';
 
 function Calendar({ width, height }: screenType) {
   const titleOfCalendar = 'Specials';
@@ -14,27 +15,14 @@ function Calendar({ width, height }: screenType) {
     .toLocaleString('en-US', { month: 'short' })
     .toUpperCase();
   //토큰 임시 테스트
-
-  const backURL = process.env.REACT_APP_BACKURL;
-  const emails = process.env.REACT_APP_BACK_TMP_EMAIL;
-  useEffect(() => {
-    const URLNext = 'users/login';
-    fetch(backURL + URLNext, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: emails }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem('accessToken', data.accessToken);
-      });
-  }, []);
-
   const [schedule, setSchedule] = useState([
     { color: 0, title: '', content: '', startDate: '', endDate: '' },
   ]);
 
+  const backURL = process.env.REACT_APP_BACKURL;
+
   useEffect(() => {
+    Authentication();
     let accessToken = localStorage.getItem('accessToken');
     const URLNext = 'schedules?year=' + thisYear + '&month=' + thisMonth;
 
