@@ -35,10 +35,14 @@ const Todo = ({ width, height }: screenType) => {
           {/* <button className='py-0 my-2' onClick={handleShow}>+</button> */}
           <BtnPlus onClick={handleShow} />
         </div>
-        <div style={{ height: '90%' }}>
-          <RoutineList />
-          <TodayList isTodayRemoved={isTodayRemoved} />
-          <div className="d-flex justify-content-end me-2">
+        <div style={{ height: '90%' }} className="px-2 pb-2">
+          <div style={{ height: '38%' }}>
+            <RoutineList />
+          </div>
+          <div style={{ height: '45%' }}>
+            <TodayList isTodayRemoved={isTodayRemoved} />
+          </div>
+          <div className="d-flex justify-content-end me-2 mt-2">
             <button
               className="bg-transparent"
               onClick={onClickDone}

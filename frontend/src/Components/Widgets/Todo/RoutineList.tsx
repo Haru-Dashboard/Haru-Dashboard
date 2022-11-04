@@ -4,15 +4,13 @@ import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 
 const routineList = () => {
   return (
-    <div style={{ height: '35%', fontSize: '0.8rem' }}>
-      <div className="container">
-        <div className="row justify-content-between my-2">
-          <div className="ms-4 col">
-            <SmallTitle title="Routine" color="#5BB7F0" />
-          </div>
-          <div className="col-4">
-            <RoutineFilterBar />
-          </div>
+    <div style={{ fontSize: '0.8rem' }} className="h-100">
+      <div className="d-flex justify-content-between my-2">
+        <div className="ms-4">
+          <SmallTitle title="Routine" color="#5BB7F0" />
+        </div>
+        <div>
+          <RoutineFilterBar />
         </div>
       </div>
       <div className="sub-board mx-3" style={{ height: '80%' }}></div>
