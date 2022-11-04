@@ -1,32 +1,87 @@
-.news {
-  margin: 1%;
-  width: 100%;
-  height: 100%;
-  color: white;
+
+.news{
+    margin: 1%;
+    width: 100%;
+    height:100%;        
+    color: white;
 }
-.news-background {
-  width: 100%;
-  height: 100%;
+.news-background
+{
+    width: 100%;
+    height: 100%;
 }
-.news-title {
-  display: flex;
-  height: 20%;
-  width: 100%;
+.news-title{
+    display: flex;
+    height: 20%;
+    width: 100%;
 }
-.news-main {
-  height: 80%;
-  width: 100%;
+.news-main{
+    position: relative;
+    height: 60%;
+    width: 90%;
+    left: 5%;
 }
-.news-title-img {
-  margin-left: 12%;
-  margin-top: 8%;
-  width: 13%;
-  height: 100%;
+.news-title-img{
+    margin-left:12%;
+    margin-top: 8%;
+    width: 13%;
+    height: 100%;
 }
-.news-title-img-src {
-  width: 80%;
+.news-title-img-src{
+    width: 80%;
 }
-.news-title-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+.news-title-title{
+    font-size: 2.5rem;
+    font-weight: bold;
+    
+}
+.news-card{
+    position: relative;
+    left:5%;
+    top: 5%;
+    width: 90%;
+    height: 80%;
+}
+.news-image{
+
+    width: 100%;
+    height: 60%;
+}
+.news-content{
+
+    width: 100%;
+    height: 40%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-overflow:hidden;
+    background-color: blue;
+}
+
+.news-imageSrc{
+    width: 100%;
+    height: 100%;
+}
+
+.news-index{
+    position: relative;
+    width: 100%;
+    height: 15%;
+}
+.btn-index{
+    background-color: white;
+    position: absolute;
+    border: none;
+    padding: 6%;
+    border-radius: 50%;
+    bottom: -5%;
+}
+.news-index-0{
+    left:10%
+}
+.news-index-1{
+    left:46%
+
+}
+.news-index-2{
+    right: 10%;
 }
