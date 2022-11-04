@@ -24,7 +24,7 @@ function Calendar({ width, height }: screenType) {
   useEffect(() => {
     Authentication();
     let accessToken = localStorage.getItem('accessToken');
-    const URLNext = 'schedules?year=' + thisYear + '&month=' + thisMonth;
+    const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
 
     if (accessToken !== null) {
       accessToken = 'Bearer ' + accessToken;

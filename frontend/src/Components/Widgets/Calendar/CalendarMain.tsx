@@ -59,7 +59,7 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
             : 'nomarday')
         }>
         <div className="date-column-dates">{index}</div>
-        <div className="date-colume-content">
+        <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
             : '')
         }>
         <div className="date-column-dates">{index}</div>
-        <div className="date-colume-content">
+        <div className="date-column-content">
           {GetCalendarContents(thisMonth - 1, index)}
         </div>
       </div>
@@ -105,7 +105,7 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
             : 'nomarday')
         }>
         <div className="date-column-dates">{index}</div>
-        <div className="date-colume-content">
+        <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
             : 'nomarday')
         }>
         <div className="date-column-dates">{index}</div>
-        <div className="date-colume-content">
+        <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
             : 'nomarday')
         }>
         <div className="date-column-dates">{index}</div>
-        <div className="date-colume-content">
+        <div className="date-column-content">
           {GetCalendarContents(thisMonth + 1, index)}
         </div>
       </div>
