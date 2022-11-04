@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
@@ -22,7 +22,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
   }, []);
 
   // category를 검색하고 localStorage에 없으면 저장하는 함수
-  const searchCategory = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const searchCategory = (e: React.KeyboardEvent) => {
     const keyword = e.target as HTMLInputElement;
     const category = localStorage.getItem('category');
 
@@ -94,19 +94,23 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
       */}
       <Dropdown>
         <Dropdown.Toggle
+          size="sm"
           variant="light"
           id="dropdown-basic"
-          className="py-0 px-2 opacity-75">
+          style={{ fontSize: '0.8rem' }}
+          className="py-0 px-2 opacity-50 fw-bold">
           {clickedFilter}
         </Dropdown.Toggle>
 
         {/* TODO: align 수정 */}
-        <Dropdown.Menu align={{ lg: 'start' }}>
-          <Dropdown.Header>
-            <input
-              type="text"
+        <Dropdown.Menu align={{ lg: 'start' }} className="border border-0">
+          <Dropdown.Header className="px-1">
+            <Form.Control
+              autoFocus
               maxLength={6}
               placeholder={'카테고리를 입력하세요'}
+              className="shadow-sm border border-0 py-1"
+              style={{ fontSize: '0.8rem' }}
               onKeyUp={(e) => searchCategory(e)}
             />
           </Dropdown.Header>
@@ -117,11 +121,12 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
               {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
               {filterList.map((filter: string, idx: number) => {
                 return (
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-between align-items-center my-1">
                     <Dropdown.Item
                       href="#/action-1"
                       key={idx}
                       className="py-0"
+                      style={{ fontSize: '0.8rem' }}
                       onClick={(e) => fetchClicked(filter)}>
                       {filter}
                     </Dropdown.Item>
@@ -149,6 +154,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
                         <Dropdown.Item
                           href="#/action-1"
                           key={idx}
+                          style={{ fontSize: '0.8rem' }}
                           onClick={(e) => fetchClicked(data)}>
                           {data}
                         </Dropdown.Item>
