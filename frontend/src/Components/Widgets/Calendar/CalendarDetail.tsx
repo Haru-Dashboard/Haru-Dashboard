@@ -44,22 +44,24 @@ export default function CalendarDetail({ schedule }: ScheduleDataType) {
       };
     }
   }
-  const calendarDetails = selectedScheduleInSelectedDate.map((index) => (
-    <div className="calendar-schedule-detail">
-      <div>
-        <div className="calendar-schedule-detail-startdate">
-          {index.date.getFullYear() +
-            '.' +
-            ((index.date.getMonth() + 1) / 10 < 1 ? '0' : '') +
-            index.date.getMonth() +
-            '.' +
-            ((index.date.getDate() + 1) / 10 < 1 ? '0' : ' ') +
-            index.date.getDate()}
+  const calendarDetails = selectedScheduleInSelectedDate.map(
+    (index, tmpKey) => (
+      <div className="calendar-schedule-detail" key={tmpKey}>
+        <div>
+          <div className="calendar-schedule-detail-startdate">
+            {index.date.getFullYear() +
+              '.' +
+              ((index.date.getMonth() + 1) / 10 < 1 ? '0' : '') +
+              index.date.getMonth() +
+              '.' +
+              ((index.date.getDate() + 1) / 10 < 1 ? '0' : ' ') +
+              index.date.getDate()}
+          </div>
+          <div className="calendar-schedule-detail-title">{index.title}</div>
         </div>
-        <div className="calendar-schedule-detail-title">{index.title}</div>
       </div>
-    </div>
-  ));
+    ),
+  );
   return (
     <div>
       <div className="calendar-detail-head">
