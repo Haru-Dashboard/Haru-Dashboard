@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import SmallTitle from '../../Common/Title/SmallTitle';
@@ -9,6 +9,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
   // const [ todayList, setTodayList ] = useState([{}])
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
+  const [lastTid, setLastTid] = useState(0);
 
   // 사용자가 생성한 todo를 localStorage에 저장하기
   // TODO: arr.length를 기준으로 인덱스 생성 시 todo들이 무작위로 삭제되고 새로 생성될 때 인덱스가 겹치는 문제 발생 가능
@@ -19,11 +20,12 @@ const createTodoModal = ({ handleClose, show }: any) => {
     // 이미 작성된 것이 있으면 배열 형태로 파싱해서 state에 저장하기
     if (localToday) {
       const arr = JSON.parse(localToday);
-      const tid = arr.length;
+      const tid = Number(arr[arr.length - 1].id);
+      console.log(arr[arr.length - 1], typeof tid);
 
       // localStorage에 저장하기
       arr.push({
-        id: `${tid}`,
+        id: tid + 1,
         category: `${clickedCategory}`,
         content: `${writtenContent}`,
       });
@@ -65,6 +67,8 @@ const createTodoModal = ({ handleClose, show }: any) => {
     handleClose();
   };
 
+  // useEffect(()=> {},[])
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -91,7 +95,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
               {/* content */}
               <div className="d-flex justify-content-between">
                 <TodayFilterBar handleCategory={handleCategory} />
-                <input
+                <Form.Control
                   type="text"
                   placeholder="오늘의 할 일"
                   onChange={(e) => setWrittenContent(e.target.value)}

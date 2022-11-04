@@ -63,6 +63,9 @@ html {
   font-weight: bold;
   color: white;
 }
+:hover.today-hover {
+  cursor: pointer;
+}
 
 /* width, height */
 .h-100 {

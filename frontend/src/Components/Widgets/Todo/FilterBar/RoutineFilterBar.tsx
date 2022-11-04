@@ -67,9 +67,10 @@ const RoutineFilterBar = () => {
       */}
       <Dropdown>
         <Dropdown.Toggle
+          size="sm"
           variant="light"
           id="dropdown-basic"
-          className="py-0 px-2 opacity-75">
+          className="py-0 px-2 opacity-50 fw-bold">
           {clickedFilter}
         </Dropdown.Toggle>
 
