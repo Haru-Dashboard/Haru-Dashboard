@@ -22,3 +22,8 @@ Content-Disposition: form-data; name="file"; filename="image.png"
 Content-Type: image/png
 
 < ./../main/resources/dummy/image.png
+
+### 프로젝트 상세 조회
+GET {{apiUrl}}/projects/1
+Authorization: {{authorizationToken}}
+
