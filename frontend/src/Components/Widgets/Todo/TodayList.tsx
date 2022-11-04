@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import TodayFilterBar from './FilterBar/TodayFilterBar';
 import TodayListItems from './TodayListItems';
+import TodoMoreModal from './TodoMoreModal';
 
 export type localToday = {
   id: number;
@@ -21,7 +22,6 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
   const [isEmpty, setIsEmpty] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
-  // const MySwal = withReactContent(Swal)
 
   // filter bar component에서 클릭된 카테고리 가져오는 함수
   const handleCategory = (clicked: string) => {
