@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import CardComponent from '../../Common/CardComponent';
+import Carousel from 'react-bootstrap/Carousel';
 import './ITNews.css';
 
-export default function ITNews() {
-  const newsURL = 'https://api.bing.microsoft.com/v7.0/news';
-  const URL = newsURL;
+const URL = 'https://api.bing.microsoft.com/v7.0/news';
+const eMSEdgeKey = process.env.REACT_APP_MSEdgeKey;
 
-  const pastNewsInfor = localStorage.getItem('newsData');
-  const [newsIndexNo, setNewsIndexNo] = useState(0);
-  const setIndex0 = () => setNewsIndexNo(0);
-  const setIndex1 = () => setNewsIndexNo(1);
-  const setIndex2 = () => setNewsIndexNo(2);
-  const eMSEdgeKey = process.env.REACT_APP_MSEdgeKey;
-  const [searchOutput, setSearchOutput] = useState([
-    { name: '', image: { thumbnail: { contentUrl: '' } } },
+const ITNews = () => {
+  const [index, setIndex] = useState(0);
+  const [news, setNews] = useState([
+    { name: '', url: '', image: { thumbnail: { contentUrl: '' } } },
   ]);
-  if (pastNewsInfor !== null) {
-    useEffect(() => {
-      setSearchOutput(JSON.parse(pastNewsInfor));
-    }, []);
-  }
-  if (eMSEdgeKey !== undefined) {
-    useEffect(() => {
-      //
+
+  useEffect(() => {
+    // TODO: news를 저장한 시점이 현재로부터 일정 시간 이상이면 새로 fetch하는 로직 추가
+    const pastNews = localStorage.getItem('newsData');
+    if (pastNews !== null) {
+      setNews(JSON.parse(pastNews));
+    } else {
+      fetchNews();
+    }
+  }, []);
+
+  const fetchNews = (): void => {
+    if (eMSEdgeKey !== undefined) {
       fetch(URL, {
         method: 'GET',
         headers: {
@@ -31,53 +31,78 @@ export default function ITNews() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setSearchOutput(data.value);
           if (data.value !== null) {
             localStorage.setItem('newsData', JSON.stringify(data.value));
           }
+          setNews(data.value);
         });
-    }, []);
-  }
-  const content = (
-    <div className="news-card">
-      <div className="news-image">
-        <img
-          src={searchOutput[newsIndexNo].image.thumbnail.contentUrl}
-          className="news-imageSrc"
-        />
-      </div>
-      <div className="news-content">{searchOutput[newsIndexNo].name}</div>
-    </div>
-  );
+    }
+  };
+
+  const handleSelect = (
+    selectedIndex: number,
+    e: Record<string, unknown> | null,
+  ) => {
+    setIndex(selectedIndex);
+  };
 
   return (
-    <div className="news board">
-      <div className="news-background">
-        <div className="news-title">
-          <div className="news-title-img">
-            <img src="/img/ITNewsImg.png" className="news-title-img-src" />
-          </div>
-          <div className="news-title-title">News</div>
-        </div>
-        <div className="news-main ">
-          <CardComponent
-            cardContent={content}
-            cardWidth={'100%'}
-            cardHeight={'100%'}
-          />
-        </div>
-        <div className="news-index">
-          <button
-            className="news-index-0 btn-index"
-            onClick={setIndex0}></button>
-          <button
-            className="news-index-1 btn-index"
-            onClick={setIndex1}></button>
-          <button
-            className="news-index-2 btn-index"
-            onClick={setIndex2}></button>
-        </div>
+    <div className="news-background p-3">
+      {/* Title */}
+      <div className="news-title d-flex" style={{ height: '15%' }}>
+        <img
+          src="/img/ITNewsImg.png"
+          className="news-title-img-src"
+          style={{ height: '100%', aspectRatio: '1/1' }}
+        />
+        <div className="news-title-title">News</div>
+      </div>
+
+      {/* Carousel */}
+      <div
+        className="mx-auto"
+        style={{
+          width: '80%',
+          height: '70%',
+          background: 'rgba(255, 255, 255, 0.7)',
+          borderRadius: '20px',
+        }}>
+        <Carousel activeIndex={index} onSelect={handleSelect}>
+          {news.map((newsItem, idx) => (
+            <Carousel.Item key={idx}>
+              <a
+                className="carousel-anchor text-decoration-none text-reset"
+                href={newsItem.url}>
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ width: '100%', height: '70%' }}>
+                  <img
+                    width="80%"
+                    height="80%"
+                    style={{
+                      aspectRatio: '6/5',
+                    }}
+                    src={newsItem.image.thumbnail.contentUrl}
+                    alt="First slide"
+                  />
+                </div>
+                <p
+                  className="mx-auto my-0"
+                  style={{
+                    width: '85%',
+                    height: '20%',
+                    fontSize: '0.6rem',
+                    overflow: 'ellipsis',
+                  }}>
+                  {newsItem.name}
+                </p>
+              </a>
+            </Carousel.Item>
+          ))}
+        </Carousel>
       </div>
     </div>
   );
-}
+};
+
+export default ITNews;
