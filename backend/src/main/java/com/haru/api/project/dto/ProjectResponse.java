@@ -41,7 +41,7 @@ public class ProjectResponse {
         private List<ProjectLabelResponse.GetProjectLabel> projectLabels;
         private S3FileResponse.GetImage imageInfo;
         public static ProjectResponse.GetProject build(Project project, S3FileResponse.GetImage imageInfo) {
-            GetProjectBuilder builder = GetProject.builder()
+            GetProjectBuilder response = GetProject.builder()
                     .id(project.getId())
                     .title(project.getTitle())
                     .content(project.getContent())
@@ -50,9 +50,9 @@ public class ProjectResponse {
                     .projectLinks(project.getProjectLinks().stream().map(ProjectLinkResponse.GetProjectLink::build).collect(Collectors.toList()))
                     .projectLabels(project.getProjectLabels().stream().map(ProjectLabelResponse.GetProjectLabel::build).collect(Collectors.toList()));
             if(project.getFile() != null) {
-                builder.imageInfo(imageInfo);
+                response.imageInfo(imageInfo);
             }
-            return builder().build();
+            return response.build();
         }
     }
 }
