@@ -70,16 +70,35 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectResponse.OnlyId update(Long projectId, User user) {
+    public ProjectResponse.OnlyId update(Long projectId, ProjectRequest.CreateOrUpdate request, MultipartFile file, User user) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
-        return null;
+        if (!request.getLinks().isEmpty()) {
+            projectLinkRepository.deleteAllByProject(project);
+            List<ProjectLinkRequest.Create> links = request.getLinks();
+            List<ProjectLink> projectLinks = links.stream().map(link -> ProjectLink.create(link, project)).collect(Collectors.toList());
+            projectLinkRepository.saveAll(projectLinks);
+        }
+        if (!request.getLabels().isEmpty()) {
+            projectLabelRepository.deleteAllByProject(project);
+            List<String> labels = request.getLabels();
+            List<ProjectLabel> projectLabels = labels.stream().map(label -> ProjectLabel.create(label, project)).collect(Collectors.toList());
+            projectLabelRepository.saveAll(projectLabels);
+        }
+        S3File savedImage;
+        if (!file.isEmpty()) {
+            savedImage = fileRepository.save(S3File.create(s3Service.upload(file)));
+            project.updateS3File(savedImage);
+        }
+        project.update(request);
+        return ProjectResponse.OnlyId.build(project);
     }
 
     @Transactional
     public ProjectResponse.OnlyId delete(Long projectId, User user) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
-        return null;
+        projectRepository.delete(project);
+        return ProjectResponse.OnlyId.build(project);
     }
 }

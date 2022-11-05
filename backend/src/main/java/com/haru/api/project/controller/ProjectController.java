@@ -38,7 +38,7 @@ public class ProjectController {
 
     @PatchMapping("/{projectId}")
     public ResponseEntity<ProjectResponse.OnlyId> update(@PathVariable Long projectId, @RequestPart(name = "form") ProjectRequest.CreateOrUpdate request, @RequestPart(name = "file", required = false) MultipartFile file, @CurrentUser CustomUserDetails customUserDetails) {
-        ProjectResponse.OnlyId response = projectService.update(projectId, customUserDetails.getUser());
+        ProjectResponse.OnlyId response = projectService.update(projectId, request, file, customUserDetails.getUser());
         return ResponseEntity.ok().body(response);
     }
 
