@@ -1,0 +1,3 @@
+### Category조회
+GET {{apiUrl}}/categories?keyword=
+Authorization: {{authorizationToken}}
