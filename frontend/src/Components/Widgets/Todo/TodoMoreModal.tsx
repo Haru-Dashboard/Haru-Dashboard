@@ -36,7 +36,7 @@ const TodoMoreModal = ({
               onClick={(e) => setIsCompleted(!isCompleted)}
             />
           </div>
-        </Modal.Body>{' '}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
