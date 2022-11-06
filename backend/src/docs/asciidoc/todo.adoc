@@ -1,0 +1,71 @@
+= 할일 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+== *할일 생성*
+
+`POST /api/todos`
+
+요청 HTTP Request
+include::{snippets}/todos_create/http-request.adoc[]
+include::{snippets}/todos_create/request-fields.adoc[]
+
+응답 HTTP Response
+include::{snippets}/todos_create/http-response.adoc[]
+include::{snippets}/todos_create/response-fields.adoc[]
+
+== *할일 상세 조회*
+
+`GET /api/todos/{todoId}`
+
+요청 HTTP Request
+include::{snippets}/todos_detail/http-request.adoc[]
+include::{snippets}/todos_detail/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/todos_detail/http-response.adoc[]
+include::{snippets}/todos_detail/response-fields.adoc[]
+
+== *할일 목록 조회*
+
+`GET /api/todos`
+
+요청 HTTP Request
+include::{snippets}/todos_list/http-request.adoc[]
+include::{snippets}/todos_list/request-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/todos_list/http-response.adoc[]
+include::{snippets}/todos_list/response-fields.adoc[]
+
+== *할일 정보 수정*
+
+`PATCH /api/todos/{todoId}`
+
+요청 HTTP Request
+
+include::{snippets}/todos_update/http-request.adoc[]
+include::{snippets}/todos_update/path-parameters.adoc[]
+include::{snippets}/todos_update/request-fields.adoc[]
+
+성공 응답 HTTP Response
+
+include::{snippets}/todos_update/http-response.adoc[]
+include::{snippets}/todos_update/response-fields.adoc[]
+
+== *할일 삭제*
+
+`DELETE /api/todos/{todoId}`
+
+요청 HTTP Request
+include::{snippets}/todos_delete/http-request.adoc[]
+include::{snippets}/todos_delete/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/todos_delete/http-response.adoc[]
+include::{snippets}/todos_delete/response-fields.adoc[]
