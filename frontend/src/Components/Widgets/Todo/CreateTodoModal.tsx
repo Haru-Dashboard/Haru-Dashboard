@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import SmallTitle from '../../Common/Title/SmallTitle';
+import SelectDayBar from './SelectDayBar';
 
 const createTodoModal = ({ handleClose, show }: any) => {
   const [isToday, setIsToday] = useState(true);
@@ -10,6 +11,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
   const [lastTid, setLastTid] = useState(0);
+  const [selectedDayList, setSelectedDayList] = useState<Array<string>>([]);
 
   // 사용자가 생성한 todo를 localStorage에 저장하기
   // TODO: arr.length를 기준으로 인덱스 생성 시 todo들이 무작위로 삭제되고 새로 생성될 때 인덱스가 겹치는 문제 발생 가능
@@ -67,7 +69,42 @@ const createTodoModal = ({ handleClose, show }: any) => {
     handleClose();
   };
 
-  // useEffect(()=> {},[])
+  // routine function
+  // const onClickDay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  //   const targetId = e.currentTarget.id; // ok; 그냥 target을 쓰니까 value값을 못 읽어옴
+  //   // console.log(e.currentTarget.value);
+
+  //   // 기존에 이미 선택된 요소이면 빼버리기
+  //   if (selectedDay.includes(targetId)) {
+  //     let idx = selectedDay.indexOf(targetId);
+  //     selectedDay.splice(idx, 1);
+  //     // have to fix: 뺀 요소가 바로바로 반영이 안됨
+  //   } else {
+  //     if (!selectedDay.length) {
+  //       setSelectedDay([targetId]);
+  //       // console.log(selectedDay);
+  //     } else {
+  //       setSelectedDay(selectedDay.concat(targetId));
+  //       // console.log(selectedDay);
+  //     }
+  //   }
+  //   // console.log(selectedDay);
+  // };
+
+  // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
+  const handleSelectedDayList = (selectedList: Array<string>) => {
+    console.log('handleselectodaylist', selectedList);
+    const arr = selectedList;
+    console.log('createmodal arr==>', selectedList);
+
+    // have to fix: 이 코드가 작동을 안함; selectedList까지 정상 출력이 되는데 들어가지를 않음
+    setSelectedDayList(selectedList);
+  };
+
+  useEffect(() => {
+    console.log('createtodomodal useeffect= ', selectedDayList);
+    // setSelectedDayList(selectedDayList);
+  }, [selectedDayList]);
 
   return (
     <div>
@@ -97,7 +134,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
                 <TodayFilterBar handleCategory={handleCategory} />
                 <Form.Control
                   type="text"
-                  placeholder="오늘의 할 일"
+                  placeholder="Today"
                   onChange={(e) => setWrittenContent(e.target.value)}
                   className="ms-5 w-100 border border-0"
                 />
@@ -108,7 +145,18 @@ const createTodoModal = ({ handleClose, show }: any) => {
           {!isToday && (
             // todo routine
             <div>
-              <RoutineFilterBar />
+              {/* 날짜 선택 부분 */}
+              <SelectDayBar handleSelectedDayList={handleSelectedDayList} />
+              <hr />
+              <div className="d-flex justify-content-between">
+                <RoutineFilterBar />
+                <Form.Control
+                  type="text"
+                  placeholder="Routine 이름"
+                  onChange={(e) => setWrittenContent(e.target.value)}
+                  className="ms-5 w-100 border border-0"
+                />
+              </div>
             </div>
           )}
         </Modal.Body>
