@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import TodayFilterBar from './FilterBar/TodayFilterBar';
+// import TodayFilterBar from './FilterBar/TodayFilterBar';
+import CommonFilterBar from './FilterBar/CommonFilterBar';
 import TodayListItems from './TodayListItems';
-import TodoMoreModal from './TodoMoreModal';
+// import TodoMoreModal from './TodoMoreModal';
 
 export type localToday = {
   id: number;
@@ -92,7 +93,7 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
           <SmallTitle title="Today" color="#49649E" />
         </div>
         <div>
-          <TodayFilterBar handleCategory={handleCategory} />
+          <CommonFilterBar handleCategory={handleCategory} />
         </div>
       </div>
       <div

@@ -1,12 +1,11 @@
 const defaultURL = process.env.REACT_APP_BACKURL;
 // TODO: todo routine bar - category 조회
-export const getRoutineCategory = () => {
-  const url = '';
+export const getRoutineCategory = (params: string) => {
+  const url = `/categories?keyword=${params}`;
   fetch(defaultURL + url, {
     method: 'GET',
     headers: {},
-    body: JSON.stringify({}),
-  }).then();
+  });
 };
 
 /* 

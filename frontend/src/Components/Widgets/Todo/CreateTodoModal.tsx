@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import SelectDayBar from './SelectDayBar';
+// import SelectDayBar from './SelectDayBar';
 
 const createTodoModal = ({ handleClose, show }: any) => {
   const [isToday, setIsToday] = useState(true);
@@ -146,7 +146,7 @@ const createTodoModal = ({ handleClose, show }: any) => {
             // todo routine
             <div>
               {/* 날짜 선택 부분 */}
-              <SelectDayBar handleSelectedDayList={handleSelectedDayList} />
+              {/* <SelectDayBar handleSelectedDayList={handleSelectedDayList} /> */}
               <hr />
               <div className="d-flex justify-content-between">
                 <RoutineFilterBar />

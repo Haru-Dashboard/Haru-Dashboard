@@ -12,3 +12,9 @@ export interface createTodo {
   routine: routine;
   today: today;
 }
+
+export type localToday = {
+  id: number;
+  category: string;
+  content: string;
+};
