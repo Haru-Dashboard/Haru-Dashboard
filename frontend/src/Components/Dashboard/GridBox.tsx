@@ -4,6 +4,7 @@ import { screenType } from '../../Utils/Common';
 import Calendar from '../Widgets/Calendar';
 import ITNews from '../Widgets/ITNews';
 import Bookmark from '../Widgets/Bookmark';
+import Project from '../Widgets/Project';
 
 const GridBox = ({ width, height }: screenType) => {
   const [layout, setLayout] = useState([
@@ -38,7 +39,7 @@ const GridBox = ({ width, height }: screenType) => {
         </div>
       </div>
       <div className="p-1" key="2">
-        In Progress
+        <Project />
       </div>
       <div className="p-1" key="3">
         <div

@@ -1,56 +1,54 @@
 import React, { useEffect, useState } from 'react';
-// import Dropdown from './Dropdown';
 import { Dropdown } from 'react-bootstrap';
+import {
+  getRoutineCategory,
+  setRoutineCategory,
+} from '../../../../API/Todo/routine';
 
 const RoutineFilterBar = () => {
   const [clickedFilter, setClickedFilter] = useState('전체');
-  const [filterList, setFilterList] = useState(['']);
   const [searchedWord, setSearchedword] = useState('');
   const [searchResult, setSearchResult] = useState(['']);
 
   useEffect(() => {
     // localStorage에서 카테고리들 받아오기
-    const localCategories = localStorage.getItem('category');
-    if (localCategories) {
-      setFilterList(JSON.parse(localCategories));
-    }
+    return;
   }, []);
 
   const searchCategory = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(filterList);
+    // keyword : 사용자가 입력한 검색어를 받아옴
     const keyword = e.target as HTMLInputElement;
-    const category = localStorage.getItem('category');
 
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
 
-    filterList.map((data: string) => {
-      if (data.includes(searchedWord) && !searchResult.includes(data)) {
-        setSearchResult(searchResult.concat(data));
-      }
-    });
+    /* 
+      Todo: routine category 불러오는 axios 함수; API/todo.ts에서 수정하기
+      - 받아온 데이터를 setSearchedResult로 저장하기
+    */
+    getRoutineCategory();
 
-    if (e.key === 'Enter') {
-      // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
-      if (searchedWord.trim() && !filterList.includes(searchedWord)) {
-        // console.log('into if');
-        // state에 저장
-        setFilterList(filterList.concat(searchedWord));
+    // if (e.key === 'Enter') {
+    //   // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
+    //   if (searchedWord.trim() && !filterList.includes(searchedWord)) {
+    //     // console.log('into if');
+    //     // state에 저장
+    //     setFilterList(filterList.concat(searchedWord));
 
-        // localStorage에 저장
-        if (category) {
-          const arr = JSON.parse(category);
-          // console.log('arr=',arr, typeof(arr)); //object
-          arr.push(searchedWord.trim());
-          // console.log('pushed arr= ', arr);
+    //     // localStorage에 저장
+    //     if (category) {
+    //       const arr = JSON.parse(category);
+    //       // console.log('arr=',arr, typeof(arr)); //object
+    //       arr.push(searchedWord.trim());
+    //       // console.log('pushed arr= ', arr);
 
-          localStorage.setItem('category', JSON.stringify(arr));
-        } else {
-          localStorage.setItem('category', JSON.stringify([searchedWord]));
-        }
-        setSearchedword('');
-      }
-    }
+    //       localStorage.setItem('category', JSON.stringify(arr));
+    //     } else {
+    //       localStorage.setItem('category', JSON.stringify([searchedWord]));
+    //     }
+    //     setSearchedword('');
+    //   }
+    // }
   };
 
   return (
@@ -75,18 +73,23 @@ const RoutineFilterBar = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu align={{ lg: 'start' }}>
-          {/* <Dropdown.Header>
-          <input type="text" 
-            maxLength={6} 
-            placeholder={'카테고리를 입력하세요'}
-            onKeyUp={e=> searchCategory(e)}/>
-        </Dropdown.Header> */}
+          {/* dropdown input */}
+          <Dropdown.Header>
+            <input
+              type="text"
+              maxLength={6}
+              placeholder={'카테고리를 입력하세요'}
+              onKeyUp={(e) => searchCategory(e)}
+            />
+          </Dropdown.Header>
 
           {/* 검색창이 빈 경우 */}
           {!searchedWord.trim() && (
             <div>
-              {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
-              {filterList.map((filter: string, idx: number) => {
+              <Dropdown.Item href="#/action-1">
+                카테고리를 검색해주세요
+              </Dropdown.Item>
+              {/* {filterList.map((filter: string, idx: number) => {
                 return (
                   <Dropdown.Item
                     href="#/action-1"
@@ -95,7 +98,7 @@ const RoutineFilterBar = () => {
                     {filter}
                   </Dropdown.Item>
                 );
-              })}
+              })} */}
             </div>
           )}
           {/* 검색창에 문자가 있는 경우 */}
@@ -103,24 +106,24 @@ const RoutineFilterBar = () => {
             <div>
               {searchResult && (
                 <div>
-                  {/* filterList의 요소 중에서 searchedWord와 겹치는 게 있으면 searchResult 배열에 담기 */}
+                  {/* axios로 받아온 searchResult를 출력하는 부분 */}
                   {searchResult.map((data: string, idx: number) => {
-                    if (data.includes(searchedWord)) {
-                      return (
-                        <Dropdown.Item
-                          href="#/action-1"
-                          key={idx}
-                          onClick={(e) => setClickedFilter(data)}>
-                          {data}
-                        </Dropdown.Item>
-                      );
-                    }
+                    return (
+                      <Dropdown.Item
+                        href="#/action-1"
+                        key={idx}
+                        onClick={(e) => setClickedFilter(data)}>
+                        {data}
+                      </Dropdown.Item>
+                    );
                   })}
                 </div>
               )}
               {/* 여기 작동 안함 */}
               {!searchResult && (
-                <Dropdown.Item href="#/action-1">검색결과없다</Dropdown.Item>
+                <Dropdown.Item href="#/action-1">
+                  검색 결과가 없습니다
+                </Dropdown.Item>
               )}
             </div>
           )}
