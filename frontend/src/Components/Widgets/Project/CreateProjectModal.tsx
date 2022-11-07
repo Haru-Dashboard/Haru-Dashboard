@@ -3,6 +3,11 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 
 const CreateProjectModal = ({ handleClose, show }: any) => {
+  // TODO: project 생성 fetch 함수
+  const createProject = () => {
+    return;
+  };
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -15,9 +20,15 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
         </Modal.Header>
         <Modal.Body>
           <div>
-            {/* TODO: 이미지 파일 업로드 */}
             {/* content */}
             <div>
+              {/* TODO: 이미지 파일 업로드 */}
+              <Form.Control
+                type="file"
+                accept="image/*"
+                className="my-2 border"
+              />
+              {/*  */}
               <Form.Control
                 type="text"
                 placeholder="제목"
@@ -30,11 +41,15 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
                 style={{ resize: 'none' }}
                 placeholder="내용을 입력하세요"
               />
-              <Form.Control
-                type="text"
-                placeholder="태그"
-                className="my-2 border"
-              />
+              {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
+              <div>
+                <p>작성한 태그가 뜨는 곳</p>
+                <Form.Control
+                  type="text"
+                  placeholder="태그"
+                  className="my-2 border"
+                />
+              </div>
               <div className="d-flex justify-content-between">
                 <Form.Control
                   type="date"
@@ -45,6 +60,30 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
                 <Form.Control
                   type="date"
                   placeholder="시작 날짜"
+                  className="my-2 border"
+                />
+              </div>
+              <div className="d-flex justify-content-between">
+                <Form.Control
+                  type="text"
+                  placeholder="링크명"
+                  className="my-2 me-2 border w-50"
+                />
+                <Form.Control
+                  type="url"
+                  placeholder="링크 url"
+                  className="my-2 border"
+                />
+              </div>
+              <div className="d-flex justify-content-between">
+                <Form.Control
+                  type="text"
+                  placeholder="링크명"
+                  className="my-2 me-2 border w-50"
+                />
+                <Form.Control
+                  type="url"
+                  placeholder="링크 url"
                   className="my-2 border"
                 />
               </div>
