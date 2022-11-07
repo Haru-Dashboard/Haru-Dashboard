@@ -68,37 +68,40 @@ const ITNews = () => {
           borderRadius: '20px',
         }}>
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          {news.map((newsItem, idx) => (
-            <Carousel.Item key={idx}>
-              <a
-                className="carousel-anchor text-decoration-none text-reset"
-                href={newsItem.url}>
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ width: '100%', height: '70%' }}>
-                  <img
-                    width="80%"
-                    height="80%"
-                    style={{
-                      aspectRatio: '6/5',
-                    }}
-                    src={newsItem.image.thumbnail.contentUrl}
-                    alt="First slide"
-                  />
-                </div>
-                <p
-                  className="mx-auto my-0"
-                  style={{
-                    width: '85%',
-                    height: '20%',
-                    fontSize: '0.6rem',
-                    overflow: 'ellipsis',
-                  }}>
-                  {newsItem.name}
-                </p>
-              </a>
-            </Carousel.Item>
-          ))}
+          {news.map(
+            (newsItem, idx) =>
+              newsItem.image && (
+                <Carousel.Item key={idx}>
+                  <a
+                    className="carousel-anchor text-decoration-none text-reset"
+                    href={newsItem.url}>
+                    <div
+                      className="d-flex justify-content-center align-items-center"
+                      style={{ width: '100%', height: '70%' }}>
+                      <img
+                        width="80%"
+                        height="80%"
+                        style={{
+                          aspectRatio: '6/5',
+                        }}
+                        src={newsItem.image.thumbnail.contentUrl}
+                        alt="First slide"
+                      />
+                    </div>
+                    <p
+                      className="mx-auto my-0"
+                      style={{
+                        width: '85%',
+                        height: '20%',
+                        fontSize: '0.6rem',
+                        overflow: 'ellipsis',
+                      }}>
+                      {newsItem.name}
+                    </p>
+                  </a>
+                </Carousel.Item>
+              ),
+          )}
         </Carousel>
       </div>
     </div>
