@@ -1,73 +1,120 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScheduleDataType } from './ScheduleDataType';
+import BtnPlus from '../../Common/Button/BtnPlus';
+import CalendalAddSchedule from './CalendalAddSchedule';
+import CalendarBigsize from './CalendarBigsize';
+import ManageSchedule from './ManageSchedule';
+import { DateBetween } from './ScheduleDataType';
 
-function addNewSchedule() {
-  //모달팝업
-}
-
-//
-//
-//
-//선택된 날자를 변경해줌. 해줘야함.
-export function SelectDate(month: number, date: number) {
-  //Calendar main에서 달력 날자 클릭시
-  //여기서
-  //선택된 날자 바꾸주고
-  //바뀐 날자에 따라 시간순 출력
-  //5개를 보여줌.
-}
 const dateObj = new Date();
-let selectedDate = dateObj.getDate();
-//detail에서 보여줄 스케쥴들(5개)
-let selectedScheduleInSelectedDate = [
-  {
-    color: -1,
-    title: '',
-    content: '',
-    date: new Date(),
-  },
-];
-selectedScheduleInSelectedDate = selectedScheduleInSelectedDate.splice(0, 5);
-export default function CalendarDetail({ schedule }: ScheduleDataType) {
-  const dates = new Date();
+type calendarDetailPorps = {
+  selectedDate: Date;
+  schedule: {
+    id: number;
+    color: number;
+    title: string;
+    content: string;
+    startDate: Date;
+    endDate: Date;
+  }[];
+  setSchedule: any;
+};
 
-  for (let i = 0, count = 0; i < schedule.length && count < 5; i++) {
-    //
-    const startDate = new Date(schedule[i].startDate);
-    const endDate = new Date(schedule[i].endDate);
-    if (startDate < dates && dates < endDate) {
-      selectedScheduleInSelectedDate[count] = {
-        color: schedule[i].color,
-        title: schedule[i].title,
-        content: schedule[i].content,
-        date: dates,
-      };
-    }
-  }
-  const calendarDetails = selectedScheduleInSelectedDate.map(
-    (index, tmpKey) => (
+//detail에서 보여줄 스케쥴들(5개)
+export default function CalendarDetail({
+  schedule,
+  selectedDate,
+  setSchedule,
+}: calendarDetailPorps) {
+  //죄송합니다 이부분 수정해야합니다
+
+  //
+  const [detailCalendar, setDetailCalendarOpen] = useState(false);
+
+  const openDetailCalendar = () => {
+    setDetailCalendarOpen(true);
+  };
+  const closeDetailCalendar = () => {
+    setDetailCalendarOpen(false);
+  };
+  const [addCalendar, setADDCalendarOpen] = useState(false);
+
+  const openAddCalendar = () => {
+    setADDCalendarOpen(true);
+  };
+  const closeAddCalendar = () => {
+    setADDCalendarOpen(false);
+  };
+  const [manageSchedule, setManageSchedule] = useState(false);
+
+  const [selectedButton, setSelectedButton] = useState(0);
+  const openManageSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setManageSchedule(true);
+    const button: HTMLButtonElement = event.currentTarget;
+    setSelectedButton(parseInt(button.value));
+  };
+  const closeManageSchedule = () => {
+    setManageSchedule(false);
+  };
+  const calendarDetails = schedule.map((index, tmpKey) =>
+    DateBetween(
+      new Date(index.startDate),
+      selectedDate,
+      new Date(index.endDate),
+    ) ? (
       <div className="calendar-schedule-detail" key={tmpKey}>
-        <div>
+        <ManageSchedule
+          open={manageSchedule}
+          close={closeManageSchedule}
+          scheduleNo={selectedButton}
+          schedule={schedule}
+          setSchedule={setSchedule}
+        />
+        <button
+          className="full100 calendar-schedule-detail-button"
+          key={tmpKey}
+          value={tmpKey}
+          onClick={openManageSchedule}>
           <div className="calendar-schedule-detail-startdate">
-            {index.date.getFullYear() +
-              '.' +
-              ((index.date.getMonth() + 1) / 10 < 1 ? '0' : '') +
-              index.date.getMonth() +
-              '.' +
-              ((index.date.getDate() + 1) / 10 < 1 ? '0' : ' ') +
-              index.date.getDate()}
+            {(new Date(index.startDate).getHours() / 10 < 1 ? '0' : '') +
+              new Date(index.startDate).getHours() +
+              ':' +
+              (new Date(index.startDate).getMinutes() / 10 < 1 ? '0' : '') +
+              new Date(index.startDate).getMinutes()}
           </div>
           <div className="calendar-schedule-detail-title">{index.title}</div>
-        </div>
+        </button>
       </div>
+    ) : (
+      ''
     ),
   );
   return (
-    <div>
+    <div className="calendar-detail-back">
+      {
+        <CalendarBigsize
+          open={detailCalendar}
+          close={closeDetailCalendar}
+          setSchedule={setSchedule}
+          schedule={schedule}
+        />
+      }
+      <div className="calendar-addschedule ">
+        <div className="calendar-addschedule-actual">
+          <BtnPlus onClick={openAddCalendar} />
+          <CalendalAddSchedule
+            open={addCalendar}
+            close={closeAddCalendar}
+            setSchedule={setSchedule}
+            schedule={schedule}
+            header="Modal heading"
+          />
+        </div>
+      </div>
       <div className="calendar-detail-head">
-        <button onClick={addNewSchedule} className="calendar-detail-title">
-          일정 추가
-        </button>
+        {/*<button onClick={openDetailCalendar} className="calendar-detail-title">
+          세부 일정 보기
+        </button>*/}
       </div>
       <div className="calendar-detail-main">{calendarDetails}</div>
     </div>

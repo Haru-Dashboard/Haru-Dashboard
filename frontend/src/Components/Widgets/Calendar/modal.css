@@ -1,0 +1,111 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    color:black;
+    width:100%;
+    height:100%;
+  }
+.calendar-form{
+  width: 100%;
+  height: 100%;
+}
+  .modal button {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+  }
+  .modal > section {
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+      border-radius: 0.3rem;
+      background-color: white;
+    animation: modal-show 0.3s;
+    overflow: hidden;
+    text-align: left;
+  }
+  .modal > section> header {
+    position: relative;
+    padding: 1rem 1rem 1rem 1rem;
+    font-weight: bolder;
+    height: 10%;
+    width: 100%;
+  }
+  .modal > section > header button {
+    position: absolute;
+    top: 0rem;
+    right: 1rem;
+    width: 1.5rem;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+    background-color: transparent;
+  }
+  .modal > section >.calendar-form> main {
+    padding: 1rem;
+    height: 70%;
+  }
+  .modal > section >.calendar-form> footer {
+    height: 10%;
+    padding: 0.1rem 0.8rem;
+    text-align: right;
+  }
+  .modal > section >.calendar-form> footer button {
+    padding: 0rem 0.5rem;
+    color: blue;
+    background-color: white;
+  
+    border-radius: 5px;
+  }
+  .modal.openModal {
+    display: flex;
+    align-items: center;
+    animation: modal-bg-show 0.3s;
+  }
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -2rem;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+.schedule-card{
+  position: absolute;
+}
+.shcdule-inputs::placeholder{
+  color: black;
+}
+.input-title{
+  width: 100%;
+}
+.schedule-details{
+  width: 100%;
+}
+.schedule-select{
+  width: 60%;
+}
+.schedule-inline
+{
+  display: flex;
+  width: 100%;
+}
+.schedule-date-text{
+  width: 60%;
+}
+.schedule-date-input{
+  right:0%;
+  width: 60%;
+}

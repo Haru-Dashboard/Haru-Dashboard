@@ -25,7 +25,7 @@ const GridBox = ({ width, height }: screenType) => {
       isDraggable={false}
       isResizable={false}>
       <div className="p-1" key="0">
-        <Calendar width={width} height={height / 2} />
+        <Calendar />
       </div>
       <div className="p-1" key="1">
         <div
