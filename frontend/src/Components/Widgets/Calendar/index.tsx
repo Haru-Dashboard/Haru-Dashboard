@@ -4,8 +4,8 @@ import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
 import { Authentication } from '../../../API/Authentication';
-
-function Calendar({ width, height }: screenType) {
+import BigTitle from '../../Common/Title/BigTitle';
+function Calendar() {
   const titleOfCalendar = 'Specials';
 
   const dateObj = new Date();
@@ -16,9 +16,16 @@ function Calendar({ width, height }: screenType) {
     .toUpperCase();
   //토큰 임시 테스트
   const [schedule, setSchedule] = useState([
-    { color: 0, title: '', content: '', startDate: '', endDate: '' },
+    {
+      color: 0,
+      title: '',
+      content: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      id: 0,
+    },
   ]);
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const backURL = process.env.REACT_APP_BACKURL;
 
   useEffect(() => {
@@ -44,14 +51,10 @@ function Calendar({ width, height }: screenType) {
   return (
     <div className="calendar board">
       <div className="calendar-back">
-        <div className="calendar-title ">
-          <div className="d-flex">
-            <img
-              src="img/calendarImg.png"
-              className="calendar-title-icon-img"
-            />
-            <div className="calendar-title-titles">Calendar</div>
-          </div>
+        <div
+          style={{ height: '10%' }}
+          className="d-flex justify-content-between align-items-center ms-5 me-3 mt-2">
+          <BigTitle title="Calendar" />
         </div>
 
         <div className="calendar-head">
@@ -64,11 +67,15 @@ function Calendar({ width, height }: screenType) {
           </div>
         </div>
         <div className="calendar-main">
-          <CalendarMain schedule={schedule} />
+          <CalendarMain schedule={schedule} setSelectedDate={setSelectedDate} />
         </div>
       </div>
       <div className="calendar-detail">
-        <CalendarDetail schedule={schedule} />
+        <CalendarDetail
+          schedule={schedule}
+          selectedDate={selectedDate}
+          setSchedule={setSchedule}
+        />
       </div>
     </div>
   );

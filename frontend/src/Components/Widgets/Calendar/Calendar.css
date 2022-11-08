@@ -2,6 +2,10 @@
     background-color: rgb(256, 256, 256, 0.3);
     margin: auto;
 }
+.full100{
+    width: 100%;
+    height: 100%;
+}
 .calendar{
     width: 100%;
     height:100%;        
@@ -60,7 +64,7 @@
     width: 50%;
 }
 .calendar-month{
-    margin-left:10%;
+    margin-left:40%;
 }
 .calendar-subtitle{
     width: 65%;
@@ -137,17 +141,33 @@
     height: 50%;
 
 }
+.calendar-addschedule{
+    width: 100%;
+    height: 16%;
+    overflow: hidden;
+}
+.calendar-addschedule-actual{
+    margin-top: 5%;
+    margin-left: 70%;
+}
 
 .calendar-detail-head{
     width: 100%;
     height: 8%;
-    margin-top:40%;
+}
+.calendar-detail-back{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 .calendar-detail-main{
+    margin-top: 10%;
+    overflow: hidden;
     width: 100%;
     height: 72%;
-    margin-top:10%;
-     text-align: center;
+    background-color: rgb(256, 256, 256, 0.3);
+    border-radius: 1rem;
+    text-align: center;
 }
 
 .calendar-detail-title{
@@ -156,15 +176,26 @@
     background-color: rgb(256, 256, 256, 0.3);
     text-align: center;
     border-radius: 0.5rem;
+    border: 0px;
     
 }
 
 .calendar-schedule-detail
 {
-    width: 100%;
+    color: black;
+    width: 80%;
     height: 18%;
-    margin-bottom: 2%;
+    margin-left: 10%;
+    margin-top: 8%;
+    border: 0px;
+}
+.calendar-schedule-detail-button
+{
+    color: black;
+    background-color: rgb(256, 256, 256, 0.3);
     text-align: left;
+    border-radius: 0.5rem;
+    border: 0px;
 }
 .calendar-schedule-detail-shcdule{
     width: 80%;
@@ -174,13 +205,17 @@
 .calendar-schedule-detail-head{
     display: flex;
 }
-
 .calendar-schedule-detail-startdate{
-    font-size: 0.1rem;
+    font-size: 0.5rem;
+    line-height: 100%;
 }
 .calendar-schedule-detail-title
 {
     font-size:0.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
 }
 
 .calendar-schedule-detail-detail
@@ -193,6 +228,35 @@
     width: 100%;
     height: 100%;
 }
+
+.makrColor0{
+    background-color: red;
+    width: 60%;
+    margin-left: 20%;
+    height: 30%;
+    border-radius: 15%;
+}
+.makrColor1{
+    background-color: blue;
+    width: 60%;
+    margin-left: 20%;
+    height: 30%;
+    border-radius: 15%;
+}
+.makrColor2{
+    background-color: yellow;
+    width: 60%;
+    margin-left: 20%;
+    height: 30%;
+    border-radius: 15%;
+}
+.makrColor3{
+    background-color: black;
+    width: 60%;
+    margin-left: 20%;
+    height: 30%;
+    border-radius: 15%;
+}
 .makrColor4{
     background-color: green;
     width: 60%;
@@ -200,3 +264,7 @@
     height: 30%;
     border-radius: 15%;
 }
+
+
+
+

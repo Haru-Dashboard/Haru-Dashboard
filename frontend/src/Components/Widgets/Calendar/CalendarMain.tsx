@@ -3,11 +3,7 @@ import { screenType } from '../../../Utils/Common';
 import { ScheduleDataType } from './ScheduleDataType';
 import SelectDate from './CalendarDetail';
 
-function ClickedCalendar(month: number, date: number) {
-  console.log(month + ':' + date);
-}
-
-export default function CalendarMain({ schedule }: ScheduleDataType) {
+export default function CalendarMain({ schedule, setSelectedDate }: any) {
   //공용변수
   const numbers = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -17,6 +13,12 @@ export default function CalendarMain({ schedule }: ScheduleDataType) {
   const thisYear = dateObj.getFullYear();
   const thisMonth = dateObj.getMonth();
 
+  function ClickedCalendar(month: number, date: number) {
+    let newDate1 = new Date();
+    newDate1.setMonth(newDate1.getMonth() + month);
+    newDate1.setDate(date);
+    setSelectedDate(newDate1);
+  }
   const startDayOfThisMonth = new Date(thisYear, thisMonth, 1).getDay();
   const startDayOfNextMonth = new Date(thisYear, thisMonth + 1, 1).getDay();
   const dateOfLastMonth = new Date(thisYear, thisMonth, 0).getDate();
