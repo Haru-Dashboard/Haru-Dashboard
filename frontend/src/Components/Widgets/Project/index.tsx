@@ -5,14 +5,8 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import CreateProjectModal from './CreateProjectModal';
 import ProjectMoreModal from './ProjectMoreModal';
 import InsideCard from './InsideCard';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Project = () => {
-  // 카드 컴포넌트를 세번 출력시키기 위한 임시 리스트
-  //
-  //
-  //
-  //
   const [lists, setLists] = useState([]);
   const [pageNo, setPageNo] = useState(0);
 
@@ -27,7 +21,6 @@ const Project = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          const A = [];
           if (data.length) {
             setLists(data);
           }
@@ -43,14 +36,17 @@ const Project = () => {
   //
   //
   const [showCreate, setShowCreate] = useState(false);
+  const [selectedListNo, setSelectedListNo] = useState(-1);
   const [showMore, setShowMore] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => setShowCreate(true);
   const handleCloseMore = () => setShowMore(false);
-  const handleShowMore = () => setShowMore(true);
-
+  function handleShowMore(no: number) {
+    setShowMore(true);
+    setSelectedListNo(no);
+  }
   function toBack() {
-    if (pageNo > 4) {
+    if (pageNo >= 4) {
       setPageNo(pageNo - 3);
     } else {
       setPageNo(1);
@@ -63,7 +59,6 @@ const Project = () => {
   - 조회한 배열을 projectList에 저장하고
   - 아래 DOM에 list를 projectList로 바꿔주세요
   */
-  const getProject = () => {};
 
   return (
     <div className="w-100 h-100 p-3 sub-board">
@@ -76,9 +71,12 @@ const Project = () => {
           <button
             onClick={toBack}
             style={{ visibility: pageNo <= 4 ? 'hidden' : 'visible' }}></button>
-          {lists.map((item, mapNo) => {
+          {lists.map((item, mapNo: number) => {
             return (
-              <div onClick={handleShowMore} className="w-30 h-100" key={mapNo}>
+              <div
+                onClick={() => handleShowMore(mapNo)}
+                className="w-30 h-100"
+                key={mapNo}>
                 <CardComponent
                   cardWidth="100%"
                   cardHeight="100%"
@@ -96,7 +94,12 @@ const Project = () => {
       </div>
       {/* project 상세 보기 모달 */}
       <div>
-        <ProjectMoreModal handleClose={handleCloseMore} show={showMore} />
+        <ProjectMoreModal
+          handleClose={handleCloseMore}
+          show={showMore}
+          lists={lists}
+          selectedListNo={selectedListNo}
+        />
       </div>
       <div></div>
     </div>
