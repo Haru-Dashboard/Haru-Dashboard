@@ -28,7 +28,7 @@ GET {{apiUrl}}/projects/2
 Authorization: {{authorizationToken}}
 
 ### 프로젝트 전체 조회
-GET {{apiUrl}}/projects
+GET {{apiUrl}}/projects?page=0&size=2
 Authorization: {{authorizationToken}}
 
 ### 프로젝트 수정
