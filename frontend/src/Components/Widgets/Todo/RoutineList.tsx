@@ -106,7 +106,7 @@ const routineList = ({ today }: any) => {
         </div>
       </div>
       <div>
-        <RoutineMoreModal handleClose={handleClose} show={show} />
+        {/* <RoutineMoreModal handleClose={handleClose} show={show} /> */}
       </div>
     </div>
   );

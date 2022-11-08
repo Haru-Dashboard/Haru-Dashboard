@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 
@@ -46,6 +47,7 @@ const RoutineMoreModal = ({
           </div>
           <div className="d-flex justify-content-between">
             <SmallTitle title="category" color="#49649E" />
+            <Form.Control />
             <p>{listItem.category}</p>
           </div>
           <div className="d-flex justify-content-between">
