@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-const SelectDayBarItems = ({ day, handleSelectedDay }: any) => {
+const SelectDayBarItems = ({ day, handleSelectedDay, idx }: any) => {
   const [isClicked, setIsClicked] = useState(false);
   const [borderClass, setBorderClass] = useState('');
   const [textColor, setTextColor] = useState('');
   // const [selectedDay, setSelectedDay] = useState<Array<string>>([]);
 
   // routine function
-  const onClickDay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickDay = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    key: number,
+  ) => {
     // 클릭된 것인지 여부 저장
     setIsClicked(!isClicked);
     // 클릭된 것을 selectdaybar로 올리기
-    handleSelectedDay(e.currentTarget.id);
+    handleSelectedDay(key);
     // console.log(selectedDay);
   };
 
@@ -41,7 +44,7 @@ const SelectDayBarItems = ({ day, handleSelectedDay }: any) => {
         style={{ borderColor: '#49649E' }}
         className={`border border-3 ${borderClass} bg-white rounded-circle fw-bold ${textColor}`}
         id={day}
-        onClick={(e) => onClickDay(e)}>
+        onClick={(e) => onClickDay(e, idx)}>
         {day}
       </button>
     </div>

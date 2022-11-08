@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import {
-  getRoutineCategory,
-  setRoutineCategory,
-} from '../../../../API/Todo/routine';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import { todayFilterBar } from './TodayFilterBar';
 
-const RoutineFilterBar = () => {
+const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
+  const defaultURL = process.env.REACT_APP_BACKURL;
+
   const [clickedFilter, setClickedFilter] = useState('전체');
   const [searchedWord, setSearchedword] = useState('');
-  const [searchResult, setSearchResult] = useState(['']);
+  const [searchResult, setSearchResult] = useState<Array<string> | void>([]);
+  const [localCategoryList, setLocalCategoryList] = useState(['']);
 
+  const localCategories = localStorage.getItem('category');
   useEffect(() => {
     // localStorage에서 카테고리들 받아오기
-    return;
+    if (localCategories) {
+      setLocalCategoryList(JSON.parse(localCategories));
+    }
   }, []);
+
+  // localCategories에 변경 사항이 생길 때마다 갱신; okay
+  useEffect(() => {
+    if (localCategories) {
+      setLocalCategoryList(JSON.parse(localCategories));
+    }
+  }, [localCategories]);
 
   const searchCategory = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // keyword : 사용자가 입력한 검색어를 받아옴
     const keyword = e.target as HTMLInputElement;
+    // console.log(keyword.value);
 
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
@@ -26,29 +39,32 @@ const RoutineFilterBar = () => {
       Todo: routine category 불러오는 axios 함수; API/todo.ts에서 수정하기
       - 받아온 데이터를 setSearchedResult로 저장하기
     */
-    getRoutineCategory();
+    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    if (accessToken !== null) {
+      const url = `categories?keyword=${keyword.value}`;
+      fetch(defaultURL + url, {
+        method: 'GET',
+        headers: { Authorization: accessToken },
+      })
+        .then((response) => {
+          response.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          setSearchResult(data);
+        });
+      if (typeof searchResult === 'undefined' && e.key === 'Enter') {
+        setSearchResult([keyword.value]);
+        setClickedFilter(keyword.value);
+      }
+    }
+  };
 
-    // if (e.key === 'Enter') {
-    //   // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
-    //   if (searchedWord.trim() && !filterList.includes(searchedWord)) {
-    //     // console.log('into if');
-    //     // state에 저장
-    //     setFilterList(filterList.concat(searchedWord));
+  const onClickFilter = (clicked: string) => {
+    console.log('onclickfilter');
 
-    //     // localStorage에 저장
-    //     if (category) {
-    //       const arr = JSON.parse(category);
-    //       // console.log('arr=',arr, typeof(arr)); //object
-    //       arr.push(searchedWord.trim());
-    //       // console.log('pushed arr= ', arr);
-
-    //       localStorage.setItem('category', JSON.stringify(arr));
-    //     } else {
-    //       localStorage.setItem('category', JSON.stringify([searchedWord]));
-    //     }
-    //     setSearchedword('');
-    //   }
-    // }
+    handleCategory(clicked);
+    setClickedFilter(clicked);
   };
 
   return (
@@ -68,11 +84,12 @@ const RoutineFilterBar = () => {
           size="sm"
           variant="light"
           id="dropdown-basic"
+          style={{ fontSize: '0.8rem' }}
           className="py-0 px-2 opacity-50 fw-bold">
           {clickedFilter}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu align={{ lg: 'start' }}>
+        <Dropdown.Menu>
           {/* dropdown input */}
           <Dropdown.Header>
             <input
@@ -86,45 +103,78 @@ const RoutineFilterBar = () => {
           {/* 검색창이 빈 경우 */}
           {!searchedWord.trim() && (
             <div>
-              <Dropdown.Item href="#/action-1">
-                카테고리를 검색해주세요
+              <Dropdown.Item href="#/action-1" style={{ fontSize: '0.8rem' }}>
+                내 카테고리
               </Dropdown.Item>
-              {/* {filterList.map((filter: string, idx: number) => {
-                return (
-                  <Dropdown.Item
-                    href="#/action-1"
-                    key={idx}
-                    onClick={(e) => setClickedFilter(filter)}>
-                    {filter}
-                  </Dropdown.Item>
-                );
-              })} */}
+              <div className="border border-1 mx-2">
+                {localCategoryList.map((filter: string, idx: number) => {
+                  return (
+                    <Dropdown.Item
+                      href="#/action-1"
+                      key={idx}
+                      className="py-0 my-2"
+                      style={{ fontSize: '0.8rem' }}
+                      onClick={(e) => onClickFilter(filter)}>
+                      {filter}
+                    </Dropdown.Item>
+                  );
+                })}
+              </div>
             </div>
           )}
           {/* 검색창에 문자가 있는 경우 */}
           {searchedWord.trim() && (
             <div>
-              {searchResult && (
-                <div>
-                  {/* axios로 받아온 searchResult를 출력하는 부분 */}
-                  {searchResult.map((data: string, idx: number) => {
-                    return (
-                      <Dropdown.Item
-                        href="#/action-1"
-                        key={idx}
-                        onClick={(e) => setClickedFilter(data)}>
-                        {data}
-                      </Dropdown.Item>
-                    );
-                  })}
+              {/* todo: '카테고리 검색' 이라고 넣고 위의 '내 카테고리'랑 폰트/레이아웃 똑같이 맞추기 */}
+              {/* 지금 입력한 카테고리가 내 카테고리 안에 있으면 그 내용을 보여주고 없으면 내가 입력한 카테고리만 보여주기 */}
+
+              {/* 내가 입력한 카테고리 */}
+              {typeof searchResult === 'undefined' && (
+                <div className="my-2" style={{ fontSize: '0.8rem' }}>
+                  <Dropdown.Item>
+                    검색 결과가 없습니다. 새로 추가해주세요
+                  </Dropdown.Item>
+                  <div className="d-flex justify-content-between align-items-center my-1">
+                    <Dropdown.Item
+                      href="#/action-1"
+                      className="py-0"
+                      onClick={(e) => onClickFilter(searchedWord)}
+                      style={{ fontSize: '0.8rem' }}>
+                      {searchedWord}
+                    </Dropdown.Item>
+                    <FontAwesomeIcon
+                      icon={faSquarePlus}
+                      color="#FA5252"
+                      onClick={(e) => onClickFilter(searchedWord)}
+                      className="col-1 py-0 ps-0 pe-2"
+                    />
+                  </div>
                 </div>
               )}
-              {/* 여기 작동 안함 */}
-              {!searchResult && (
-                <Dropdown.Item href="#/action-1">
-                  검색 결과가 없습니다
-                </Dropdown.Item>
-              )}
+              <div>
+                {typeof searchResult !== 'undefined' && searchResult && (
+                  <div>
+                    <Dropdown.Item
+                      href="#/action-1"
+                      style={{ fontSize: '0.8rem' }}>
+                      검색 결과
+                    </Dropdown.Item>
+                    {/* axios로 받아온 searchResult를 출력하는 부분 */}
+                    {searchResult.map((data: string, idx: number) => {
+                      return (
+                        <Dropdown.Item
+                          href="#/action-1"
+                          key={idx}
+                          className="py-0 my-2"
+                          style={{ fontSize: '0.8rem' }}
+                          onClick={(e) => onClickFilter(data)}>
+                          {data}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </Dropdown.Menu>
