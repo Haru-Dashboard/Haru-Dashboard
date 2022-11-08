@@ -6,6 +6,7 @@ import com.haru.api.project.service.ProjectService;
 import com.haru.api.user.security.userdetails.CurrentUser;
 import com.haru.api.user.security.userdetails.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +32,8 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectResponse.GetProject>> getProjectList(@CurrentUser CustomUserDetails customUserDetails) {
-        List<ProjectResponse.GetProject> response = projectService.getProjectList(customUserDetails.getUser());
+    public ResponseEntity<List<ProjectResponse.GetProject>> getProjectList(Pageable pageable, @CurrentUser CustomUserDetails customUserDetails) {
+        List<ProjectResponse.GetProject> response = projectService.getProjectList(pageable, customUserDetails.getUser());
         return ResponseEntity.ok().body(response);
     }
 
