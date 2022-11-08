@@ -83,12 +83,7 @@ export default function ScheduleAdd(props: any) {
   };
 
   return (
-    <Modal
-      show={showModal}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-      centered>
+    <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
         <Modal.Title>일정추가</Modal.Title>
       </Modal.Header>
@@ -142,7 +137,6 @@ export default function ScheduleAdd(props: any) {
               type="text"
               name="content"
               placeholder="세부일정"
-              defaultValue={TimeInsertT('' + new Date() + '')}
               onChange={handleChange}
               required
             />
