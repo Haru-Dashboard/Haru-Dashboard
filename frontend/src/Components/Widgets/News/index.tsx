@@ -3,7 +3,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import BigTitle from '../../Common/Title/BigTitle';
 import './index.css';
 
-const URL = 'https://api.bing.microsoft.com/v7.0/news';
+const URL = 'https://api.bing.microsoft.com/v7.0/news/search?';
+const URLNext = new URLSearchParams({ q: '기술', setlang: 'ko' }).toString();
 const eMSEdgeKey = process.env.REACT_APP_MSEdgeKey;
 
 const News = () => {
@@ -24,7 +25,7 @@ const News = () => {
 
   const fetchNews = (): void => {
     if (eMSEdgeKey !== undefined) {
-      fetch(URL, {
+      fetch(URL + URLNext, {
         method: 'GET',
         headers: {
           'Ocp-Apim-Subscription-Key': eMSEdgeKey,
