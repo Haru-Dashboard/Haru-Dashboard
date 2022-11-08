@@ -137,7 +137,6 @@ export default function ScheduleAdd(props: any) {
               type="text"
               name="content"
               placeholder="세부일정"
-              defaultValue={TimeInsertT('' + new Date() + '')}
               onChange={handleChange}
               required
             />
