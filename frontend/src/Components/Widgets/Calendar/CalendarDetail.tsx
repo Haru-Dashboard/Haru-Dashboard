@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ScheduleDataType } from './ScheduleDataType';
 import BtnPlus from '../../Common/Button/BtnPlus';
-import CalendalAddSchedule from './CalendalAddSchedule';
-import CalendarBigsize from './CalendarBigsize';
-import ManageSchedule from './ManageSchedule';
 import { DateBetween } from './ScheduleDataType';
+import ScheduleAdd from './ScheduleAdd';
+import SCheduleManage from './SCheduleManage';
 
 const dateObj = new Date();
 type calendarDetailPorps = {
@@ -19,42 +18,24 @@ type calendarDetailPorps = {
   }[];
   setSchedule: any;
 };
-
 //detail에서 보여줄 스케쥴들(5개)
 export default function CalendarDetail({
   schedule,
   selectedDate,
   setSchedule,
 }: calendarDetailPorps) {
-  //죄송합니다 이부분 수정해야합니다
-
-  //
-  const [detailCalendar, setDetailCalendarOpen] = useState(false);
-
-  const openDetailCalendar = () => {
-    setDetailCalendarOpen(true);
-  };
-  const closeDetailCalendar = () => {
-    setDetailCalendarOpen(false);
-  };
-  const [addCalendar, setADDCalendarOpen] = useState(false);
-
-  const openAddCalendar = () => {
-    setADDCalendarOpen(true);
-  };
-  const closeAddCalendar = () => {
-    setADDCalendarOpen(false);
-  };
-  const [manageSchedule, setManageSchedule] = useState(false);
-
   const [selectedButton, setSelectedButton] = useState(0);
-  const openManageSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setManageSchedule(true);
+
+  const [showManageModal, setShowManageModal] = useState(false);
+  const handleManageClose = () => setShowManageModal(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const handleAddClose = () => setShowAddModal(false);
+  const handleAddShow = () => setShowAddModal(true);
+
+  const handleManageShow = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setShowManageModal(true);
     const button: HTMLButtonElement = event.currentTarget;
     setSelectedButton(parseInt(button.value));
-  };
-  const closeManageSchedule = () => {
-    setManageSchedule(false);
   };
   const calendarDetails = schedule.map((index, tmpKey) =>
     DateBetween(
@@ -63,18 +44,11 @@ export default function CalendarDetail({
       new Date(index.endDate),
     ) ? (
       <div className="calendar-schedule-detail" key={tmpKey}>
-        <ManageSchedule
-          open={manageSchedule}
-          close={closeManageSchedule}
-          scheduleNo={selectedButton}
-          schedule={schedule}
-          setSchedule={setSchedule}
-        />
         <button
           className="full100 calendar-schedule-detail-button"
           key={tmpKey}
           value={tmpKey}
-          onClick={openManageSchedule}>
+          onClick={handleManageShow}>
           <div className="calendar-schedule-detail-startdate">
             {(new Date(index.startDate).getHours() / 10 < 1 ? '0' : '') +
               new Date(index.startDate).getHours() +
@@ -89,26 +63,12 @@ export default function CalendarDetail({
       ''
     ),
   );
+
   return (
     <div className="calendar-detail-back">
-      {
-        <CalendarBigsize
-          open={detailCalendar}
-          close={closeDetailCalendar}
-          setSchedule={setSchedule}
-          schedule={schedule}
-        />
-      }
       <div className="calendar-addschedule ">
         <div className="calendar-addschedule-actual">
-          <BtnPlus onClick={openAddCalendar} />
-          <CalendalAddSchedule
-            open={addCalendar}
-            close={closeAddCalendar}
-            setSchedule={setSchedule}
-            schedule={schedule}
-            header="Modal heading"
-          />
+          <BtnPlus onClick={handleAddShow} />
         </div>
       </div>
       <div className="calendar-detail-head">
@@ -117,6 +77,19 @@ export default function CalendarDetail({
         </button>*/}
       </div>
       <div className="calendar-detail-main">{calendarDetails}</div>
+      <ScheduleAdd
+        showModal={showAddModal}
+        handleClose={handleAddClose}
+        setSchedule={setSchedule}
+        schedule={schedule}
+      />
+      <SCheduleManage
+        showModal={showManageModal}
+        handleClose={handleManageClose}
+        setSchedule={setSchedule}
+        scheduleNo={selectedButton}
+        schedule={schedule}
+      />
     </div>
   );
 }
