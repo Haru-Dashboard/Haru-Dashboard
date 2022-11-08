@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import SelectDayBar from './SelectDayBar';
+import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import { Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
+import { week } from '../../../Utils/Todo';
 
 const RoutineMoreModal = ({
   handleClose,
@@ -22,9 +23,21 @@ const RoutineMoreModal = ({
     { day: '금', isClicked: listItem.fri },
     { day: '토', isClicked: listItem.sat },
   ];
+  const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
+  const [writtenContent, setWrittenContent] = useState('');
+  const [clickedCategory, setClickedCategory] = useState('전체');
+
   const onClickUpdate = () => {};
   const onClickDelete = () => {};
+  const handleSelectedDayList = (selectedList: Array<week>) => {
+    // console.log('createtodomodal routine= ', selectedList);
 
+    setSelectedDayList(selectedList);
+  };
+  // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
+  const handleCategory = (clicked: string) => {
+    setClickedCategory(clicked);
+  };
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -32,36 +45,23 @@ const RoutineMoreModal = ({
           <SmallTitle title="More" color="#49649E" />
         </Modal.Header>
         <Modal.Body>
-          <div className="d-flex justify-content-between mb-5">
-            {availableDays.map((item, idx: number) => {
-              return (
-                <button
-                  style={{ borderColor: '#49649E' }}
-                  className={`border border-3 bg-white rounded-circle fw-bold 
-                    ${item.isClicked ? 'border-secondary' : 'border-white'}`}
-                  key={idx}>
-                  {item.day}
-                </button>
-              );
-            })}
-          </div>
-          <div className="d-flex justify-content-between">
-            <SmallTitle title="category" color="#49649E" />
-            <Form.Control />
-            <p>{listItem.category}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <SmallTitle title="content" color="#49649E" />
-            <p>{listItem.title}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <SmallTitle title="Done" color="#49649E" />
-            <FontAwesomeIcon
-              icon={isCompleted ? faSquareCheck : faSquare}
-              color="black"
-              className="col-1 p-0"
-              onClick={(e) => setIsCompleted(!isCompleted)}
-            />
+          <div>
+            {/* 날짜 선택 부분 */}
+            <SelectDayBar handleSelectedDayList={handleSelectedDayList} />
+            <hr />
+            <div className="d-flex justify-content-between">
+              <RoutineFilterBar
+                handleCategory={handleCategory}
+                clicked={listItem.category}
+              />
+              <Form.Control
+                type="text"
+                placeholder="Routine 이름"
+                onChange={(e) => setWrittenContent(e.target.value)}
+                className="ms-5 w-100 border border-0"
+                value={listItem.title}
+              />
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-end">

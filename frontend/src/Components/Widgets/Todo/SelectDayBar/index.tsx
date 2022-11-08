@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { week } from '../../../../Utils/Todo';
 import SelectDayBarItems from './SelectDayBarItems';
 
-export type handleSelectedDayList = {
+export type selectDayBarType = {
   handleSelectedDayList: (selectedList: Array<week>) => void;
+  clicked: string;
 };
 
-const SelectDayBar = ({ handleSelectedDayList }: handleSelectedDayList) => {
+const SelectDayBar = ({ handleSelectedDayList }: selectDayBarType) => {
   const [weeks, setWeeks] = useState<Array<week>>([]);
   // const [selectedDayObject, setSelectedDayObject] = useState<Array<week>>([]);
   const [selectedDay, setselectedDay] = useState<Array<week>>([]);
