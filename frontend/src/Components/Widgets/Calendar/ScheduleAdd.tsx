@@ -83,12 +83,7 @@ export default function ScheduleAdd(props: any) {
   };
 
   return (
-    <Modal
-      show={showModal}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-      centered>
+    <Modal show={showModal} onHide={handleClose} backdrop="static" centered>
       <Modal.Header>
         <Modal.Title>일정추가</Modal.Title>
       </Modal.Header>
