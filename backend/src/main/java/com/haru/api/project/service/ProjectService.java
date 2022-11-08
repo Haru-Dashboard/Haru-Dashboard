@@ -2,8 +2,8 @@ package com.haru.api.project.service;
 
 import com.haru.api.common.exception.PermissionException;
 import com.haru.api.file.domain.S3FileRepository;
+import com.haru.api.file.dto.S3FileResponse;
 import com.haru.api.file.entity.S3File;
-import com.haru.api.file.service.S3FileService;
 import com.haru.api.file.service.S3Service;
 import com.haru.api.project.domain.entity.Project;
 import com.haru.api.project.domain.entity.ProjectLabel;
@@ -34,7 +34,6 @@ public class ProjectService {
     private final ProjectLabelRepository projectLabelRepository;
     private final S3FileRepository fileRepository;
     private final S3Service s3Service;
-    private final S3FileService s3FileService;
 
     @Transactional
     public ProjectResponse.OnlyId create(ProjectRequest.CreateOrUpdate request, MultipartFile file, User user) {
@@ -61,12 +60,12 @@ public class ProjectService {
     public ProjectResponse.GetProject getProject(Long projectId, User user) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
-        return ProjectResponse.GetProject.build(project, s3FileService.getImage(project.getFile().getId()));
+        return ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
     }
 
     public List<ProjectResponse.GetProject> getProjectList(User user) {
         List<Project> projects = projectRepository.findAllByUser(user);
-        return projects.stream().map(project -> ProjectResponse.GetProject.build(project, s3FileService.getImage(project.getFile().getId()))).collect(Collectors.toList());
+        return projects.stream().map(project -> ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
     }
 
     @Transactional
