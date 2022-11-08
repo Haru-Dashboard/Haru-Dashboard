@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { week } from '../../../../Utils/Todo';
 import SelectDayBarItems from './SelectDayBarItems';
 
-export type handleSelectedDayList = {
+export type selectDayBarType = {
   handleSelectedDayList: (selectedList: Array<week>) => void;
+<<<<<<< HEAD
   availableDays?: Array<week>;
   availableDaysList?: Array<week>;
 };
@@ -13,6 +14,12 @@ const SelectDayBar = ({
   availableDays,
   availableDaysList,
 }: handleSelectedDayList) => {
+=======
+  clicked: string;
+};
+
+const SelectDayBar = ({ handleSelectedDayList }: selectDayBarType) => {
+>>>>>>> origin/feat/29/routine
   const [weeks, setWeeks] = useState<Array<week>>([]);
   // const [selectedDayObject, setSelectedDayObject] = useState<Array<week>>([]);
   const [selectedDay, setselectedDay] = useState<Array<week>>([]);

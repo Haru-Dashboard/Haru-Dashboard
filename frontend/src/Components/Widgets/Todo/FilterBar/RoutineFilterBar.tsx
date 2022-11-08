@@ -5,7 +5,18 @@ import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
 import { routineFilterBar } from '../../../../Utils/Todo';
 
+<<<<<<< HEAD
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
+=======
+export type RoutineFilterBarType = {
+  handleCategory: (clicked: string) => void;
+  clicked: string;
+};
+const RoutineFilterBar = ({
+  handleCategory,
+  clicked,
+}: RoutineFilterBarType) => {
+>>>>>>> origin/feat/29/routine
   const defaultURL = process.env.REACT_APP_BACKURL;
 
   const [clickedFilter, setClickedFilter] = useState('전체');
@@ -15,6 +26,10 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
 
   const localCategories = localStorage.getItem('category');
   useEffect(() => {
+    // clicked를 기본 값으로
+    if (clicked) {
+      setClickedFilter(clicked);
+    }
     // localStorage에서 카테고리들 받아오기
     if (localCategories) {
       setLocalCategoryList(JSON.parse(localCategories));
