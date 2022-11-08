@@ -37,7 +37,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.css'],
-    // fallback: { "zlib": false, "stream": false, "https": false, "http": false, "url": false, "assert": false },
   },
   plugins: [
     new CopyPlugin({

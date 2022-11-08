@@ -6,9 +6,9 @@ import {
   faSquare,
   faSquareCheck,
 } from '@fortawesome/free-regular-svg-icons';
-import TodoMoreModal from './TodoMoreModal';
+import CreateTodoModal from './CreateTodoModal';
 
-const TodayListItems = ({ listItem, setFilteredList }: any) => {
+const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
@@ -66,20 +66,20 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
             whiteSpace: 'nowrap',
             textDecoration: isCompleted ? 'line-through' : 'none',
           }}>
-          {listItem.content}
+          {listItem.title}
         </div>
         {/* TODO: 각각 idx를 인식해서 해당 데이터만 지우기 */}
         <FontAwesomeIcon
           icon={faSquareMinus}
           color="#FA5252"
-          onClick={(e) => onClickDelete(listItem.id)}
-          key={listItem.id}
+          onClick={(e) => onClickDelete(listItem.todoId)}
+          key={listItem.todoId}
           className="col-1 p-0 ms-1"
         />
       </div>
       <div>
-        <TodoMoreModal
-          name="today"
+        <CreateTodoModal
+          name="routine"
           handleClose={handleClose}
           show={show}
           listItem={listItem}
@@ -91,4 +91,4 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
   );
 };
 
-export default TodayListItems;
+export default RoutineListItems;
