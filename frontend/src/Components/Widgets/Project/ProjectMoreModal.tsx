@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
+import Form from 'react-bootstrap/Form';
 
-const ProjectMoreModal = ({ handleClose, show }: any) => {
+const ProjectMoreModal = ({
+  handleClose,
+  show,
+  lists,
+  selectedListNo,
+}: any) => {
   // TODO: project 수정하기
-  const updateProject = () => {};
+
+  const updateProject = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   // TODO: 프로젝트 삭제하기
-  const deleteProject = () => {};
-
+  const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const backURL = process.env.REACT_APP_BACKURL;
+    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    const URLNext = 'projects/' + lists[selectedListNo].id;
+    if (accessToken !== null) {
+      fetch(backURL + URLNext, {
+        method: 'DELETE',
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+        .then((response) => response.json())
+        .then((datas) => {
+          handleClose();
+        });
+    } else {
+      //
+    }
+  };
   return (
     <div>
       <Modal show={show} onHide={handleClose} className="h-100">
@@ -21,21 +48,33 @@ const ProjectMoreModal = ({ handleClose, show }: any) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div
-            className="w-70 bg-secondary mx-auto mb-3"
-            style={{ height: '150px' }}>
-            image
-          </div>
-          <div>dates</div>
-          <div>content</div>
-          <div className="text-end">links</div>
+          {selectedListNo != -1 && lists != null ? (
+            <Form>
+              <div
+                className="w-70 bg-secondary mx-auto mb-3"
+                style={{ height: '150px' }}>
+                image
+              </div>
+              <Form.Group>
+                <Form.Label>종료일</Form.Label>
+                <Form.Control type="datetime-local" name="startDate" required />
+              </Form.Group>
+              <div>content</div>
+              <div className="text-end">links</div>
+            </Form>
+          ) : (
+            ''
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={updateProject}>
+          <Button variant="primary" onClick={updateProject}>
             수정
           </Button>
           <Button variant="primary" onClick={deleteProject}>
             삭제
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            종료
           </Button>
         </Modal.Footer>
       </Modal>
