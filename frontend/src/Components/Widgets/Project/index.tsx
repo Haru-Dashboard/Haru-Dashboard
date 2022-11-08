@@ -80,7 +80,7 @@ const Project = () => {
                 <CardComponent
                   cardWidth="100%"
                   cardHeight="100%"
-                  cardContent={<InsideCard lists={item} />}
+                  cardContent={<InsideCard list={item} />}
                 />
               </div>
             );
