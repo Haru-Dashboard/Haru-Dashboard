@@ -17,6 +17,7 @@ import com.haru.api.project.dto.ProjectResponse;
 import com.haru.api.project.exception.ProjectNotFoundException;
 import com.haru.api.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,8 +64,8 @@ public class ProjectService {
         return ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
     }
 
-    public List<ProjectResponse.GetProject> getProjectList(User user) {
-        List<Project> projects = projectRepository.findAllByUser(user);
+    public List<ProjectResponse.GetProject> getProjectList(Pageable pageable, User user) {
+        List<Project> projects = projectRepository.findAllByUserOrderByCreatedAtDesc(pageable, user);
         return projects.stream().map(project -> ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
     }
 
