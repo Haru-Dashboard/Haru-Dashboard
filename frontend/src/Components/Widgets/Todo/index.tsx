@@ -10,6 +10,7 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 const Todo = ({ width, height }: screenType) => {
   const [show, setShow] = useState(false);
   const [isTodayRemoved, setIsTodayRemoved] = useState(false);
+  const [today, setToday] = useState(new Date().getDay());
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,6 +20,7 @@ const Todo = ({ width, height }: screenType) => {
     localStorage.removeItem('today');
     // 바로 반영시키기
     setIsTodayRemoved(true);
+    setToday(today + 1);
   };
 
   return (
@@ -37,7 +39,7 @@ const Todo = ({ width, height }: screenType) => {
         </div>
         <div style={{ height: '90%' }} className="px-2 pb-2">
           <div style={{ height: '38%' }}>
-            <RoutineList />
+            <RoutineList today={today} />
           </div>
           <div style={{ height: '45%' }}>
             <TodayList isTodayRemoved={isTodayRemoved} />
