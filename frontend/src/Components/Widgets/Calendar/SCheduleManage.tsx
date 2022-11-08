@@ -125,7 +125,7 @@ export default function SCheduleManage(props: any) {
   };
 
   return (
-    <Modal show={showModal} onHide={handleClose} backdrop="static" centered>
+    <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
         <Modal.Title>일정관리</Modal.Title>
       </Modal.Header>
