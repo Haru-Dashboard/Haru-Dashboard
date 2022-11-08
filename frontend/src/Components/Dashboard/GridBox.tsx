@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import { screenType } from '../../Utils/Common';
 import Calendar from '../Widgets/Calendar';
-import ITNews from '../Widgets/ITNews';
+import News from '../Widgets/News';
 import Bookmark from '../Widgets/Bookmark';
 import Project from '../Widgets/Project';
 
@@ -49,7 +49,7 @@ const GridBox = ({ width, height }: screenType) => {
             backgroundColor: 'rgb(256, 256, 256, 0.1)',
             borderRadius: '3.5rem',
           }}>
-          <ITNews />
+          <News />
         </div>
       </div>
     </GridLayout>
