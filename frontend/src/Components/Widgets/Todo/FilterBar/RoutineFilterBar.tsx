@@ -3,8 +3,9 @@ import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
+import { routineFilterBar } from '../../../../Utils/Todo';
 
-const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
+const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
 
   const [clickedFilter, setClickedFilter] = useState('전체');
@@ -67,6 +68,11 @@ const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
     setClickedFilter(clicked);
   };
 
+  useEffect(() => {
+    if (clicked) {
+      setClickedFilter(clicked);
+    }
+  }, []);
   return (
     <div>
       {/* 

@@ -1,48 +1,44 @@
 import React, { useState } from 'react';
-import { localToday } from './TodayList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSquareMinus,
   faSquare,
   faSquareCheck,
 } from '@fortawesome/free-regular-svg-icons';
-import CreateTodoModal from './CreateTodoModal';
+import RoutineMoreModal from './RoutineMoreModal';
+import { defaultURL } from '../../../API';
 
 const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
   const [show, setShow] = useState(false);
+  const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // 선택한 todo 삭제하기
-  const onClickDelete = (id: number) => {
-    // console.log(idx); // ok
-    if (localToday) {
-      // 리스트 전체
-      const list = JSON.parse(localToday);
-      // 지우고자 하는 요소의 인덱스 찾기
-      const index = list.findIndex(function (item: localToday) {
-        return item.id === id;
-      });
-      list.splice(index, 1);
-      // console.log(list);
-
-      localStorage.setItem('today', JSON.stringify(list)); // ok
-      setFilteredList(list);
-    }
-  };
 
   const onClickMore = () => {
     console.log('more');
     handleShow();
   };
+  const onClickDelete = () => {
+    const url = `todos/${listItem.todoId}`;
+    if (accessToken !== null) {
+      fetch(defaultURL + url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: accessToken,
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => console.log(res));
+      // .then((data) => console.log(data));
+    }
+  };
 
   return (
     <div>
-      <div className="row ms-2 mt-2 today-hover" onClick={onClickMore}>
+      <div className="row ms-2 mt-2 today-hover">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}
@@ -72,14 +68,13 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
         <FontAwesomeIcon
           icon={faSquareMinus}
           color="#FA5252"
-          onClick={(e) => onClickDelete(listItem.todoId)}
+          onClick={onClickDelete}
           key={listItem.todoId}
           className="col-1 p-0 ms-1"
         />
       </div>
       <div>
-        <CreateTodoModal
-          name="routine"
+        <RoutineMoreModal
           handleClose={handleClose}
           show={show}
           listItem={listItem}

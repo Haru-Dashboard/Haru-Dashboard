@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-const SelectDayBarItems = ({ day, handleSelectedDay, idx }: any) => {
+const SelectDayBarItems = ({
+  name,
+  day,
+  handleSelectedDay,
+  isSelected,
+  idx,
+}: any) => {
   const [isClicked, setIsClicked] = useState(false);
   const [borderClass, setBorderClass] = useState('');
   const [textColor, setTextColor] = useState('');
@@ -36,6 +42,9 @@ const SelectDayBarItems = ({ day, handleSelectedDay, idx }: any) => {
     } else {
       setTextColor('text-black');
     }
+
+    // 수정 시에 이미 선택된 것
+    setIsClicked(isSelected);
   }, []);
 
   return (

@@ -105,6 +105,7 @@ const createTodoModal = ({
         .then((res) => res.json())
         .then((data) => console.log(data));
     }
+    location.reload();
   };
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수

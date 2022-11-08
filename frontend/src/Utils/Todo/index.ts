@@ -37,3 +37,8 @@ export type routineData = {
   sat: boolean;
   sun: boolean;
 };
+
+export type routineFilterBar = {
+  handleCategory: (clicked: string) => void;
+  clicked?: string;
+};
