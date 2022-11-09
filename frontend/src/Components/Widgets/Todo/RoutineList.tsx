@@ -71,21 +71,19 @@ const routineList = ({ today }: any) => {
   return (
     <div style={{ fontSize: '0.8rem' }} className="h-100">
       <div className="d-flex justify-content-between my-2">
-        <div className="ms-4">
-          <SmallTitle title="Routine" color="#5BB7F0" />
-        </div>
+        <SmallTitle title="Routine" color="#5BB7F0" />
         <div>
           <CommonFilterBar handleCategory={handleCategory} />
         </div>
       </div>
       {/* 리스트 목록 */}
       <div
-        className="sub-board mx-3"
+        className="sub-board"
         style={{ height: '80%', overflowY: 'auto', overflowX: 'hidden' }}>
-        <div className="px-2">
+        <div className="px-2 h-100">
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
-            <div className="container px-0 py-3">
+            <div className="container h-100 px-0 py-3">
               {todayRoutineList.map((item: routineData, nums: number) => {
                 return (
                   <RoutineListItems listItem={item} key={nums} />
