@@ -9,6 +9,7 @@ import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { defaultURL } from '../../../API';
+import { Cookies } from 'react-cookie';
 
 const RoutineMoreModal = ({
   handleClose,
@@ -32,7 +33,7 @@ const RoutineMoreModal = ({
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
   const [availableDaysList, setavailableDaysList] = useState<Array<week>>([]);
-  const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+  const accessToken = 'Bearer ' + new Cookies().get('accessToken');
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {

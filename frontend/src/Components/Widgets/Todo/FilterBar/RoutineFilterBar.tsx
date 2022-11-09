@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
 import { routineFilterBar } from '../../../../Utils/Todo';
+import { Cookies } from 'react-cookie';
 
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
@@ -43,7 +44,7 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
       Todo: routine category 불러오는 axios 함수; API/todo.ts에서 수정하기
       - 받아온 데이터를 setSearchedResult로 저장하기
     */
-    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
     if (accessToken !== null) {
       const url = `categories?keyword=${keyword.value}`;
       fetch(defaultURL + url, {
