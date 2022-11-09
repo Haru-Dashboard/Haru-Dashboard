@@ -19,13 +19,10 @@ const Bookmark = () => {
   }, []);
 
   const fetchBookmarksFromLocal = (): void => {
-    chrome.storage.local.get('bookmarks').then((res) => {
-      if (Object.keys(res).length !== 0 && res['bookmarks']) {
-        setBookmarks(res['bookmarks']);
-      } else {
-        //
-      }
-    });
+    const bookmarks = localStorage.getItem('bookmarks');
+    if (bookmarks !== null) {
+      setBookmarks(JSON.parse(bookmarks));
+    }
   };
 
   // Modal 관련 함수
@@ -43,14 +40,9 @@ const Bookmark = () => {
     const url = target[1]['value'];
 
     const tmpBookmarks = [...bookmarks, { title: title, url: url }];
-    chrome.storage.local
-      .set({ bookmarks: tmpBookmarks })
-      .then(() => {
-        setBookmarks(tmpBookmarks);
-      })
-      .then(() => {
-        handleClose();
-      });
+    localStorage.setItem('bookmarks', JSON.stringify(tmpBookmarks));
+    setBookmarks(tmpBookmarks);
+    handleClose();
   };
 
   // BookmarkItem 관련 함수
@@ -63,9 +55,8 @@ const Bookmark = () => {
     const tmpBookmarks = bookmarks.filter(
       (bookmark, bookmarkIdx) => bookmarkIdx !== idx,
     );
-    chrome.storage.local.set({ bookmarks: tmpBookmarks }).then(() => {
-      setBookmarks(tmpBookmarks);
-    });
+    localStorage.setItem('bookmarks', JSON.stringify(tmpBookmarks));
+    setBookmarks(tmpBookmarks);
   };
 
   return (

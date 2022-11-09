@@ -1,4 +1,6 @@
-import { sum } from '../sum';
+function sum(x: number, y: number) {
+  return x + y;
+}
 
 test('1 + 1 = 2', () => {
   expect(sum(1, 1)).toBe(2);
