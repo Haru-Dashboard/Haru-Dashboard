@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
@@ -8,35 +8,18 @@ type link = {
   name: string;
   url: string;
 };
-type form = {
+type inputs = {
   title: string;
   content: string;
-  labels: Array<string>;
-  links: Array<link>;
+  labels: string[];
+  links: link[];
   startDate: Date;
   endDate: Date;
 };
 
-const CreateProjectModal = ({ handleClose, show }: any) => {
+const ProjectCreationModal = ({ handleClose, show }: any) => {
   const [file, setFile] = useState<File>();
-  const [form, setForm] = useState<form>();
-
-  // TODO: project 생성 fetch 함수
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.currentTarget;
-    const files = (target.files as FileList)[0];
-    if (files === undefined) return;
-
-    if (files.size > FILE_SIZE_MAX_LIMIT) {
-      target.value = '';
-      alert('업로드 가능한 최대 용량은 5MB입니다. ');
-      return;
-    }
-
-    setFile(files);
-  };
-
-  const [inputs, setInputs] = useState<form>({
+  const [inputs, setInputs] = useState<inputs>({
     title: '',
     content: '',
     labels: [],
@@ -45,6 +28,22 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
     endDate: new Date(),
   });
 
+  // TODO: project 생성 fetch 함수
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const userFile = (target.files as FileList)[0];
+    if (userFile === undefined) return;
+
+    if (userFile.size > FILE_SIZE_MAX_LIMIT) {
+      target.value = '';
+      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      return;
+    }
+
+    setFile(userFile);
+  };
+
+  // Handle inputs when target is not label or link
   const handleInputChange = (event: any) => {
     const target = event.target;
     const name = target.name;
@@ -52,19 +51,29 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  // Handle inputs when target is label
   const addLabel = (event: any) => {
     event.preventDefault();
+    if (event.key !== 'Enter') return;
     setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
     event.target.value = '';
   };
 
-  const enterLabel = (event: any) => {
-    event.preventDefault();
-    if (event.key !== 'Enter') return;
-    addLabel(event);
+  // Handle inputs when target is link
+  const addLink = (event: any) => {
+    const value: string = event.target.value;
+    const key: 'name' | 'url' = event.target.name.split('-')[1];
+    const id = Number(event.target.name.split('-')[2]);
+    const newLinks = inputs.links.map((link, idx) =>
+      idx !== id ? link : { ...link, ...{ [key]: value } },
+    );
+    setInputs({
+      ...inputs,
+      links: newLinks,
+    });
   };
 
-  const addLink = (event: any) => {
+  const addNewLink = (event: any) => {
     const newLink: link = {
       name: '',
       url: '',
@@ -76,6 +85,7 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
     e.preventDefault();
     const formData = new FormData();
 
+    // TODO: append inputs after checking inputs
     formData.append(
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
@@ -91,7 +101,20 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
           Authorization: accessToken,
         },
         body: formData,
-      });
+      }).then(
+        () => {
+          setFile(undefined);
+          setInputs({
+            title: '',
+            content: '',
+            labels: [],
+            links: [{ name: '', url: '' }],
+            startDate: new Date(),
+            endDate: new Date(),
+          });
+        },
+        // close Modal?
+      );
     }
   };
 
@@ -104,7 +127,6 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
         <Form encType="multipart/form-data">
           <Modal.Body>
             {/* content */}
-            {/* TODO: 이미지 파일 업로드 */}
             <Form.Group>
               <Form.Control
                 type="file"
@@ -113,8 +135,6 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
                 onChange={handleFile}
               />
             </Form.Group>
-            {/*  */}
-            <Form.Group></Form.Group>
             <Form.Control
               type="text"
               placeholder="제목"
@@ -139,13 +159,12 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
                 {label}
               </span>
             ))}
-            <span></span>
             <Form.Control
               type="text"
               placeholder="태그 추가하기"
               className="my-2 border"
               name="labels"
-              onKeyUp={enterLabel}
+              onKeyUp={addLabel}
             />
 
             <Form.Group className="d-flex justify-content-between">
@@ -165,25 +184,25 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            {inputs.links.map((_, idx) => (
+            {inputs.links.map((link, idx) => (
               <Form.Group className="d-flex justify-content-between" key={idx}>
                 <Form.Control
                   type="text"
                   placeholder="링크명"
                   className="my-2 me-2 border w-50"
-                  name={`links[${idx}].name`}
-                  onChange={handleInputChange}
+                  name={`link-name-${idx}`}
+                  onChange={addLink}
                 />
                 <Form.Control
                   type="url"
                   placeholder="링크 url"
                   className="my-2 border"
-                  name={`links[${idx}].url`}
-                  onChange={handleInputChange}
+                  name={`link-url-${idx}`}
+                  onChange={addLink}
                 />
               </Form.Group>
             ))}
-            <BtnPlus onClick={addLink} />
+            <BtnPlus onClick={addNewLink} />
           </Modal.Body>
         </Form>
         <Modal.Footer>
@@ -196,4 +215,4 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
   );
 };
 
-export default CreateProjectModal;
+export default ProjectCreationModal;

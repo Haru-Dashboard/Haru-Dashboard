@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
 
-const ProjectMoreModal = ({
-  handleClose,
-  show,
-  lists,
-  selectedListNo,
-}: any) => {
+const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   // TODO: project 수정하기
 
   const updateProject = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,7 +15,7 @@ const ProjectMoreModal = ({
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
     const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
-    const URLNext = 'projects/' + lists[selectedListNo].id;
+    const URLNext = 'projects/' + item.id;
     if (accessToken !== null) {
       fetch(backURL + URLNext, {
         method: 'DELETE',
@@ -29,7 +24,7 @@ const ProjectMoreModal = ({
         },
       })
         .then((response) => response.json())
-        .then((datas) => {
+        .then((data) => {
           handleClose();
         });
     } else {
@@ -48,7 +43,7 @@ const ProjectMoreModal = ({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedListNo != -1 && lists != null ? (
+          {item !== null ? (
             <Form>
               <div
                 className="w-70 bg-secondary mx-auto mb-3"
@@ -62,9 +57,7 @@ const ProjectMoreModal = ({
               <div>content</div>
               <div className="text-end">links</div>
             </Form>
-          ) : (
-            ''
-          )}
+          ) : null}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={updateProject}>
@@ -82,4 +75,4 @@ const ProjectMoreModal = ({
   );
 };
 
-export default ProjectMoreModal;
+export default ProjectDetailModal;
