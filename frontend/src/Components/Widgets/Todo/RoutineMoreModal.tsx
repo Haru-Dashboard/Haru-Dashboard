@@ -33,7 +33,6 @@ const RoutineMoreModal = ({
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
   const [availableDaysList, setavailableDaysList] = useState<Array<week>>([]);
-  const accessToken = 'Bearer ' + new Cookies().get('accessToken');
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
@@ -57,7 +56,9 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
         method: 'PATCH',
         headers: {
@@ -75,7 +76,9 @@ const RoutineMoreModal = ({
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {

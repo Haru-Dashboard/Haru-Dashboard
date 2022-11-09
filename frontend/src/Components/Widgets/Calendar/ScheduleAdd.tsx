@@ -44,7 +44,7 @@ export default function ScheduleAdd(props: any) {
     const URLNext = `schedules`;
 
     const backURL = process.env.REACT_APP_BACKURL;
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
       if (inputs.title == null || inputs.title == '') {
         alert('타이틀이 없습니다.');
       } else if (inputs.content == null || inputs.content == '') {

@@ -24,7 +24,6 @@
       "js": ["js/vendor.js", "js/content_script.js"]
     }
   ],
-
   "permissions": ["storage", "geolocation"],
   "host_permissions": ["<all_urls>"]
 }

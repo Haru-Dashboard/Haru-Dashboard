@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
-import { Authentication } from '../../../API/Authentication';
 import BigTitle from '../../Common/Title/BigTitle';
 import { Cookies } from 'react-cookie';
 function Calendar() {
@@ -29,10 +28,10 @@ function Calendar() {
   const backURL = process.env.REACT_APP_BACKURL;
 
   useEffect(() => {
-    Authentication();
     let accessToken = new Cookies().get('accessToken');
     const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
+      console.log(accessToken);
       accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'GET',

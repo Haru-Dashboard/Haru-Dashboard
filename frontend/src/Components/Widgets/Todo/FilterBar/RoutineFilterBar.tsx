@@ -40,12 +40,9 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
 
-    /* 
-      Todo: routine category 불러오는 axios 함수; API/todo.ts에서 수정하기
-      - 받아온 데이터를 setSearchedResult로 저장하기
-    */
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       const url = `categories?keyword=${keyword.value}`;
       fetch(defaultURL + url, {
         method: 'GET',
@@ -166,7 +163,6 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
                       style={{ fontSize: '0.8rem' }}>
                       검색 결과
                     </Dropdown.Item>
-                    {/* axios로 받아온 searchResult를 출력하는 부분 */}
                     {searchResult.map((data: string, idx: number) => {
                       return (
                         <Dropdown.Item

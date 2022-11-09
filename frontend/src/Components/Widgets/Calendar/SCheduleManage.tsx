@@ -35,7 +35,7 @@ export default function SCheduleManage(props: any) {
     const backURL = process.env.REACT_APP_BACKURL;
     let accessToken = new Cookies().get('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'DELETE',
@@ -102,7 +102,7 @@ export default function SCheduleManage(props: any) {
     let accessToken = new Cookies().get('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'PATCH',

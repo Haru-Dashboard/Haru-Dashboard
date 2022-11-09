@@ -78,7 +78,6 @@ const createTodoModal = ({
   // routine 생성하기 fetch 함수
   const saveRoutine = () => {
     const url = 'todos';
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
     const data = {
       category: clickedCategory,
       title: writtenContent,
@@ -90,7 +89,9 @@ const createTodoModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
         method: 'POST',
         headers: {
