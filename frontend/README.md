@@ -68,3 +68,39 @@ Load `dist` directory
 
 ## Test
 `npx jest` or `npm run test`
+
+-----------------------------
+# Included Files
+## public
+Images and manifest
+
+
+--------------------
+## API
+Folder for common files
+
+#### Authentication
+##### Get accesstoken and manage token
+
+--------------------
+## Components
+#### Common components used elsewhere
+##### Button
+##### CardComponent
+##### Title
+
+--------------------
+## DashBoard
+#### Where each component will be placed
+##### GridBox
+##### index
+---------------------------------------
+## Widgets
+#### Each feature actually divided
+
+## Basic
+## BookMark
+## Calendar
+## News
+## Project
+## Todo
