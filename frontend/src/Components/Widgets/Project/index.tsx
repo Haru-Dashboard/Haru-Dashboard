@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import ProjectCreationModal from './ProjectCreationModal';
+import ProjectDetailModal from './ProjectDetailModal';
+import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
-import CardComponent from '../../Common/CardComponent';
 import BtnPlus from '../../Common/Button/BtnPlus';
-import CreateProjectModal from './CreateProjectModal';
-import ProjectMoreModal from './ProjectMoreModal';
-import InsideCard from './InsideCard';
+import { project } from '../../../Utils/Project';
+import './index.css';
 
 const Project = () => {
-  const [lists, setLists] = useState([]);
+  const [projectList, setProjectList] = useState<project[]>([]);
   const [pageNo, setPageNo] = useState(0);
 
-  function callList(pNo: number) {
+  useEffect(() => {
+    fetchProjectList(pageNo);
+  }, []);
+
+  function fetchProjectList(pageNo: number) {
     const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
     const backURL = process.env.REACT_APP_BACKURL;
-    const URLNext = 'projects?page=' + pNo + '&size=3';
+    const URLNext = `projects?page=${pageNo}&size=3`;
     if (accessToken != null) {
       fetch(backURL + URLNext, {
         method: 'GET',
@@ -22,88 +27,106 @@ const Project = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.length) {
-            setLists(data);
+            setProjectList(data);
           }
         });
     }
   }
-  useEffect(() => {
-    callList(pageNo);
-  }, []);
-  //
-  //
-  //
-  //
-  //
+
+  // creation modal
   const [showCreate, setShowCreate] = useState(false);
-  const [selectedListNo, setSelectedListNo] = useState(-1);
-  const [showMore, setShowMore] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => setShowCreate(true);
+
+  // detail modal
+  const [showMore, setShowMore] = useState(false);
+  const [selectedListNo, setSelectedListNo] = useState<number>();
   const handleCloseMore = () => setShowMore(false);
-  function handleShowMore(no: number) {
+  function handleShowMore(id: number) {
+    setSelectedListNo(id);
     setShowMore(true);
-    setSelectedListNo(no);
   }
-  function toBack() {
-    if (pageNo >= 4) {
-      setPageNo(pageNo - 3);
-    } else {
-      setPageNo(1);
-    }
-  }
-  function toNext() {
-    setPageNo(pageNo + 3);
-  }
-  /* TODO: project 조회 fetch 함수
-  - 조회한 배열을 projectList에 저장하고
-  - 아래 DOM에 list를 projectList로 바꿔주세요
-  */
 
   return (
     <div className="w-100 h-100 p-3 sub-board">
       <div className="h-100">
-        <div className="d-flex justify-content-between pe-3">
+        {/* Header */}
+        <div className="d-flex justify-content-between">
           <BigTitle title="In Progress" color="white" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
-        <div className="d-flex justify-content-between h-70 mt-1">
-          <button
-            onClick={toBack}
-            style={{ visibility: pageNo <= 4 ? 'hidden' : 'visible' }}></button>
-          {lists.map((item, mapNo: number) => {
+        {/* Body */}
+        <div className="d-flex justify-content-center h-75">
+          {projectList.map((item, idx) => {
             return (
-              <div
-                onClick={() => handleShowMore(mapNo)}
-                className="w-30 h-100"
-                key={mapNo}>
-                <CardComponent
-                  cardWidth="100%"
-                  cardHeight="100%"
-                  cardContent={<InsideCard list={item} />}
-                />
-              </div>
+              <ProjectCard
+                key={idx}
+                item={item}
+                handleShowMore={handleShowMore}
+              />
             );
           })}
-          <button onClick={toNext}></button>
         </div>
+        {/* Footer */}
       </div>
       {/* project를 생성하는 모달 */}
       <div>
-        <CreateProjectModal handleClose={handleCloseCreate} show={showCreate} />
+        <ProjectCreationModal
+          handleClose={handleCloseCreate}
+          show={showCreate}
+        />
       </div>
       {/* project 상세 보기 모달 */}
       <div>
-        <ProjectMoreModal
+        <ProjectDetailModal
           handleClose={handleCloseMore}
           show={showMore}
-          lists={lists}
-          selectedListNo={selectedListNo}
+          item={selectedListNo ? projectList[selectedListNo] : null}
         />
       </div>
-      <div></div>
     </div>
   );
 };
 
 export default Project;
+
+/*
+[
+    {
+        "id": 1,
+        "title": "테스트프로젝트",
+        "content": "테스트용입니다.",
+        "startDate": "2022.10.30",
+        "endDate": "2022.10.31",
+        "projectLinks": [
+            {
+                "id": 1,
+                "name": "github",
+                "link": "link"
+            },
+            {
+                "id": 2,
+                "name": "jira",
+                "link": "link"
+            }
+        ],
+        "projectLabels": [
+            {
+                "id": 1,
+                "name": "프로젝트"
+            },
+            {
+                "id": 2,
+                "name": "BE"
+            }
+        ],
+        "imageInfo": {
+            "id": 1,
+            "originName": "image.png",
+            "name": "6ac74080-9216-4869-a183-5f64b0c81fa5.png",
+            "extension": "png",
+            "imageUrl": "https://s3.ap-northeast-2.amazonaws.com/haru.s3.file/6ac74080-9216-4869-a183-5f64b0c81fa5.png"
+        }
+    }
+]
+*/
