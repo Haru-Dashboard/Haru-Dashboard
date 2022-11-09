@@ -38,9 +38,10 @@ const routineList = ({ today }: any) => {
   };
 
   useEffect(() => {
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
+    let accessToken = new Cookies().get('accessToken');
 
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       const url = `todos?day=${days[today]}`;
       fetch(defaultURL + url, {
         method: 'GET',
@@ -85,12 +86,14 @@ const routineList = ({ today }: any) => {
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
             <div className="container h-100 px-0 py-3">
-              {todayRoutineList.map((item: routineData, nums: number) => {
-                return (
-                  <RoutineListItems listItem={item} key={nums} />
-                  // setFilteredList={setFilteredList}
-                );
-              })}
+              {todayRoutineList != null && todayRoutineList.length > 0
+                ? todayRoutineList.map((item: routineData, nums: number) => {
+                    return (
+                      <RoutineListItems listItem={item} key={nums} />
+                      // setFilteredList={setFilteredList}
+                    );
+                  })
+                : ''}
             </div>
           )}
           {isEmpty && (

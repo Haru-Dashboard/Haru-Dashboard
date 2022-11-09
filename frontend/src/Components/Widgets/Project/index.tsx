@@ -17,10 +17,11 @@ const Project = () => {
   }, []);
 
   function fetchProjectList(pageNo: number) {
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
+    let accessToken = new Cookies().get('accessToken');
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = `projects?page=${pageNo}&size=3`;
     if (accessToken != null) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'GET',
         headers: { Authorization: accessToken },

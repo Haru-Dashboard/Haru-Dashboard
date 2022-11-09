@@ -15,9 +15,10 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
+    let accessToken = new Cookies().get('accessToken');
     const URLNext = 'projects/' + item.id;
-    if (accessToken !== null) {
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {

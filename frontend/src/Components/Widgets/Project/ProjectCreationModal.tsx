@@ -93,8 +93,9 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
     );
     if (file !== undefined) formData.append('file', file);
 
-    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       const url = process.env.REACT_APP_BACKURL;
       await fetch(url + `projects`, {
         method: 'POST',
