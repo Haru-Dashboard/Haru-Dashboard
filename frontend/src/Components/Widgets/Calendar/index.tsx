@@ -4,6 +4,7 @@ import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
 import { Authentication } from '../../../API/Authentication';
 import BigTitle from '../../Common/Title/BigTitle';
+import { Cookies } from 'react-cookie';
 function Calendar() {
   const titleOfCalendar = 'Specials';
 
@@ -29,9 +30,8 @@ function Calendar() {
 
   useEffect(() => {
     Authentication();
-    let accessToken = localStorage.getItem('accessToken');
+    let accessToken = new Cookies().get('accessToken');
     const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
-
     if (accessToken !== null) {
       accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
+import { Cookies } from 'react-cookie';
 
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
 type link = {
@@ -92,7 +93,7 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
     );
     if (file !== undefined) formData.append('file', file);
 
-    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
     if (accessToken !== null) {
       const url = process.env.REACT_APP_BACKURL;
       await fetch(url + `projects`, {

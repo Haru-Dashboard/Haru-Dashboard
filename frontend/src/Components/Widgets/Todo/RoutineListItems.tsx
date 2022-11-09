@@ -7,13 +7,14 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
+import { Cookies } from 'react-cookie';
 
 const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
   const [show, setShow] = useState(false);
-  const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+  const accessToken = 'Bearer ' + new Cookies().get('accessToken');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
+import { Cookies } from 'react-cookie';
 
 const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   // TODO: project 수정하기
@@ -14,7 +15,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
-    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
     const URLNext = 'projects/' + item.id;
     if (accessToken !== null) {
       fetch(backURL + URLNext, {

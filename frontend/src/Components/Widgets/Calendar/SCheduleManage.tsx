@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { TimeInsertT } from './ScheduleDataType';
+import { Cookies } from 'react-cookie';
 
 export default function SCheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
@@ -32,7 +33,7 @@ export default function SCheduleManage(props: any) {
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
-    let accessToken = localStorage.getItem('accessToken');
+    let accessToken = new Cookies().get('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     if (accessToken !== null) {
       accessToken = 'Bearer ' + accessToken;
@@ -98,7 +99,7 @@ export default function SCheduleManage(props: any) {
       setInputs((values) => ({ ...values, color: inputs.color }));
       inputs.color = schedule[scheduleNo].color;
     }
-    let accessToken = localStorage.getItem('accessToken');
+    let accessToken = new Cookies().get('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
     if (accessToken !== null) {
