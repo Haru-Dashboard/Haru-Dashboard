@@ -29,7 +29,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-bar w-50 pb-2 d-flex align-items-end">
+    <div className="search-bar w-50 d-flex align-items-end">
       <form
         className="w-100 h-75"
         action="http://www.google.com/search"

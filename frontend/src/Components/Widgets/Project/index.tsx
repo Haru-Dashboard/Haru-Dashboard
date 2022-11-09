@@ -50,9 +50,8 @@ const Project = () => {
   return (
     <div className="w-100 h-100 p-3 sub-board">
       <div className="h-100">
-        {/* Header */}
-        <div className="d-flex justify-content-between">
-          <BigTitle title="In Progress" color="white" />
+        <div className="d-flex justify-content-between pe-3">
+          <BigTitle title="In Progress" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}

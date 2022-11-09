@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import BtnPlus from '../../Common/Button/BtnPlus';
+import BigTitle from '../../Common/Title/BigTitle';
 import BookmarkItem from './BookmarkItem';
 import BookmarkModal from './BookmarkModal';
+import './index.css';
 
 export type bookmarkType = {
   title: string;
@@ -67,16 +69,12 @@ const Bookmark = () => {
   };
 
   return (
-    <div className="w-100 h-100 p-3">
+    <div className="widget-bookmark">
       {/* header */}
-      <div className="d-flex flex-row" style={{ height: '20%' }}>
-        <img
-          width="36px"
-          height="36px"
-          src="../img/icons8-bookmark-50.png"
-          alt="bookmark"
-        />
-        <span className="text-white flex-grow-1">Bookmark</span>
+      <div
+        // style={{ height: '10%' }}
+        className="d-flex justify-content-between align-items-center">
+        <BigTitle title="Bookmark" />
         <BtnPlus onClick={handleShow} />
       </div>
 

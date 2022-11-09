@@ -1,16 +1,20 @@
 import React from 'react';
+import './BigTitle.css';
 
-const BigTitle = (props: any) => {
+type bigTitleProps = {
+  title: string;
+};
+
+const BigTitle = ({ title }: bigTitleProps) => {
   return (
-    <div className="text-center big-title d-flex justify-content-start align-items-center">
-      {/* <TodoIcon /> */}
+    <div className="big-title text-center d-flex align-items-center">
       <img
-        src={`icon/haru-icon-${props.title}-title.png`}
+        src={`icon/haru-icon-${title}-title.png`}
         className="me-2"
-        alt={props.title}
-        style={{ width: '30px', height: '30px' }}
+        alt={title}
+        style={{ width: '32px', height: '32px' }}
       />
-      <p className="mb-0">{props.title}</p>
+      <span>{title}</span>
     </div>
   );
 };
