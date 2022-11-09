@@ -34,7 +34,7 @@ const Todo = () => {
         <BigTitle title="Todo" />
         <BtnPlus onClick={handleShow} />
       </div>
-      <div style={{ height: '90%' }} className="px-2 pb-2">
+      <div style={{ height: '90%' }}>
         <div style={{ height: '38%' }}>
           <RoutineList />
         </div>

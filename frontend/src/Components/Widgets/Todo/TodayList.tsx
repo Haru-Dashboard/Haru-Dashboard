@@ -86,20 +86,18 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
   return (
     <div style={{ fontSize: '0.8rem' }} className="h-100">
       <div className="d-flex justify-content-between mt-3 mb-2">
-        <div className="ms-4">
-          <SmallTitle title="Today" color="#49649E" />
-        </div>
+        <SmallTitle title="Today" color="#49649E" />
         <div>
           <CommonFilterBar handleCategory={handleCategory} />
         </div>
       </div>
       <div
-        className="sub-board mx-3"
+        className="sub-board"
         style={{ height: '80%', overflowY: 'auto', overflowX: 'hidden' }}>
-        <div className="px-2">
+        <div className="px-2 h-100">
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
-            <div className="container px-0 py-3">
+            <div className="container h-100 px-0 py-3">
               {filteredList.map((filtered: localToday, k: number) => {
                 return (
                   <TodayListItems
