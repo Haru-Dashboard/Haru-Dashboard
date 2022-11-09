@@ -21,7 +21,7 @@ const Bookmark = () => {
       if (Object.keys(res).length !== 0 && res['bookmarks']) {
         setBookmarks(res['bookmarks']);
       } else {
-        console.log('local에 저장된 bookmark가 없습니다.');
+        //
       }
     });
   };

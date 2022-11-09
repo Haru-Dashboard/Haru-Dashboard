@@ -28,7 +28,6 @@ export default function ScheduleAdd(props: any) {
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log(name + ':' + value);
     setInputs((values) => ({ ...values, [name]: value }));
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,12 +38,10 @@ export default function ScheduleAdd(props: any) {
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // console.log(inputs);
 
     let accessToken = localStorage.getItem('accessToken');
     const URLNext = `schedules`;
 
-    console.log(inputs);
     const backURL = process.env.REACT_APP_BACKURL;
     if (accessToken !== null) {
       if (inputs.title == null || inputs.title == '') {
@@ -74,7 +71,6 @@ export default function ScheduleAdd(props: any) {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             setSchedule([...schedule, inputs]);
             handleClose();
           });

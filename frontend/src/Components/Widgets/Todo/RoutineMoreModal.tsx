@@ -1,23 +1,14 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> origin/feat/29/routine
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import SelectDayBar from './SelectDayBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
-<<<<<<< HEAD
 import { week } from '../../../Utils/Todo';
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { defaultURL } from '../../../API';
-=======
-import { Form } from 'react-bootstrap';
-import { week } from '../../../Utils/Todo';
->>>>>>> origin/feat/29/routine
 
 const RoutineMoreModal = ({
   handleClose,
@@ -35,7 +26,6 @@ const RoutineMoreModal = ({
     { id: 'fri', day: '금', isClicked: listItem.fri, color: 'text-black' },
     { id: 'sat', day: '토', isClicked: listItem.sat, color: 'text-primary' },
   ];
-<<<<<<< HEAD
 
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
@@ -46,29 +36,13 @@ const RoutineMoreModal = ({
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
-    // console.log('createtodomodal routine= ', selectedList);
-
     setSelectedDayList(selectedList);
   };
 
-=======
-  const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
-  const [writtenContent, setWrittenContent] = useState('');
-  const [clickedCategory, setClickedCategory] = useState('전체');
-
-  const onClickUpdate = () => {};
-  const onClickDelete = () => {};
-  const handleSelectedDayList = (selectedList: Array<week>) => {
-    // console.log('createtodomodal routine= ', selectedList);
-
-    setSelectedDayList(selectedList);
-  };
->>>>>>> origin/feat/29/routine
   // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
   const handleCategory = (clicked: string) => {
     setClickedCategory(clicked);
   };
-<<<<<<< HEAD
   const onClickUpdate = () => {
     const url = `todos/${listItem.todoId}`;
     const data = {
@@ -82,7 +56,6 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    console.log(data);
     if (accessToken !== null) {
       fetch(defaultURL + url, {
         method: 'PATCH',
@@ -93,7 +66,9 @@ const RoutineMoreModal = ({
         body: JSON.stringify(data),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          //
+        });
     }
     location.reload();
   };
@@ -108,7 +83,9 @@ const RoutineMoreModal = ({
         },
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          //
+        });
     }
     location.reload();
   };
@@ -117,15 +94,12 @@ const RoutineMoreModal = ({
     const filtered = availableDays.filter((item: week) => item.isClicked);
     setavailableDaysList(filtered);
   }, []);
-=======
->>>>>>> origin/feat/29/routine
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <SmallTitle title="More" color="#49649E" />
         </Modal.Header>
-<<<<<<< HEAD
         {!isUpdate && (
           <div>
             <Modal.Body>
@@ -213,36 +187,6 @@ const RoutineMoreModal = ({
             </Modal.Footer>
           </div>
         )}
-=======
-        <Modal.Body>
-          <div>
-            {/* 날짜 선택 부분 */}
-            <SelectDayBar handleSelectedDayList={handleSelectedDayList} />
-            <hr />
-            <div className="d-flex justify-content-between">
-              <RoutineFilterBar
-                handleCategory={handleCategory}
-                clicked={listItem.category}
-              />
-              <Form.Control
-                type="text"
-                placeholder="Routine 이름"
-                onChange={(e) => setWrittenContent(e.target.value)}
-                className="ms-5 w-100 border border-0"
-                value={listItem.title}
-              />
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-end">
-          <Button variant="secondary" onClick={onClickUpdate}>
-            수정
-          </Button>
-          <Button variant="secondary" onClick={onClickDelete}>
-            삭제
-          </Button>
-        </Modal.Footer>
->>>>>>> origin/feat/29/routine
       </Modal>
     </div>
   );

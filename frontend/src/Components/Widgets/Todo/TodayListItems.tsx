@@ -19,7 +19,6 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
 
   // 선택한 todo 삭제하기
   const onClickDelete = (id: number) => {
-    // console.log(idx); // ok
     if (localToday) {
       // 리스트 전체
       const list = JSON.parse(localToday);
@@ -28,7 +27,6 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
         return item.id === id;
       });
       list.splice(index, 1);
-      // console.log(list);
 
       localStorage.setItem('today', JSON.stringify(list)); // ok
       setFilteredList(list);
@@ -36,7 +34,6 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
   };
 
   const onClickMore = () => {
-    console.log('more');
     handleShow();
   };
 

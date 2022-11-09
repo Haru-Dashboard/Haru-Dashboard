@@ -21,7 +21,6 @@ const SelectDayBarItems = ({
     setIsClicked(!isClicked);
     // 클릭된 것을 selectdaybar로 올리기
     handleSelectedDay(key);
-    // console.log(selectedDay);
   };
 
   useEffect(() => {

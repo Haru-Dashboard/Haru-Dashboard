@@ -22,9 +22,7 @@ const Weather = () => {
             setIcon(data['weather'][0]['icon']);
           });
       },
-      (error) => {
-        console.log(error);
-      },
+      (error) => {},
     );
   };
 

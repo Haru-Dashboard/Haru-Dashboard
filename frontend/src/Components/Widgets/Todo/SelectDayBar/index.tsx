@@ -4,7 +4,6 @@ import SelectDayBarItems from './SelectDayBarItems';
 
 export type selectDayBarType = {
   handleSelectedDayList: (selectedList: Array<week>) => void;
-<<<<<<< HEAD
   availableDays?: Array<week>;
   availableDaysList?: Array<week>;
 };
@@ -13,19 +12,12 @@ const SelectDayBar = ({
   handleSelectedDayList,
   availableDays,
   availableDaysList,
-}: handleSelectedDayList) => {
-=======
-  clicked: string;
-};
-
-const SelectDayBar = ({ handleSelectedDayList }: selectDayBarType) => {
->>>>>>> origin/feat/29/routine
+}: selectDayBarType) => {
   const [weeks, setWeeks] = useState<Array<week>>([]);
   // const [selectedDayObject, setSelectedDayObject] = useState<Array<week>>([]);
   const [selectedDay, setselectedDay] = useState<Array<week>>([]);
 
   useEffect(() => {
-    // console.log('availableDays==', availableDays);
     if (availableDays) {
       setWeeks(availableDays);
     } else {
@@ -51,7 +43,6 @@ const SelectDayBar = ({ handleSelectedDayList }: selectDayBarType) => {
     weeks[key].isClicked = !toggle;
 
     const filteredDay = weeks.filter((item) => item.isClicked === true);
-    // console.log(filteredDay);
     setselectedDay(filteredDay);
     handleSelectedDayList(weeks);
   };

@@ -38,7 +38,6 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
     if (e.key === 'Enter') {
       // 검색어가 존재하고, 검색어가 리스트 안에 없으면 저장하기
       if (searchedWord.trim() && !filterList.includes(searchedWord)) {
-        // console.log('into if');
         // state에 저장
         setFilterList(filterList.concat(searchedWord));
 
@@ -46,9 +45,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
         // localStorage에 저장된 category가 있는 경우
         if (category) {
           const arr = JSON.parse(category);
-          // console.log('arr=',arr, typeof(arr)); //object
           arr.push(searchedWord.trim());
-          // console.log('pushed arr= ', arr);
           localStorage.setItem('category', JSON.stringify(arr));
         } else {
           localStorage.setItem('category', JSON.stringify([searchedWord]));
@@ -68,13 +65,11 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
 
   // 선택한 category 삭제하기
   const onClickDelete = (idx: number) => {
-    // console.log(idx); // ok
     if (localCategories) {
       // 리스트 전체
       const list = JSON.parse(localCategories);
 
       list.splice(idx, 1);
-      // console.log(list);
       localStorage.setItem('category', JSON.stringify(list)); // ok
       setFilterList(list);
     }

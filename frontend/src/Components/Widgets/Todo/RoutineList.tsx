@@ -37,9 +37,7 @@ const routineList = ({ today }: any) => {
   };
 
   useEffect(() => {
-    // console.log(data);
     const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
-    // console.log('today==', today);
 
     if (accessToken !== null) {
       const url = `todos?day=${days[today]}`;
@@ -51,8 +49,6 @@ const routineList = ({ today }: any) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-
           setTodayRoutineList(data);
         });
     }
@@ -90,9 +86,9 @@ const routineList = ({ today }: any) => {
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
             <div className="container px-0 py-3">
-              {todayRoutineList.map((item: routineData) => {
+              {todayRoutineList.map((item: routineData, nums: number) => {
                 return (
-                  <RoutineListItems listItem={item} />
+                  <RoutineListItems listItem={item} key={nums} />
                   // setFilteredList={setFilteredList}
                 );
               })}

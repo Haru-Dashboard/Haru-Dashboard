@@ -5,18 +5,7 @@ import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
 import { routineFilterBar } from '../../../../Utils/Todo';
 
-<<<<<<< HEAD
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
-=======
-export type RoutineFilterBarType = {
-  handleCategory: (clicked: string) => void;
-  clicked: string;
-};
-const RoutineFilterBar = ({
-  handleCategory,
-  clicked,
-}: RoutineFilterBarType) => {
->>>>>>> origin/feat/29/routine
   const defaultURL = process.env.REACT_APP_BACKURL;
 
   const [clickedFilter, setClickedFilter] = useState('전체');
@@ -46,7 +35,6 @@ const RoutineFilterBar = ({
   const searchCategory = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // keyword : 사용자가 입력한 검색어를 받아옴
     const keyword = e.target as HTMLInputElement;
-    // console.log(keyword.value);
 
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
@@ -66,7 +54,6 @@ const RoutineFilterBar = ({
           response.json();
         })
         .then((data) => {
-          // console.log(data);
           setSearchResult(data);
         });
       if (typeof searchResult === 'undefined' && e.key === 'Enter') {
@@ -77,8 +64,6 @@ const RoutineFilterBar = ({
   };
 
   const onClickFilter = (clicked: string) => {
-    console.log('onclickfilter');
-
     handleCategory(clicked);
     setClickedFilter(clicked);
   };

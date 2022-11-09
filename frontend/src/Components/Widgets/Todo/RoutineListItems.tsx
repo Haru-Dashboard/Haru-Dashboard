@@ -19,7 +19,6 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const handleShow = () => setShow(true);
 
   const onClickMore = () => {
-    console.log('more');
     handleShow();
   };
   const onClickDelete = () => {
@@ -31,8 +30,9 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           Authorization: accessToken,
           'Content-Type': 'application/json',
         },
-      }).then((res) => console.log(res));
-      // .then((data) => console.log(data));
+      }).then((res) => {
+        //
+      });
     }
   };
 
