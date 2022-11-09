@@ -41,7 +41,6 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
     event.preventDefault();
 
     const clicked: HTMLButtonElement = event.currentTarget;
-    console.log(clicked);
   };
 
   const weeksDay = function (startDate: number) {

@@ -49,7 +49,6 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    console.log(target);
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
@@ -86,7 +85,6 @@ const CreateProjectModal = ({ handleClose, show }: any) => {
     const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
     if (accessToken !== null) {
       const url = process.env.REACT_APP_BACKURL;
-      console.log(inputs);
       await fetch(url + `projects`, {
         method: 'POST',
         headers: {

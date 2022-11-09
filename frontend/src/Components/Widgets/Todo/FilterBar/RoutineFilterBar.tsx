@@ -3,8 +3,9 @@ import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
+import { routineFilterBar } from '../../../../Utils/Todo';
 
-const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
+const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
 
   const [clickedFilter, setClickedFilter] = useState('전체');
@@ -14,6 +15,10 @@ const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
 
   const localCategories = localStorage.getItem('category');
   useEffect(() => {
+    // clicked를 기본 값으로
+    if (clicked) {
+      setClickedFilter(clicked);
+    }
     // localStorage에서 카테고리들 받아오기
     if (localCategories) {
       setLocalCategoryList(JSON.parse(localCategories));
@@ -30,7 +35,6 @@ const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
   const searchCategory = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // keyword : 사용자가 입력한 검색어를 받아옴
     const keyword = e.target as HTMLInputElement;
-    // console.log(keyword.value);
 
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
@@ -50,7 +54,6 @@ const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
           response.json();
         })
         .then((data) => {
-          // console.log(data);
           setSearchResult(data);
         });
       if (typeof searchResult === 'undefined' && e.key === 'Enter') {
@@ -61,12 +64,15 @@ const RoutineFilterBar = ({ handleCategory }: todayFilterBar) => {
   };
 
   const onClickFilter = (clicked: string) => {
-    console.log('onclickfilter');
-
     handleCategory(clicked);
     setClickedFilter(clicked);
   };
 
+  useEffect(() => {
+    if (clicked) {
+      setClickedFilter(clicked);
+    }
+  }, []);
   return (
     <div>
       {/* 

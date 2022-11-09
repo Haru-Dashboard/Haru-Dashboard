@@ -31,7 +31,6 @@ const createTodoModal = ({
     if (localToday) {
       const arr = JSON.parse(localToday);
       const tid = Number(arr[arr.length - 1].id);
-      console.log(arr[arr.length - 1], typeof tid);
 
       // localStorage에 저장하기
       arr.push({
@@ -69,8 +68,6 @@ const createTodoModal = ({
     3. 모달 닫기 
   */
   const saveToday = () => {
-    console.log('savetoday func');
-
     // 1. localStorage에 저장 + 2. TodayList에 emit해서 추가
     saveAtLocal();
     // 3. 모달 닫기
@@ -92,7 +89,6 @@ const createTodoModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    // console.log(data);
     if (accessToken !== null) {
       fetch(defaultURL + url, {
         method: 'POST',
@@ -103,20 +99,18 @@ const createTodoModal = ({
         body: JSON.stringify(data),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          //
+        });
     }
+    location.reload();
   };
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
-    // console.log('createtodomodal routine= ', selectedList);
-
     setSelectedDayList(selectedList);
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, []);
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
