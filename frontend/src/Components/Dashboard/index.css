@@ -1,0 +1,6 @@
+.main-board {
+  width: 100%;
+  background-color: rgb(256, 256, 256, 0.3);
+  border-radius: 4rem;
+  aspect-ratio: 2000/1000;
+}

@@ -1,40 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import { getWeather, weatherData } from '../../../API/Weather';
 
 const Weather = () => {
-  const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-  const [temperature, setTemperature] = useState(12.5);
-  const [icon, setIcon] = useState('01d');
+  const [temperature, setTemperature] = useState<number>();
+  const [icon, setIcon] = useState<string>();
 
   useEffect(() => {
-    // getWeather();
+    const pastWeatherData = localStorage.getItem('weatherData');
+    if (pastWeatherData !== null) {
+      const weather: weatherData = JSON.parse(pastWeatherData);
+      setTemperature(weather['main']['temp']);
+      setIcon(weather['weather'][0]['icon']);
+    } else {
+      getCoords()
+        .then(getWeather)
+        .then((weather: weatherData) => {
+          localStorage.setItem('weatherData', JSON.stringify(weather));
+          setTemperature(weather['main']['temp']);
+          setIcon(weather['weather'][0]['icon']);
+        });
+    }
   }, []);
 
-  const getWeather = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`,
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            setTemperature(data['main']['temp']);
-            setIcon(data['weather'][0]['icon']);
-          });
-      },
-      (error) => {},
-    );
-  };
+  function getCoords(): Promise<GeolocationCoordinates> {
+    return new Promise(function (resolve, reject) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => resolve(position.coords),
+        (error) => {
+          reject(error);
+        },
+      );
+    });
+  }
 
   return (
-    <div className="weather">
-      <img
-        src={`http://openweathermap.org/img/w/${icon}.png`}
-        alt="weather icon"
-      />
-      {/* Note &#8451; is a Unicode for DEGREE CELSIUS */}
-      <span>{temperature}&#8451;</span>
-    </div>
+    <>
+      {icon ? (
+        <div className="weather d-flex align-items-center">
+          <img
+            src={`http://openweathermap.org/img/w/${icon}.png`}
+            alt="weather icon"
+          />
+          {/* Note &#8451; is a Unicode for DEGREE CELSIUS */}
+          <span>{temperature?.toFixed(1)}&#8451;</span>
+        </div>
+      ) : (
+        <span style={{ width: '0px' }}></span>
+      )}
+    </>
   );
 };
 

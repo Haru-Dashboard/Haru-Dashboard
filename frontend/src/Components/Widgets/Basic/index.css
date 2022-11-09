@@ -1,0 +1,9 @@
+header {
+  aspect-ratio: 2000 / 175;
+}
+
+/* Chrome, Firefox, Opera, Safari 10.1+ */
+input::placeholder {
+  color: rgb(256, 256, 256, 0.6);
+  font-weight: lighter;
+}

@@ -1,24 +1,24 @@
 import React from 'react';
-import { screenType } from '../../../Utils/Common';
 import SearchBar from './SearchBar';
 import Time from './Time';
 import User from './User';
 import Weather from './Weather';
 import Settings from './Settings';
+import './index.css';
 
-const Basic = ({ width, height }: screenType) => {
+const Basic = () => {
   return (
-    <div style={{ height: height }}>
-      <div className="d-flex justify-content-between" style={{ height: '35%' }}>
+    <header>
+      <section className="d-flex justify-content-between align-items-center">
         <Weather />
         <Settings />
-      </div>
-      <div className="d-flex flex-row" style={{ height: '65%' }}>
+      </section>
+      <section className="d-flex flex-row pb-3">
         <Time />
         <SearchBar />
         <User />
-      </div>
-    </div>
+      </section>
+    </header>
   );
 };
 

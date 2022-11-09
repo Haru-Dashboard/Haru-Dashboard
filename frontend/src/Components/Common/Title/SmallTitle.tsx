@@ -1,4 +1,5 @@
 import React from 'react';
+import './SmallTitle.css';
 
 const SmallTitle = (props: any) => {
   return (
