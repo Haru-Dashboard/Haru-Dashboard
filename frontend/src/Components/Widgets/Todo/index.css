@@ -1,0 +1,18 @@
+.todo-board {
+  width: 25%;
+  height: 100%;
+  background-color: rgb(256, 256, 256, 0.3);
+  border-top-left-radius: 4rem;
+  border-bottom-left-radius: 4rem;
+  padding: 2rem 1rem 2rem 1.5rem;
+}
+
+.sub-board {
+  background-color: rgb(256, 256, 256, 0.3);
+  margin: auto;
+  border-radius: 3.1rem;
+}
+
+:hover.today-hover {
+  cursor: pointer;
+}

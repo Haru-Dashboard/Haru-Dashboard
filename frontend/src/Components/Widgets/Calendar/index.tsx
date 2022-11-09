@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { screenType } from '../../../Utils/Common';
 import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';

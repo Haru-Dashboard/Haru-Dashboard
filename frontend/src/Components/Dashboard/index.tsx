@@ -1,18 +1,14 @@
 import React from 'react';
-import GridBox from './GridBox';
-import { screenType } from '../../Utils/Common';
+import GridBoard from './GridBoard';
 import Todo from '../Widgets/Todo';
+import './index.css';
 
-const DashBoard = ({ width, height }: screenType) => {
+const DashBoard = () => {
   return (
-    <div
-      className="main-board w-100 d-flex"
-      style={{
-        height: `${height}px`,
-      }}>
-      <Todo width={width * 0.25} height={height} />
-      <GridBox width={width * 0.75} height={height} />
-    </div>
+    <main className="main-board d-flex">
+      <Todo />
+      <GridBoard />
+    </main>
   );
 };
 

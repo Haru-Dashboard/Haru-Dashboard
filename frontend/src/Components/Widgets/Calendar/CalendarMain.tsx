@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { screenType } from '../../../Utils/Common';
 import { ScheduleDataType } from './ScheduleDataType';
 import SelectDate from './CalendarDetail';
 
@@ -212,7 +211,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
   //날자체크해서 일정짜는 함수.
   function GetCalendarContents(dateMonth: number, dateNo: number) {
     let count = 0;
-    let color = [-1, -1, -1];
+    const color = [-1, -1, -1];
     for (let i = 0; i < schedule.length; i++) {
       const startDate = new Date(schedule[i].startDate);
       const endDate = new Date(schedule[i].endDate);
