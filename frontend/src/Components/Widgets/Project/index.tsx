@@ -57,7 +57,7 @@ const Project = () => {
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-center h-75">
+        <div className="d-flex justify-content-center">
           {projectList.map((item, idx) => {
             return (
               <ProjectCard
