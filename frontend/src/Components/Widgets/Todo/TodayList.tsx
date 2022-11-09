@@ -100,11 +100,12 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
             <div className="container px-0 py-3">
-              {filteredList.map((filtered: localToday) => {
+              {filteredList.map((filtered: localToday, k: number) => {
                 return (
                   <TodayListItems
                     listItem={filtered}
                     setFilteredList={setFilteredList}
+                    key={k}
                   />
                 );
               })}

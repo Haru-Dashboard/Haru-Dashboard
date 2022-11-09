@@ -54,8 +54,8 @@ const SelectDayBar = ({
         {selectedDay.length !== 7 && (
           <div className="d-flex justify-content-start">
             <p className="fw-bold px-3">매주 </p>
-            {selectedDay.map((item) => {
-              return <p>{item.day}&nbsp;</p>;
+            {selectedDay.map((item, k: number) => {
+              return <p key={k}>{item.day}&nbsp;</p>;
             })}
           </div>
         )}
