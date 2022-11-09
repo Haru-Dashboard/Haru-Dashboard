@@ -17,7 +17,6 @@ const CommonFilterBar = ({ handleCategory }: any) => {
         localCategoryList.concat(JSON.parse(localCategories)),
       );
     }
-    console.log(localCategories);
   }, []);
 
   // 클릭된 category를 state에 저장하고, parent에 보냄

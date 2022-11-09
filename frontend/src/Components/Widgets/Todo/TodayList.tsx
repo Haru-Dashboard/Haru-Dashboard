@@ -44,7 +44,6 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
   // 클릭한 필터에 맞게 필터링하는 함수
   const filterTodayList = () => {
     if (clickedCategory === '전체') {
-      // console.log('전체');
       // 현재 filteredList가 localTodayList와 다른 경우
       if (filteredList !== localTodayList && localToday) {
         checkIsEmpty(JSON.parse(localToday));
@@ -61,7 +60,6 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
 
   // 새로운 todo가 추가되면 리스트 변경
   useEffect(() => {
-    console.log('localstorage changed'); // ok
     if (localToday) {
       setLocalTodayList(JSON.parse(localToday));
       filterTodayList();
@@ -75,7 +73,6 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
 
   // 리셋하면 바로 반영되게
   useEffect(() => {
-    // console.log('removed todaylist', isTodayRemoved);
     setFilteredList([]);
   }, [isTodayRemoved]);
 
