@@ -36,7 +36,7 @@ const ProjectCard = (props: projectCardProps) => {
               key={idx}
               // TODO: bg -> random color
               bg="primary"
-              style={{ fontSize: '0.75rem' }}
+              style={{ fontSize: '0.5rem' }}
               // style={{backgroungColor: ???}}
             >
               {projectLabel.name}
