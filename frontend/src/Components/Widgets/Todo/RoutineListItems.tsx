@@ -14,7 +14,6 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
   const [show, setShow] = useState(false);
-  const accessToken = 'Bearer ' + new Cookies().get('accessToken');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -24,7 +23,9 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    if (accessToken !== null) {
+    let accessToken = new Cookies().get('accessToken');
+    if (accessToken !== undefined) {
+      accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {
