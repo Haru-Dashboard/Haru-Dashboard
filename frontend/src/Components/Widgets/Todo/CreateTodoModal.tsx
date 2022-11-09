@@ -6,6 +6,7 @@ import SmallTitle from '../../Common/Title/SmallTitle';
 import SelectDayBar from './SelectDayBar';
 import { week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
+import { Cookies } from 'react-cookie';
 
 const createTodoModal = ({
   handleClose,
@@ -77,7 +78,7 @@ const createTodoModal = ({
   // routine 생성하기 fetch 함수
   const saveRoutine = () => {
     const url = 'todos';
-    const accessToken = 'Bearer ' + localStorage.getItem('accessToken');
+    const accessToken = 'Bearer ' + new Cookies().get('accessToken');
     const data = {
       category: clickedCategory,
       title: writtenContent,
