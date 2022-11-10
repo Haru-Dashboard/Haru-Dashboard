@@ -4,7 +4,7 @@ import SelectDayBarItems from './SelectDayBarItems';
 
 export type selectDayBarType = {
   handleSelectedDayList: (selectedList: Array<week>) => void;
-  clicked: string;
+  clicked?: string;
 };
 
 const SelectDayBar = ({ handleSelectedDayList }: selectDayBarType) => {
