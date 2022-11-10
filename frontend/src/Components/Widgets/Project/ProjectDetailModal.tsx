@@ -2,6 +2,10 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   // TODO: project 수정하기
@@ -14,14 +18,12 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
-    let accessToken = localStorage.getItem('accessToken');
     const URLNext = 'projects/' + item.id;
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
         },
       })
         .then((response) => response.json())

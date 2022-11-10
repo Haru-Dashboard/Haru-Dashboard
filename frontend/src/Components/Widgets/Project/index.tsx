@@ -6,6 +6,10 @@ import BigTitle from '../../Common/Title/BigTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { project } from '../../../Utils/Project';
 import './index.css';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
@@ -16,14 +20,12 @@ const Project = () => {
   }, []);
 
   function fetchProjectList(pageNo: number) {
-    let accessToken = localStorage.getItem('accessToken');
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = `projects?page=${pageNo}&size=3`;
-    if (accessToken != null) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(backURL + URLNext, {
         method: 'GET',
-        headers: { Authorization: accessToken },
+        headers: { Authorization: getAccessToken() },
       })
         .then((response) => response.json())
         .then((data) => {
