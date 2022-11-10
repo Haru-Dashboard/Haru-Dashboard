@@ -17,7 +17,7 @@ export function saveToken(tokens: string) {
 }
 export function checkTokenValidate(): boolean {
   const tokens = localStorage.getItem('accessToken');
-  if (tokens != null && tokens != undefined) {
+  if (tokens !== null && tokens !== undefined) {
     return true;
   } else {
     localStorage.removeItem('accessToken');
