@@ -5,6 +5,10 @@ import RoutineMoreModal from './RoutineMoreModal';
 import { routine, routineData } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const routineList = ({ today }: any) => {
   const [clickedCategory, setClickedCategory] = useState('전체');
@@ -37,15 +41,12 @@ const routineList = ({ today }: any) => {
   };
 
   useEffect(() => {
-    let accessToken = localStorage.getItem('accessToken');
-
-    if (accessToken != undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       const url = `todos?day=${days[today]}`;
       fetch(defaultURL + url, {
         method: 'GET',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
         },
       })
         .then((res) => res.json())

@@ -3,6 +3,10 @@ import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
 import BigTitle from '../../Common/Title/BigTitle';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 function Calendar() {
   const titleOfCalendar = 'Specials';
 
@@ -27,13 +31,11 @@ function Calendar() {
   const backURL = process.env.REACT_APP_BACKURL;
 
   useEffect(() => {
-    let accessToken = localStorage.getItem('accessToken');
     const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
-    if (accessToken != undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(backURL + URLNext, {
         method: 'GET',
-        headers: { Authorization: accessToken },
+        headers: { Authorization: getAccessToken() },
       })
         .then((response) => response.json())
         .then((data) => {

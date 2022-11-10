@@ -7,6 +7,10 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -22,13 +26,11 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    let accessToken = localStorage.getItem('accessToken');
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
           'Content-Type': 'application/json',
         },
       }).then((res) => {

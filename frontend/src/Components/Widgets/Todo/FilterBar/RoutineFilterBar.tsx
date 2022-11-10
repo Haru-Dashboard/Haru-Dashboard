@@ -4,6 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
 import { routineFilterBar } from '../../../../Utils/Todo';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../../API/Authentication';
 
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
@@ -39,13 +43,11 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
 
-    let accessToken = localStorage.getItem('accessToken');
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       const url = `categories?keyword=${keyword.value}`;
       fetch(defaultURL + url, {
         method: 'GET',
-        headers: { Authorization: accessToken },
+        headers: { Authorization: getAccessToken() },
       })
         .then((response) => {
           response.json();

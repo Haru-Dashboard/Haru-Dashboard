@@ -3,6 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { TimeInsertT } from './ScheduleDataType';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
@@ -39,11 +43,10 @@ export default function ScheduleAdd(props: any) {
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    let accessToken = localStorage.getItem('accessToken');
     const URLNext = `schedules`;
 
     const backURL = process.env.REACT_APP_BACKURL;
-    if (accessToken !== undefined) {
+    if (checkTokenValidate()) {
       if (inputs.title == null || inputs.title == '') {
         alert('타이틀이 없습니다.');
       } else if (inputs.content == null || inputs.content == '') {
@@ -60,11 +63,10 @@ export default function ScheduleAdd(props: any) {
         if (inputs.color == null) {
           setInputs((values) => ({ ...values, color: 0 }));
         }
-        accessToken = 'Bearer ' + accessToken;
         fetch(backURL + URLNext, {
           method: 'POST',
           headers: {
-            Authorization: accessToken,
+            Authorization: getAccessToken(),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(inputs),
