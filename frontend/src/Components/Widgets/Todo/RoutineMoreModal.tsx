@@ -9,7 +9,6 @@ import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { defaultURL } from '../../../API';
-import { Cookies } from 'react-cookie';
 
 const RoutineMoreModal = ({
   handleClose,
@@ -56,7 +55,7 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
@@ -76,7 +75,7 @@ const RoutineMoreModal = ({
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {

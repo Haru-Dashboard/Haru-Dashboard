@@ -1,5 +1,3 @@
-import { Cookies } from 'react-cookie';
-
 export function Authentication() {
   const backURL = process.env.REACT_APP_BACKURL;
   const emails = process.env.REACT_APP_BACK_TMP_EMAIL;
@@ -11,7 +9,6 @@ export function Authentication() {
   })
     .then((response) => response.json())
     .then((data) => {
-      const cookies = new Cookies();
-      cookies.set('accessToken', data.accessToken);
+      localStorage.setItem('accessToken', data.accessToken);
     });
 }

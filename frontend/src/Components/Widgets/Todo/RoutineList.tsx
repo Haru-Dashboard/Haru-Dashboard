@@ -5,7 +5,6 @@ import RoutineMoreModal from './RoutineMoreModal';
 import { routine, routineData } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
-import { Cookies } from 'react-cookie';
 
 const routineList = ({ today }: any) => {
   const [clickedCategory, setClickedCategory] = useState('전체');
@@ -38,9 +37,9 @@ const routineList = ({ today }: any) => {
   };
 
   useEffect(() => {
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
 
-    if (accessToken !== undefined) {
+    if (accessToken != undefined) {
       accessToken = 'Bearer ' + accessToken;
       const url = `todos?day=${days[today]}`;
       fetch(defaultURL + url, {
