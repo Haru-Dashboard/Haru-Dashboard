@@ -1,28 +1,29 @@
 package com.haru.api.user.dto;
 
 import com.haru.api.user.domain.entity.User;
-import com.haru.api.user.security.token.Token;
 import lombok.*;
 
 public class UserResponse {
+
     @Getter
     @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class Login {
+    public static class UserInfo {
         private Long userId;
+        private String email;
         private String name;
-        private String accessToken;
         private String refreshToken;
 
-        public static Login build(User user, Token accessToken) {
-            return Login.builder()
+        public static UserInfo build(User user) {
+            return UserInfo.builder()
                     .userId(user.getId())
+                    .email(user.getEmail())
                     .name(user.getName())
-                    .accessToken(accessToken.getToken())
                     .refreshToken(user.getRefreshToken())
                     .build();
         }
+
     }
 
 

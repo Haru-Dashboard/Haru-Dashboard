@@ -1,0 +1,9 @@
+### token 재발급
+POST {{apiUrl}}/auth/refresh
+Authorization: {{authorizationToken}}
+Content-Type: application/json;charset=UTF-8
+
+{
+  "accessToken" : "",
+  "refreshToken" : ""
+}
