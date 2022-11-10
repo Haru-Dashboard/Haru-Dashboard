@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { TimeInsertT } from './ScheduleDataType';
-import { Cookies } from 'react-cookie';
 
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
@@ -40,7 +39,7 @@ export default function ScheduleAdd(props: any) {
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     const URLNext = `schedules`;
 
     const backURL = process.env.REACT_APP_BACKURL;
@@ -102,9 +101,9 @@ export default function ScheduleAdd(props: any) {
             <Form.Select name="color" onChange={handleSelect} defaultValue={0}>
               <option value={0}>빨강</option>
               <option value={1}>파랑</option>
-              <option value={2}>초록</option>
+              <option value={2}>노랑</option>
               <option value={3}>검정</option>
-              <option value={4}>주환</option>
+              <option value={4}>초록</option>
             </Form.Select>
           </Form.Group>
 

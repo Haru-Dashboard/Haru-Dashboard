@@ -3,7 +3,6 @@ import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
 import BigTitle from '../../Common/Title/BigTitle';
-import { Cookies } from 'react-cookie';
 function Calendar() {
   const titleOfCalendar = 'Specials';
 
@@ -28,10 +27,9 @@ function Calendar() {
   const backURL = process.env.REACT_APP_BACKURL;
 
   useEffect(() => {
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
-    if (accessToken !== undefined) {
-      console.log(accessToken);
+    if (accessToken != undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(backURL + URLNext, {
         method: 'GET',

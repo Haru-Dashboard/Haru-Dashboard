@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { todayFilterBar } from './TodayFilterBar';
 import { routineFilterBar } from '../../../../Utils/Todo';
-import { Cookies } from 'react-cookie';
 
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
@@ -40,7 +39,7 @@ const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
     // 입력한 검색어 state에 저장
     setSearchedword(keyword.value);
 
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       const url = `categories?keyword=${keyword.value}`;

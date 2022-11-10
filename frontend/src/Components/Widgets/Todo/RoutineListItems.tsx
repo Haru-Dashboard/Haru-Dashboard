@@ -7,7 +7,6 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
-import { Cookies } from 'react-cookie';
 
 const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -23,7 +22,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {

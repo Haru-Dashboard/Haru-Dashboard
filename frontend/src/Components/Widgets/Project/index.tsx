@@ -6,7 +6,6 @@ import BigTitle from '../../Common/Title/BigTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { project } from '../../../Utils/Project';
 import './index.css';
-import { Cookies } from 'react-cookie';
 
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
@@ -17,7 +16,7 @@ const Project = () => {
   }, []);
 
   function fetchProjectList(pageNo: number) {
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = `projects?page=${pageNo}&size=3`;
     if (accessToken != null) {

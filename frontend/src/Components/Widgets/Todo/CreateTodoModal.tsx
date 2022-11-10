@@ -6,7 +6,6 @@ import SmallTitle from '../../Common/Title/SmallTitle';
 import SelectDayBar from './SelectDayBar';
 import { week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
-import { Cookies } from 'react-cookie';
 
 const createTodoModal = ({
   handleClose,
@@ -89,7 +88,7 @@ const createTodoModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    let accessToken = new Cookies().get('accessToken');
+    let accessToken = localStorage.getItem('accessToken');
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
       fetch(defaultURL + url, {
