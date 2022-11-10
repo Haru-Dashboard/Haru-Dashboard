@@ -17,7 +17,7 @@ type inputs = {
   endDate: Date;
 };
 
-const ProjectCreationModal = ({ handleClose, show }: any) => {
+const CreateProjectModal = ({ handleClose, show, item }: any) => {
   const [file, setFile] = useState<File>();
   const [inputs, setInputs] = useState<inputs>({
     title: '',
@@ -216,4 +216,4 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
   );
 };
 
-export default ProjectCreationModal;
+export default CreateProjectModal;

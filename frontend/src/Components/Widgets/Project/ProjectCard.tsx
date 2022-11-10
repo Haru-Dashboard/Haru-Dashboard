@@ -16,44 +16,59 @@ const ProjectCard = (props: projectCardProps) => {
       onClick={() => handleShowMore(item.id)}
       key={item.id}>
       <div
-        className="h-100 p-1"
+        className="p-2 h-100 d-flex flex-column justify-content-between"
         style={{
           backgroundColor: 'rgba(255,255,255,0.5)',
           borderRadius: '1rem',
         }}>
-        <div
-          className="d-flex justify-content-center"
-          style={{ width: '100%', height: '45%' }}>
-          <img src={item.imageInfo.imageUrl} className="w-80 h-100" />
+        <div className="col d-flex justify-content-center">
+          <img src={item.imageInfo.imageUrl} className="w-80" />
         </div>
-        <p className="my-0" style={{ height: '12.5%', fontSize: '1rem' }}>
+        <p className="col my-0 fw-bold mt-1" style={{ fontSize: '0.8rem' }}>
           {item.title}
         </p>
-        <div style={{ height: '12.5%' }}>
-          {item.projectLabels.map((projectLabel, idx) => (
-            <Badge
-              pill
-              key={idx}
-              // TODO: bg -> random color
-              bg="primary"
-              style={{ fontSize: '0.5rem' }}
-              // style={{backgroungColor: ???}}
-            >
-              {projectLabel.name}
-            </Badge>
-          ))}
+        <div className="col">
+          {item.projectLabels.length > 2 && (
+            <div>
+              {item.projectLabels.slice(0, 2).map((projectLabel, idx) => (
+                <Badge
+                  pill
+                  key={idx}
+                  bg="warning"
+                  style={{ fontSize: '0.5rem', marginRight: '0.1rem' }}>
+                  {projectLabel.name}
+                </Badge>
+              ))}
+              <span className="fw-bold" style={{ fontSize: '0.5rem' }}>
+                + {item.projectLabels.length - 2}
+              </span>
+            </div>
+          )}
+          {item.projectLabels.length <= 2 && (
+            <div>
+              {item.projectLabels.map((projectLabel, idx) => (
+                <Badge
+                  pill
+                  key={idx}
+                  bg="warning"
+                  style={{ fontSize: '0.5rem', marginRight: '0.1rem' }}>
+                  {projectLabel.name}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
-        <p className="my-0" style={{ height: '25%', fontSize: '0.75rem' }}>
-          {item.content}
-        </p>
         <div
-          className="d-flex justify-content-end"
+          className="col d-flex justify-content-end"
           style={{ height: '5%', right: '1rem', bottom: '1rem' }}>
           {item.projectLinks.map((projectLink, idx) => (
-            <a href={projectLink.link} key={idx}>
+            <a
+              href={projectLink.link}
+              key={idx}
+              style={{ marginRight: '0.3rem' }}>
               <img
-                width="20"
-                height="20"
+                width="18"
+                height="18"
                 src={getFaviconSrc(projectLink.link)}
                 alt={projectLink.name}
               />

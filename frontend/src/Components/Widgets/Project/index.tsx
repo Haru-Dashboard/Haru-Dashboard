@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectCreationModal from './ProjectCreationModal';
+import CreateProjectModal from './CreateProjectModal';
 import ProjectDetailModal from './ProjectDetailModal';
 import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
@@ -56,7 +56,7 @@ const Project = () => {
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center h-85">
           {projectList.map((item, idx) => {
             return (
               <ProjectCard
@@ -71,18 +71,15 @@ const Project = () => {
       </div>
       {/* project를 생성하는 모달 */}
       <div>
-        <ProjectCreationModal
+        <CreateProjectModal
           handleClose={handleCloseCreate}
           show={showCreate}
+          item={selectedListNo ? projectList[selectedListNo] : null}
         />
       </div>
       {/* project 상세 보기 모달 */}
       <div>
-        <ProjectDetailModal
-          handleClose={handleCloseMore}
-          show={showMore}
-          item={selectedListNo ? projectList[selectedListNo] : null}
-        />
+        <ProjectDetailModal handleClose={handleCloseMore} show={showMore} />
       </div>
     </div>
   );

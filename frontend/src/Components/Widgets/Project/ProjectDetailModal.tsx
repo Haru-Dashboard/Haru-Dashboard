@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
+import { defaultURL } from '../../../API';
 
 const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   // TODO: project 수정하기
@@ -13,12 +14,11 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
   // TODO: 프로젝트 삭제하기
   const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const backURL = process.env.REACT_APP_BACKURL;
     let accessToken = localStorage.getItem('accessToken');
     const URLNext = 'projects/' + item.id;
     if (accessToken !== undefined) {
       accessToken = 'Bearer ' + accessToken;
-      fetch(backURL + URLNext, {
+      fetch(defaultURL + URLNext, {
         method: 'DELETE',
         headers: {
           Authorization: accessToken,
@@ -32,6 +32,9 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
       //
     }
   };
+
+  useEffect(() => {}, []);
+
   return (
     <div>
       <Modal show={show} onHide={handleClose} className="h-100">
@@ -49,7 +52,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: any) => {
               <div
                 className="w-70 bg-secondary mx-auto mb-3"
                 style={{ height: '150px' }}>
-                image
+                {/* <img src={item.imageInfo.imageUrl} alt="" /> */}
               </div>
               <Form.Group>
                 <Form.Label>종료일</Form.Label>
