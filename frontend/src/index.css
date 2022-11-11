@@ -1,8 +1,138 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Thin.woff);
+  font-weight: thin;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-ExtraLight.woff);
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Light.woff);
+  font-weight: light;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Regular.woff);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Medium.woff);
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Bold.woff);
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Black.woff);
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-ExtraLightItalic.woff);
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-LightItalic.woff);
+  font-weight: light;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-Italic.woff);
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-MediumItalic.woff);
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-SemiBoldItalic.woff);
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-BoldItalic.woff);
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.woff);
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/fonts/Montserrat/Montserrat-BlackItalic.woff);
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Thin.otf) format('woff2');
+  font-weight: thin;
+  unicode-range: U+AC00-D7A3;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Light.otf) format('woff2');
+  font-weight: light;
+  unicode-range: U+AC00-D7A3;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Regular.otf) format('woff2');
+  font-weight: normal;
+  unicode-range: U+AC00-D7A3;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Medium.otf) format('woff2');
+  font-weight: 500;
+  unicode-range: U+AC00-D7A3;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Bold.otf) format('woff2');
+  font-weight: bold;
+  unicode-range: U+AC00-D7A3;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url(./assets/fonts/NotoSansKR/NotoSansKR-Black.otf) format('woff2');
+  font-weight: 900;
+  unicode-range: U+AC00-D7A3;
+}
+
 body {
   height: 100%;
-  font-family: 'Montserrat', sans-serif !important ;
-  font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+* {
+  font-family: 'Montserrat', 'Noto Sans KR';
 }
 
 .App {
