@@ -1,11 +1,10 @@
 package com.haru.api.user.security.token;
 
-import com.haru.api.user.security.userdetails.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,32 +14,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Log4j2
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    // 목적 : Jwt가 유효한 토큰인지 인증하기 위한 Filter
-    private final TokenProvider tokenProvider;
-    private final CustomUserDetailService customUserDetailService;
+
+    private final JwtTokenProvider tokenProvider;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getAccessTokenFromRequest(request);
+        String token = parseBearerToken(request);
 
-        if (StringUtils.hasText(token)) {
-            Long userId = tokenProvider.getUserIdFromAccessToken(token);
-            UserDetails userDetails = customUserDetailService.loadUserById(userId);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        // Validation Access Token
+        if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
+            Authentication authentication = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug(authentication.getName() + "의 인증정보 저장");
+        } else {
+            log.debug("유효한 JWT 토큰이 없습니다.");
         }
 
         filterChain.doFilter(request, response);
     }
-    private String getAccessTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (StringUtils.hasText(token) && token.startsWith("Bearer")) {
-            return token.substring(7);
+
+    private String parseBearerToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
         }
         return null;
     }
-
 }
