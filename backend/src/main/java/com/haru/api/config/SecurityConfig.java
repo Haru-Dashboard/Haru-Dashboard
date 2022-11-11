@@ -46,11 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().disable()
                 .oauth2Login()
                 .authorizationEndpoint()
-                .baseUri("/oauth2/authorize")
+                .baseUri("/api/oauth2/authorize")
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 .and()
                 .redirectionEndpoint()
-                .baseUri("/oauth2/code/*")
+                .baseUri("/api/oauth2/code/*")
                 .and()
                 .userInfoEndpoint()     // OAuth2 로그인 성공 후 사용자 정보 가져오기
                 .userService(customOAuth2UserService)   // 소셜로그인 성공 시 OAuth2UserService 인터페이스의 구현체 등록(구글에서 사용자 정보 가져온 상태에서 추가 진행)
