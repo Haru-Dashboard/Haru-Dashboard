@@ -205,7 +205,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
         <div className="calendar-Weekends-content saturday">Sat</div>
       </div>
       {weekStartDay[5] < dateOfThisMonth ? (
-        <div className="calendar-dates">
+        <div className="calendar-dates cursor-pointer">
           <div className="calendar-dates-week6">
             {firstWeekDay(weekStartDay[0])}
           </div>
@@ -226,7 +226,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
           </div>
         </div>
       ) : weekStartDay[4] < dateOfThisMonth ? (
-        <div className="calendar-dates">
+        <div className="calendar-dates cursor-pointer">
           <div className="calendar-dates-week5">
             {firstWeekDay(weekStartDay[0])}
           </div>
@@ -244,7 +244,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
           </div>
         </div>
       ) : (
-        <div className="calendar-dates">
+        <div className="calendar-dates cursor-pointer">
           <div className="calendar-dates-week4">
             {weeksDay(weekStartDay[0])}
           </div>

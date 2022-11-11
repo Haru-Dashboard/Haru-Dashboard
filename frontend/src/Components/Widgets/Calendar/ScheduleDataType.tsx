@@ -1,5 +1,4 @@
 export type ScheduleDataType = {
-  selectedDate?: Date;
   schedule: {
     id: number;
     title: string;
@@ -8,43 +7,42 @@ export type ScheduleDataType = {
     endDate: Date;
   }[];
 };
-export function DateBetween(date1: Date, date2: Date, date3: Date) {
+export function isDateBetweenTwoDates(
+  dateBefore: Date,
+  dateNext: Date,
+  checkDate: Date,
+): boolean {
   let answer = false;
   if (
-    date1.getFullYear() < date2.getFullYear() ||
-    (date1.getFullYear() == date2.getFullYear() &&
-      (date1.getMonth() < date2.getMonth() ||
-        (date1.getMonth() == date2.getMonth() &&
-          date1.getDate() <= date2.getDate())) &&
-      date3.getFullYear() > date2.getFullYear()) ||
-    (date3.getFullYear() == date2.getFullYear() &&
-      (date3.getMonth() > date2.getMonth() ||
-        (date3.getMonth() == date2.getMonth() &&
-          date3.getDate() >= date2.getDate())))
+    dateBefore.getFullYear() < checkDate.getFullYear() ||
+    (dateBefore.getFullYear() == checkDate.getFullYear() &&
+      (dateBefore.getMonth() < checkDate.getMonth() ||
+        (dateBefore.getMonth() == checkDate.getMonth() &&
+          dateBefore.getDate() <= checkDate.getDate())) &&
+      dateNext.getFullYear() > checkDate.getFullYear()) ||
+    (dateNext.getFullYear() == checkDate.getFullYear() &&
+      (dateNext.getMonth() > checkDate.getMonth() ||
+        (dateNext.getMonth() == checkDate.getMonth() &&
+          dateNext.getDate() >= checkDate.getDate())))
   ) {
     answer = true;
   }
   return answer;
 }
-export function TimeInsertT(date: string) {
-  let newDate =
-    date[0] +
-    date[1] +
-    date[2] +
-    date[3] +
-    '-' +
-    date[5] +
-    date[6] +
-    '-' +
-    date[8] +
-    date[9] +
-    'T' +
-    date[11] +
-    date[12] +
-    ':' +
-    date[14] +
-    date[15] +
-    '';
-
+export function timeStringConverToBootstrapTime(oldDate: string): string {
+  const newDate = new Date(+oldDate + 3240).toISOString().replace(/\..*/, '');
   return newDate;
+}
+export function timeDateConverToBootstrapTime(oldDate: Date): string {
+  const newDate = new Date(+oldDate + 3240).toISOString().replace(/\..*/, '');
+  console.log(newDate);
+  return newDate;
+}
+export function datetimeTimeSettingTo0(date: Date): Date {
+  const newDate = new Intl.DateTimeFormat(getCountry()).format(date);
+  return new Date(newDate);
+}
+
+export function getCountry(): string {
+  return 'kr';
 }

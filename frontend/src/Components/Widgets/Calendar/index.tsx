@@ -29,6 +29,7 @@ function Calendar() {
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
     if (checkTokenValidate()) {
+      setSchedule(schedule.filter((sch: any) => sch.id !== -1));
       fetch(backURL + URLNext, {
         method: 'GET',
         headers: { Authorization: getAccessToken() },
@@ -55,19 +56,18 @@ function Calendar() {
     setSelectedNo(parseInt(button.value));
   };
   return (
-    <div className="calendar-board">
+    <div className="calendar-board cursor-default">
       <ScheduleAdd
         showModal={showAddModal}
         handleClose={handleAddClose}
-        setSchedule={setSchedule}
         schedule={schedule}
+        setSchedule={setSchedule}
       />
       <SCheduleManage
-        handleManageShow={handleManageShow}
         showModal={showManageModal}
         handleClose={handleManageClose}
-        setSchedule={setSchedule}
         schedule={schedule}
+        setSchedule={setSchedule}
         scheduleNo={selectedNo}
       />
       <div className="d-flex justify-content-between align-items-center">

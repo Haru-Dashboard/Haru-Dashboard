@@ -5,6 +5,10 @@
   border-radius: 3rem;
   padding: 1rem;
 }
+.cursor-default{
+  cursor:default;
+}
+.cursor-pointer{cursor:pointer;}
 .full100 {
   width: 100%;
   height: 100%;

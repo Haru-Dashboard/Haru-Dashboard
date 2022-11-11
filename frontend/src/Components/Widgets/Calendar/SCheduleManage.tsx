@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { TimeInsertT } from './ScheduleDataType';
+import {
+  timeStringConverToBootstrapTime,
+  datetimeTimeSettingTo0,
+} from './ScheduleDataType';
 import {
   checkTokenValidate,
   getAccessToken,
@@ -10,17 +13,7 @@ import {
 
 export default function SCheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
-  const today = new Date();
-  const sampledatetime = new Date(
-    today.getFullYear() +
-      '-' +
-      ((today.getMonth() + 1) / 10 >= 1 ? '' : '0') +
-      (today.getMonth() + 1) +
-      '-' +
-      (today.getDate() / 10 >= 1 ? '' : '0') +
-      today.getDate() +
-      'T00:00',
-  );
+  const sampledatetime = datetimeTimeSettingTo0(new Date());
   const [inputs, setInputs] = useState({
     title: '',
     startDate: sampledatetime,
@@ -71,9 +64,9 @@ export default function SCheduleManage(props: any) {
     }
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    console.log('T');
     if (inputs.title == '' || inputs.title == null) {
       setInputs((values) => ({ ...values, title: inputs.title }));
       inputs.title = schedule[scheduleNo].title;
@@ -81,6 +74,7 @@ export default function SCheduleManage(props: any) {
     if (inputs.startDate == null || inputs.startDate == sampledatetime) {
       setInputs((values) => ({ ...values, startDate: inputs.startDate }));
       inputs.startDate = schedule[scheduleNo].startDate;
+      console.log(inputs.startDate);
     }
     if (inputs.endDate == null || inputs.endDate == sampledatetime) {
       setInputs((values) => ({ ...values, endDate: inputs.endDate }));
@@ -121,7 +115,7 @@ export default function SCheduleManage(props: any) {
         <Modal.Title>일정관리</Modal.Title>
       </Modal.Header>
       {showModal ? (
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Modal.Body>
             <Form.Group>
               <Form.Label>제목</Form.Label>
@@ -142,8 +136,11 @@ export default function SCheduleManage(props: any) {
               <Form.Control
                 type="datetime-local"
                 name="startDate"
+                className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={TimeInsertT(schedule[scheduleNo].startDate)}
+                defaultValue={timeStringConverToBootstrapTime(
+                  schedule[scheduleNo].startDate,
+                )}
                 required
               />
             </Form.Group>
@@ -152,8 +149,11 @@ export default function SCheduleManage(props: any) {
               <Form.Control
                 type="datetime-local"
                 name="endDate"
+                className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={TimeInsertT(schedule[scheduleNo].endDate)}
+                defaultValue={timeStringConverToBootstrapTime(
+                  schedule[scheduleNo].endDate,
+                )}
                 required
               />
             </Form.Group>
@@ -173,7 +173,7 @@ export default function SCheduleManage(props: any) {
             <Button type="button" onClick={removeSchedule} variant="primary">
               삭제
             </Button>
-            <Button onClick={handleSubmit} variant="primary">
+            <Button type="submit" variant="primary">
               수정
             </Button>
           </Modal.Footer>

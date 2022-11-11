@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { TimeInsertT } from './ScheduleDataType';
+import {
+  timeDateConverToBootstrapTime,
+  datetimeTimeSettingTo0,
+} from './ScheduleDataType';
 import {
   checkTokenValidate,
   getAccessToken,
@@ -10,17 +13,7 @@ import {
 
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
-  const today = new Date();
-  const sampledatetime = new Date(
-    today.getFullYear() +
-      '-' +
-      ((today.getMonth() + 1) / 10 >= 1 ? '' : '0') +
-      (today.getMonth() + 1) +
-      '-' +
-      (today.getDate() / 10 >= 1 ? '' : '0') +
-      today.getDate() +
-      'T00:00',
-  );
+  const sampledatetime = datetimeTimeSettingTo0(new Date());
   const [inputs, setInputs] = useState({
     title: '',
     startDate: sampledatetime,
@@ -29,21 +22,16 @@ export default function ScheduleAdd(props: any) {
     color: -1,
   });
 
-  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    console.log('T');
 
-    const URLNext = `schedules`;
+    const URLNext = 'schedules';
 
     const backURL = process.env.REACT_APP_BACKURL;
     if (checkTokenValidate()) {
@@ -76,14 +64,12 @@ export default function ScheduleAdd(props: any) {
       }
     }
   };
-
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
         <Modal.Title>일정추가</Modal.Title>
       </Modal.Header>
-
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Modal.Body>
           <Form.Group>
             <Form.Label>제목</Form.Label>
@@ -101,8 +87,9 @@ export default function ScheduleAdd(props: any) {
             <Form.Control
               type="datetime-local"
               name="startDate"
+              className="cursor-pointer"
               onChange={handleChange}
-              defaultValue={TimeInsertT('' + new Date() + '')}
+              defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
             />
           </Form.Group>
@@ -111,8 +98,9 @@ export default function ScheduleAdd(props: any) {
             <Form.Control
               type="datetime-local"
               name="endDate"
+              className="cursor-pointer"
               onChange={handleChange}
-              defaultValue={'' + new Date() + ''}
+              defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
             />
           </Form.Group>
@@ -128,7 +116,7 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleSubmit} variant="primary">
+          <Button type="submit" variant="primary">
             저장
           </Button>
         </Modal.Footer>

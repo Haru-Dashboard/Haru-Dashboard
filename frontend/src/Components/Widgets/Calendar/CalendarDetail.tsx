@@ -1,5 +1,5 @@
 import React from 'react';
-import { DateBetween } from './ScheduleDataType';
+import { isDateBetweenTwoDates } from './ScheduleDataType';
 
 type calendarDetailPorps = {
   selectedDate: Date;
@@ -21,10 +21,10 @@ export default function CalendarDetail({
   const calendarDetails =
     schedule != null && schedule.length > 0
       ? schedule.map((index, tmpKey) =>
-          DateBetween(
+          isDateBetweenTwoDates(
             new Date(index.startDate),
-            selectedDate,
             new Date(index.endDate),
+            selectedDate,
           ) ? (
             <div className="calendar-schedule-detail" key={tmpKey}>
               <button
