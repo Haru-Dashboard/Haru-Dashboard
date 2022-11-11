@@ -13,7 +13,7 @@
 
 요청 HTTP Request
 include::{snippets}/projects_create/http-request.adoc[]
-include::{snippets}/projects_create/request-fields.adoc[]
+include::{snippets}/projects_create/request-parts.adoc[]
 
 응답 HTTP Response
 include::{snippets}/projects_create/http-response.adoc[]
