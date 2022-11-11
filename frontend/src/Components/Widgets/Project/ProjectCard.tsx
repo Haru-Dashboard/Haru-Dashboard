@@ -21,7 +21,7 @@ const ProjectCard = (props: projectCardProps) => {
           backgroundColor: 'rgba(255,255,255,0.5)',
           borderRadius: '1rem',
         }}>
-        <div className="col d-flex justify-content-center">
+        <div className="col d-flex justify-content-center h-50">
           <img src={item.imageInfo.imageUrl} className="w-80" />
         </div>
         <p className="col my-0 fw-bold mt-1" style={{ fontSize: '0.8rem' }}>
