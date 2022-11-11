@@ -29,8 +29,6 @@ export default function ScheduleAdd(props: any) {
   };
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    console.log('T');
-
     const URLNext = 'schedules';
 
     const backURL = process.env.REACT_APP_BACKURL;
