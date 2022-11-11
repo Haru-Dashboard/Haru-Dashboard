@@ -2,44 +2,35 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { TimeInsertT } from './ScheduleDataType';
+import {
+  timeStringConverToBootstrapTime,
+  datetimeTimeSettingTo0,
+} from './ScheduleDataType';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
-export default function SCheduleManage(props: any) {
+export default function ScheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
-  const today = new Date();
-  const sampledatetime = new Date(
-    today.getFullYear() +
-      '-' +
-      ((today.getMonth() + 1) / 10 >= 1 ? '' : '0') +
-      (today.getMonth() + 1) +
-      '-' +
-      (today.getDate() / 10 >= 1 ? '' : '0') +
-      today.getDate() +
-      'T00:00',
-  );
+  const sampledatetime = datetimeTimeSettingTo0(new Date());
   const [inputs, setInputs] = useState({
     title: '',
     startDate: sampledatetime,
     endDate: sampledatetime,
     content: '',
     color: -1,
+    id: -1,
   });
-  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
-    let accessToken = localStorage.getItem('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
         },
       })
         .then((response) => response.json())
@@ -69,13 +60,10 @@ export default function SCheduleManage(props: any) {
         value = schedule[scheduleNo].title;
       } else if (name == 'content') {
         value = schedule[scheduleNo].content;
-      } else {
-        value = schedule[scheduleNo].color;
       }
     }
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputs.title == '' || inputs.title == null) {
@@ -94,19 +82,13 @@ export default function SCheduleManage(props: any) {
       setInputs((values) => ({ ...values, content: inputs.content }));
       inputs.content = schedule[scheduleNo].content;
     }
-    if (inputs.color == null || inputs.color == -1) {
-      setInputs((values) => ({ ...values, color: inputs.color }));
-      inputs.color = schedule[scheduleNo].color;
-    }
-    let accessToken = localStorage.getItem('accessToken');
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(backURL + URLNext, {
         method: 'PATCH',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(inputs),
@@ -145,26 +127,17 @@ export default function SCheduleManage(props: any) {
                 required
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>색상</Form.Label>
-              <Form.Select
-                name="color"
-                onChange={handleSelect}
-                defaultValue={schedule[scheduleNo].color}>
-                <option value={0}>빨강</option>
-                <option value={1}>파랑</option>
-                <option value={2}>노랑</option>
-                <option value={3}>검정</option>
-                <option value={4}>초록</option>
-              </Form.Select>
-            </Form.Group>
+
             <Form.Group>
               <Form.Label>시작일</Form.Label>
               <Form.Control
                 type="datetime-local"
                 name="startDate"
+                className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={TimeInsertT(schedule[scheduleNo].startDate)}
+                defaultValue={timeStringConverToBootstrapTime(
+                  schedule[scheduleNo].startDate,
+                )}
                 required
               />
             </Form.Group>
@@ -173,8 +146,11 @@ export default function SCheduleManage(props: any) {
               <Form.Control
                 type="datetime-local"
                 name="endDate"
+                className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={TimeInsertT(schedule[scheduleNo].endDate)}
+                defaultValue={timeStringConverToBootstrapTime(
+                  schedule[scheduleNo].endDate,
+                )}
                 required
               />
             </Form.Group>
@@ -192,13 +168,10 @@ export default function SCheduleManage(props: any) {
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" onClick={removeSchedule} variant="primary">
-              일정제거
+              삭제
             </Button>
-            <Button variant="secondary" onClick={handleClose}>
-              취소
-            </Button>
-            <Button onClick={handleSubmit} variant="primary">
-              완료
+            <Button onClick={handleSubmit} type="submit" variant="primary">
+              수정
             </Button>
           </Modal.Footer>
         </Form>

@@ -9,6 +9,10 @@ import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { defaultURL } from '../../../API';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const RoutineMoreModal = ({
   handleClose,
@@ -55,13 +59,11 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    let accessToken = localStorage.getItem('accessToken');
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(defaultURL + url, {
         method: 'PATCH',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
@@ -75,13 +77,11 @@ const RoutineMoreModal = ({
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    let accessToken = localStorage.getItem('accessToken');
-    if (accessToken !== undefined) {
-      accessToken = 'Bearer ' + accessToken;
+    if (checkTokenValidate()) {
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {
-          Authorization: accessToken,
+          Authorization: getAccessToken(),
           'Content-Type': 'application/json',
         },
       })

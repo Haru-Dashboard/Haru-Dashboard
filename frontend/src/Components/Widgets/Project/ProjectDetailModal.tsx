@@ -2,6 +2,10 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 import { defaultURL } from '../../../API';
 import { project } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
@@ -29,11 +33,13 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
   // 프로젝트 삭제하기
   const deleteProject = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (accessToken !== undefined) {
-      fetch(defaultURL + URLNext, {
+    const backURL = process.env.REACT_APP_BACKURL;
+    const URLNext = 'projects/' + item.id;
+    if (checkTokenValidate()) {
+      fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {
-          Authorization: 'Bearer ' + accessToken,
+          Authorization: getAccessToken(),
         },
       })
         .then((response) => response.json())
