@@ -9,7 +9,7 @@ import {
 } from '../../../API/Authentication';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import ScheduleAdd from './ScheduleAdd';
-import SCheduleManage from './SCheduleManage';
+import ScheduleManage from './ScheduleManage';
 function Calendar() {
   const dateObj = new Date();
   const thisYear = dateObj.getUTCFullYear();
@@ -63,7 +63,7 @@ function Calendar() {
         schedule={schedule}
         setSchedule={setSchedule}
       />
-      <SCheduleManage
+      <ScheduleManage
         showModal={showManageModal}
         handleClose={handleManageClose}
         schedule={schedule}

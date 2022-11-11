@@ -11,7 +11,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 
-export default function SCheduleManage(props: any) {
+export default function ScheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
   const sampledatetime = datetimeTimeSettingTo0(new Date());
   const [inputs, setInputs] = useState({
