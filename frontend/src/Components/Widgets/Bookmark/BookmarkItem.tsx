@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { getFaviconSrc } from '../../../Utils';
 import { bookmarkType } from '.';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 type bookmarkItemProps = {
   idx: number;
@@ -28,33 +26,22 @@ const BookmarkItem = ({ idx, bookmark, deleteBookmark }: bookmarkItemProps) => {
       className="bookmark-wrapper position-relative col-3 p-1"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
-      {/* 북마크 버튼 그룹 */}
-      <OverlayTrigger
-        placement="right-start"
-        delay={{ show: 250, hide: 1000 }}
-        overlay={
-          <ListGroup>
-            <ListGroup.Item>수정</ListGroup.Item>
-            <ListGroup.Item
-              data-idx={idx}
-              style={{ backgroundColor: 'white' }}
-              onClick={deleteBookmark}>
-              삭제
-            </ListGroup.Item>
-          </ListGroup>
-        }>
-        <span
-          className="position-absolute end-0 d-flex justify-content-center"
-          style={{
-            borderRadius: '8px',
-            width: '16px',
-            visibility: showEllipsis ? 'visible' : 'hidden',
-          }}>
-          <FontAwesomeIcon icon={faEllipsisV} />
-        </span>
-      </OverlayTrigger>
+      {/* Delete Button */}
+      <div
+        className="bookmark-minus-button"
+        onClick={deleteBookmark}
+        style={{
+          visibility: showEllipsis ? 'visible' : 'hidden',
+        }}>
+        <FontAwesomeIcon
+          data-idx={idx}
+          style={{ width: '80%' }}
+          className={'fa-sm'}
+          icon={faMinus}
+        />
+      </div>
 
-      {/* 북마크 이미지 */}
+      {/* Bookmark Image */}
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ aspectRatio: '1/1' }}>
@@ -69,7 +56,7 @@ const BookmarkItem = ({ idx, bookmark, deleteBookmark }: bookmarkItemProps) => {
         </a>
       </div>
 
-      {/* 북마크 이름 */}
+      {/* Bookmark Title */}
       <p
         className="text-center my-0"
         style={{
