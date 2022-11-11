@@ -26,7 +26,7 @@ export default function ScheduleAdd(props: any) {
     startDate: sampledatetime,
     endDate: sampledatetime,
     content: '',
-    color: 0,
+    color: -1,
   });
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,9 +59,6 @@ export default function ScheduleAdd(props: any) {
         if (inputs.endDate == null) {
           setInputs((values) => ({ ...values, endDate: sampledatetime }));
           inputs.endDate = sampledatetime;
-        }
-        if (inputs.color == null) {
-          setInputs((values) => ({ ...values, color: 0 }));
         }
         fetch(backURL + URLNext, {
           method: 'POST',
@@ -98,16 +95,6 @@ export default function ScheduleAdd(props: any) {
               required
             />
           </Form.Group>
-          <Form.Group>
-            <Form.Label>색상</Form.Label>
-            <Form.Select name="color" onChange={handleSelect} defaultValue={0}>
-              <option value={0}>빨강</option>
-              <option value={1}>파랑</option>
-              <option value={2}>노랑</option>
-              <option value={3}>검정</option>
-              <option value={4}>초록</option>
-            </Form.Select>
-          </Form.Group>
 
           <Form.Group>
             <Form.Label>시작일</Form.Label>
@@ -141,11 +128,8 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            취소
-          </Button>
           <Button onClick={handleSubmit} variant="primary">
-            완료
+            저장
           </Button>
         </Modal.Footer>
       </Form>

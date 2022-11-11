@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { ScheduleDataType } from './ScheduleDataType';
-import SelectDate from './CalendarDetail';
-
+import React from 'react';
 export default function CalendarMain({ schedule, setSelectedDate }: any) {
   //공용변수
   const numbers = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
   ];
-  const dateObj = new Date('2022-11-11');
+  const dateObj = new Date();
   const thisYear = dateObj.getFullYear();
   const thisMonth = dateObj.getMonth();
 
   function ClickedCalendar(month: number, date: number) {
-    let newDate1 = new Date();
+    const newDate1 = new Date();
     newDate1.setMonth(newDate1.getMonth() + month);
     newDate1.setDate(date);
     setSelectedDate(newDate1);
@@ -36,11 +33,6 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
   const checkHolidays = function (datecheck: number) {
     return false;
   };
-  const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    const clicked: HTMLButtonElement = event.currentTarget;
-  };
 
   const weeksDay = function (startDate: number) {
     const weekDates = numbers.slice(startDate - 1, startDate + 6);
@@ -48,17 +40,20 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className={
-          'date-column ' +
-          ((index + startDayOfThisMonth) % 7 == 1
-            ? 'sunday'
-            : (index + startDayOfThisMonth) % 7 == 0
-            ? 'saturday'
-            : checkHolidays(index)
-            ? 'holiday'
-            : 'nomarday')
-        }>
-        <div className="date-column-dates">{index}</div>
+        className="date-column">
+        <div
+          className={
+            'date-column-dates ' +
+            ((index + startDayOfThisMonth) % 7 == 1
+              ? 'sunday'
+              : (index + startDayOfThisMonth) % 7 == 0
+              ? 'saturday'
+              : checkHolidays(index)
+              ? 'holiday'
+              : 'nomarday')
+          }>
+          {index}
+        </div>
         <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
@@ -75,16 +70,15 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
       <div
         onClick={() => ClickedCalendar(-1, index)}
         key={index}
-        className={
-          'date-column pastmonth ' +
-          ((index - dateOfLastMonth + startDayOfThisMonth - 1) % 7 == 0
-            ? 'sunday'
-            : checkHolidays(index)
-            ? 'holiday'
-            : '')
-        }>
-        <div className="date-column-dates">{index}</div>
-        <div className="date-column-content">
+        className="date-column pastmonth ">
+        <div
+          className={
+            'date-column-dates ' +
+            (checkHolidays(index) ? 'holiday' : 'pastmonth')
+          }>
+          {index}
+        </div>
+        <div className="date-column-content ">
           {GetCalendarContents(thisMonth - 1, index)}
         </div>
       </div>
@@ -94,17 +88,20 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className={
-          'date-column ' +
-          ((index + startDayOfThisMonth) % 7 == 1
-            ? 'sunday'
-            : (index + startDayOfThisMonth) % 7 == 0
-            ? 'saturday'
-            : checkHolidays(index)
-            ? 'holiday'
-            : 'nomarday')
-        }>
-        <div className="date-column-dates">{index}</div>
+        className="date-column">
+        <div
+          className={
+            'date-column-dates ' +
+            ((index + startDayOfThisMonth) % 7 == 1
+              ? 'sunday'
+              : (index + startDayOfThisMonth) % 7 == 0
+              ? 'saturday'
+              : checkHolidays(index)
+              ? 'holiday'
+              : 'nomarday')
+          }>
+          {index}
+        </div>
         <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
@@ -124,17 +121,20 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className={
-          'date-column ' +
-          ((index + startDayOfThisMonth) % 7 == 1
-            ? 'sunday'
-            : (index + startDayOfThisMonth) % 7 == 0
-            ? 'saturday'
-            : checkHolidays(index)
-            ? 'holiday'
-            : 'nomarday')
-        }>
-        <div className="date-column-dates">{index}</div>
+        className="date-column">
+        <div
+          className={
+            'date-column-dates ' +
+            ((index + startDayOfThisMonth) % 7 == 1
+              ? 'sunday'
+              : (index + startDayOfThisMonth) % 7 == 0
+              ? 'saturday'
+              : checkHolidays(index)
+              ? 'holiday'
+              : 'nomarday')
+          }>
+          {index}
+        </div>
         <div className="date-column-content">
           {GetCalendarContents(thisMonth, index)}
         </div>
@@ -145,17 +145,14 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
       <div
         onClick={() => ClickedCalendar(1, index)}
         key={index}
-        className={
-          'date-column ' +
-          ((index + startDayOfNextMonth) % 7 == 1
-            ? 'sunday'
-            : (index + startDayOfNextMonth) % 7 == 0
-            ? 'saturday'
-            : checkHolidays(index)
-            ? 'holiday'
-            : 'nomarday')
-        }>
-        <div className="date-column-dates">{index}</div>
+        className="date-column">
+        <div
+          className={
+            'date-column-dates ' +
+            (checkHolidays(index) ? 'holiday' : 'nextmonth')
+          }>
+          {index}
+        </div>
         <div className="date-column-content">
           {GetCalendarContents(thisMonth + 1, index)}
         </div>
@@ -170,48 +167,10 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
   };
 
   //
-  //
-  //Calendar date related functions
-  //캘린더 스케쥴 관련 함수들
-  //
-  //A function that draws a specified schedule
-  //지정한 일정을 그리는 함수
-  function calenderScheduleMark(color: number[], numberOfMarks: number) {
-    if (numberOfMarks < 0 || numberOfMarks > 3) {
-      //오류케이스
-      return '';
-    } else if (numberOfMarks == 1) {
-      //0번만
-      return (
-        <div className="marks">
-          <div className={'makrColor' + color[0]}></div>
-        </div>
-      );
-    } else if (numberOfMarks == 2) {
-      //1번만
-      return (
-        <div className="marks">
-          <div className={'makrColor' + color[0]}></div>
-          <div className={'makrColor' + color[1]}></div>
-        </div>
-      );
-    } else {
-      //3개다
-      return (
-        <div className="marks">
-          <div className={'makrColor' + color[0]}></div>
-          <div className={'makrColor' + color[1]}></div>
-          <div className={'makrColor' + color[2]}></div>
-        </div>
-      );
-    }
-  }
-  //
   //A function that checks the date and schedules it.
   //날자체크해서 일정짜는 함수.
   function GetCalendarContents(dateMonth: number, dateNo: number) {
     let count = 0;
-    const color = [-1, -1, -1];
     for (let i = 0; i < schedule.length; i++) {
       const startDate = new Date(schedule[i].startDate);
       const endDate = new Date(schedule[i].endDate);
@@ -222,17 +181,14 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
         endDate.getMonth() > dateMonth ||
         (endDate.getMonth() == dateMonth && endDate.getDate() >= dateNo);
       if (startDateCheck && endDateCheck) {
-        color[count] = schedule[i].color;
         count++;
-        if (count >= 3) {
-          return calenderScheduleMark(color, 3);
-        }
       }
     }
-    if (count) {
-      return calenderScheduleMark(color, count);
-    }
-    return '';
+    return count ? (
+      <div className="date-column-count bg-info text-light">{count}</div>
+    ) : (
+      ''
+    );
   }
 
   //

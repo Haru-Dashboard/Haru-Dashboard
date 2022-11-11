@@ -1,9 +1,7 @@
-import React from 'react';
 export type ScheduleDataType = {
   selectedDate?: Date;
   schedule: {
     id: number;
-    color: number;
     title: string;
     content: string;
     startDate: Date;

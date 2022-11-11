@@ -27,12 +27,8 @@ export default function SCheduleManage(props: any) {
     endDate: sampledatetime,
     content: '',
     color: -1,
+    id: -1,
   });
-  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
@@ -71,8 +67,6 @@ export default function SCheduleManage(props: any) {
         value = schedule[scheduleNo].title;
       } else if (name == 'content') {
         value = schedule[scheduleNo].content;
-      } else {
-        value = schedule[scheduleNo].color;
       }
     }
     setInputs((values) => ({ ...values, [name]: value }));
@@ -96,13 +90,10 @@ export default function SCheduleManage(props: any) {
       setInputs((values) => ({ ...values, content: inputs.content }));
       inputs.content = schedule[scheduleNo].content;
     }
-    if (inputs.color == null || inputs.color == -1) {
-      setInputs((values) => ({ ...values, color: inputs.color }));
-      inputs.color = schedule[scheduleNo].color;
-    }
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
     if (checkTokenValidate()) {
+      console.log(inputs);
       fetch(backURL + URLNext, {
         method: 'PATCH',
         headers: {
@@ -145,19 +136,7 @@ export default function SCheduleManage(props: any) {
                 required
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>색상</Form.Label>
-              <Form.Select
-                name="color"
-                onChange={handleSelect}
-                defaultValue={schedule[scheduleNo].color}>
-                <option value={0}>빨강</option>
-                <option value={1}>파랑</option>
-                <option value={2}>노랑</option>
-                <option value={3}>검정</option>
-                <option value={4}>초록</option>
-              </Form.Select>
-            </Form.Group>
+
             <Form.Group>
               <Form.Label>시작일</Form.Label>
               <Form.Control
@@ -192,13 +171,10 @@ export default function SCheduleManage(props: any) {
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" onClick={removeSchedule} variant="primary">
-              일정제거
-            </Button>
-            <Button variant="secondary" onClick={handleClose}>
-              취소
+              삭제
             </Button>
             <Button onClick={handleSubmit} variant="primary">
-              완료
+              수정
             </Button>
           </Modal.Footer>
         </Form>
