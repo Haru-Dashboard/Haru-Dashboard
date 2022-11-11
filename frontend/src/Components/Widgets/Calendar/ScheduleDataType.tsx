@@ -35,7 +35,6 @@ export function timeStringConverToBootstrapTime(oldDate: string): string {
 }
 export function timeDateConverToBootstrapTime(oldDate: Date): string {
   const newDate = new Date(+oldDate + 3240).toISOString().replace(/\..*/, '');
-  console.log(newDate);
   return newDate;
 }
 export function datetimeTimeSettingTo0(date: Date): Date {
