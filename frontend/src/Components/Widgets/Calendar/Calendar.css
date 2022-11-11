@@ -1,7 +1,14 @@
-.board {
-  background-color: rgb(256, 256, 256, 0.1);
-  margin: auto;
+.calendar-board {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255, 0.1);
+  border-radius: 3rem;
+  padding: 1rem;
 }
+.cursor-default{
+  cursor:default;
+}
+.cursor-pointer{cursor:pointer;}
 .full100 {
   width: 100%;
   height: 100%;
@@ -13,64 +20,15 @@
   display: flex;
   color: white;
 }
-.calendar-back {
+.calendar-main {
+  height: 85%;
   width: 60%;
-  height: 100%;
 }
 .calendar-detail {
-  width: 25%;
-  margin-left: 10%;
-  height: 90%;
-}
-
-.calendar-title {
-  width: 55.38%;
-  height: 17.25%;
-  margin-left: 8%;
-}
-.calendar-head {
-  width: 100%;
-  height: 9.9%;
-  margin-left: 5%;
-}
-.calendar-main {
-  height: 72.85%;
-  width: 100;
-}
-.calendar-title-icon-img {
-  margin-top: 2.38%;
-  width: 17.57%;
-  height: 100%;
-}
-.calendar-title-titles {
-  margin-left: 4.5%;
-  height: 100%;
-  font-size: 2rem;
-  font-weight: bold;
-}
-.calendar-head-flex {
-  width: 100%;
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: flex;
-}
-.calendar-monthyear {
-  margin-left: 7.1%;
-  width: 25%;
-  display: flex;
-}
-.calendar-year {
-  width: 50%;
-}
-.calendar-month {
-  margin-left: 40%;
-}
-.calendar-subtitle {
-  width: 65%;
-  text-align: right;
+  height: 80%;
+  width: 40%;
 }
 .calendar-maincontainer {
-  margin-left: 10%;
   width: 100%;
   height: 90%;
 }
@@ -104,19 +62,19 @@
   margin-left: 1%;
 }
 .sunday {
-  color: red !important;
+  color: #E60000   !important;
 }
 .saturday {
-  color: blue !important;
+  color: #6464C8 !important;
 }
 .holiday {
-  color: red;
+  color: #E60000 !important;
 }
-.pastMonth {
-  color: grey;
+.pastmonth {
+  color: #646464 !important;
 }
 .nextmonth {
-  color: grey;
+  color: #646464 !important;
 }
 .date-column {
   width: 13%;
@@ -124,56 +82,39 @@
   margin-left: 1%;
   border-radius: 0.5rem;
 }
-
 .date-column-dates {
   position: relative;
-  font-size: 0.1rem;
-  left: 10%;
+  font-size: 0.8rem;
+  left: 5%;
   text-align: left;
 }
-
 .date-column-content {
   width: 100%;
   height: 50%;
+  font-size: 0.5rem;
+  text-align: center;
+  position: relative;
 }
-.calendar-addschedule {
-  width: 100%;
-  height: 16%;
-  overflow: hidden;
+.date-column-count
+{
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 100%;
+  position: absolute;
+  right: 0%;
+  top:-50%
 }
-.calendar-addschedule-actual {
-  margin-top: 5%;
-  margin-left: 70%;
+.calendar-detail-date{
+  height: 10%;
 }
-
-.calendar-detail-head {
-  width: 100%;
-  height: 8%;
-}
-.calendar-detail-back {
+.calendar-detail-board {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-}
-.calendar-detail-main {
-  margin-top: 10%;
-  overflow: hidden;
-  width: 100%;
-  height: 72%;
-  background-color: rgba(255, 255, 255, 0.3);
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   text-align: center;
 }
-
-.calendar-detail-title {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
-  text-align: center;
-  border-radius: 0.5rem;
-  border: 0px;
-}
-
 .calendar-schedule-detail {
   color: black;
   width: 80%;
@@ -184,17 +125,10 @@
 }
 .calendar-schedule-detail-button {
   color: black;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: rgb(255, 255, 255, 0.3);
   text-align: left;
   border-radius: 0.5rem;
   border: 0px;
-}
-.calendar-schedule-detail-shcdule {
-  width: 80%;
-}
-
-.calendar-schedule-detail-head {
-  display: flex;
 }
 .calendar-schedule-detail-startdate {
   font-size: 0.5rem;
@@ -208,48 +142,3 @@
   font-weight: bold;
 }
 
-.calendar-schedule-detail-detail {
-  font-size: 0.2rem;
-  display: flex;
-}
-
-.marks {
-  width: 100%;
-  height: 100%;
-}
-
-.makrColor0 {
-  background-color: red;
-  width: 60%;
-  margin-left: 20%;
-  height: 30%;
-  border-radius: 15%;
-}
-.makrColor1 {
-  background-color: blue;
-  width: 60%;
-  margin-left: 20%;
-  height: 30%;
-  border-radius: 15%;
-}
-.makrColor2 {
-  background-color: yellow;
-  width: 60%;
-  margin-left: 20%;
-  height: 30%;
-  border-radius: 15%;
-}
-.makrColor3 {
-  background-color: black;
-  width: 60%;
-  margin-left: 20%;
-  height: 30%;
-  border-radius: 15%;
-}
-.makrColor4 {
-  background-color: green;
-  width: 60%;
-  margin-left: 20%;
-  height: 30%;
-  border-radius: 15%;
-}
