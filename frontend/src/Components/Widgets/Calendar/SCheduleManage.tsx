@@ -64,7 +64,7 @@ export default function ScheduleManage(props: any) {
     }
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputs.title == '' || inputs.title == null) {
       setInputs((values) => ({ ...values, title: inputs.title }));
@@ -112,7 +112,7 @@ export default function ScheduleManage(props: any) {
         <Modal.Title>일정관리</Modal.Title>
       </Modal.Header>
       {showModal ? (
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Modal.Body>
             <Form.Group>
               <Form.Label>제목</Form.Label>
@@ -170,7 +170,7 @@ export default function ScheduleManage(props: any) {
             <Button type="button" onClick={removeSchedule} variant="primary">
               삭제
             </Button>
-            <Button type="submit" variant="primary">
+            <Button onClick={handleSubmit} type="submit" variant="primary">
               수정
             </Button>
           </Modal.Footer>
