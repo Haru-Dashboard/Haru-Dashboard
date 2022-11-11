@@ -27,9 +27,10 @@ export default function ScheduleAdd(props: any) {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const URLNext = 'schedules';
+
+    const URLNext = `schedules`;
 
     const backURL = process.env.REACT_APP_BACKURL;
     if (checkTokenValidate()) {
@@ -67,7 +68,7 @@ export default function ScheduleAdd(props: any) {
       <Modal.Header>
         <Modal.Title>일정추가</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Modal.Body>
           <Form.Group>
             <Form.Label>제목</Form.Label>
@@ -85,7 +86,6 @@ export default function ScheduleAdd(props: any) {
             <Form.Control
               type="datetime-local"
               name="startDate"
-              className="cursor-pointer"
               onChange={handleChange}
               defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
@@ -96,7 +96,6 @@ export default function ScheduleAdd(props: any) {
             <Form.Control
               type="datetime-local"
               name="endDate"
-              className="cursor-pointer"
               onChange={handleChange}
               defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
@@ -114,7 +113,7 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" variant="primary">
+          <Button onClick={handleSubmit} variant="primary">
             저장
           </Button>
         </Modal.Footer>
