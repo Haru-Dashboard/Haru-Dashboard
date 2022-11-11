@@ -66,7 +66,6 @@ export default function SCheduleManage(props: any) {
   };
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    console.log('T');
     if (inputs.title == '' || inputs.title == null) {
       setInputs((values) => ({ ...values, title: inputs.title }));
       inputs.title = schedule[scheduleNo].title;
@@ -74,7 +73,6 @@ export default function SCheduleManage(props: any) {
     if (inputs.startDate == null || inputs.startDate == sampledatetime) {
       setInputs((values) => ({ ...values, startDate: inputs.startDate }));
       inputs.startDate = schedule[scheduleNo].startDate;
-      console.log(inputs.startDate);
     }
     if (inputs.endDate == null || inputs.endDate == sampledatetime) {
       setInputs((values) => ({ ...values, endDate: inputs.endDate }));
@@ -87,7 +85,6 @@ export default function SCheduleManage(props: any) {
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
     if (checkTokenValidate()) {
-      console.log(inputs);
       fetch(backURL + URLNext, {
         method: 'PATCH',
         headers: {
