@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectCreationModal from './ProjectCreationModal';
+import CreateProjectModal from './CreateProjectModal';
 import ProjectDetailModal from './ProjectDetailModal';
 import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
@@ -12,7 +12,70 @@ import {
 } from '../../../API/Authentication';
 
 const Project = () => {
-  const [projectList, setProjectList] = useState<project[]>([]);
+  const [projectList, setProjectList] = useState<project[]>([
+    {
+      id: 0,
+      title: '테스트 하드 코딩',
+      content:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
+      startDate: '2022-11-11',
+      endDate: '2022-11-21',
+      projectLinks: [
+        {
+          id: 0,
+          name: '네이버',
+          link: 'https://www.naver.com',
+        },
+      ],
+      projectLabels: [
+        {
+          id: 0,
+          name: '프로젝트',
+        },
+        {
+          id: 1,
+          name: '알고리즘',
+        },
+      ],
+      imageInfo: {
+        id: 0,
+        imageUrl:
+          'https://www.bing.com/th?id=OVFT.LWO_waeKPIzt1YEa-QnGVi&pid=News',
+        originName: '뉴스',
+      },
+    },
+    {
+      id: 1,
+      title: '이미지 테스트',
+      content:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
+      startDate: '2022-11-12',
+      endDate: '2022-11-22',
+      projectLinks: [
+        {
+          id: 0,
+          name: '구글',
+          link: 'https://www.google.com',
+        },
+      ],
+      projectLabels: [
+        {
+          id: 0,
+          name: '다섯글자아',
+        },
+        {
+          id: 1,
+          name: '여섯글자아',
+        },
+      ],
+      imageInfo: {
+        id: 0,
+        imageUrl:
+          'chrome-extension://fnacnoopaiadojkoojmobdjnlilhgikc/js/a00585464097c213e304.png',
+        originName: '뉴스',
+      },
+    },
+  ]);
   const [pageNo, setPageNo] = useState(0);
 
   useEffect(() => {
@@ -43,28 +106,54 @@ const Project = () => {
 
   // detail modal
   const [showMore, setShowMore] = useState(false);
-  const [selectedListNo, setSelectedListNo] = useState<number>();
-  const handleCloseMore = () => setShowMore(false);
-  function handleShowMore(id: number) {
-    setSelectedListNo(id);
+  const [selectedProject, setSelectedProject] = useState<project>({
+    id: -1,
+    title: '',
+    content: '',
+    startDate: '',
+    endDate: '',
+    projectLinks: [
+      {
+        id: -1,
+        name: '',
+        link: '',
+      },
+    ],
+    projectLabels: [
+      {
+        id: -1,
+        name: '',
+      },
+    ],
+    imageInfo: {
+      id: -1,
+      imageUrl: '',
+      originName: '',
+    },
+  });
+  function handleShowMore(item: project) {
+    setSelectedProject(item);
     setShowMore(true);
+  }
+  function handleCloseMore() {
+    setShowMore(false);
   }
 
   return (
     <div className="w-100 h-100 p-3 sub-board">
       <div className="h-100">
-        <div className="d-flex justify-content-between pe-3">
+        <div className="d-flex justify-content-between align-items-center pe-3">
           <BigTitle title="In Progress" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-center">
-          {projectList.map((item, idx) => {
+        <div className="d-flex justify-content-center h-90">
+          {projectList.map((item: project, idx: number) => {
             return (
               <ProjectCard
                 key={idx}
                 item={item}
-                handleShowMore={handleShowMore}
+                handleShowMore={(e) => handleShowMore(item)}
               />
             );
           })}
@@ -73,17 +162,14 @@ const Project = () => {
       </div>
       {/* project를 생성하는 모달 */}
       <div>
-        <ProjectCreationModal
-          handleClose={handleCloseCreate}
-          show={showCreate}
-        />
+        <CreateProjectModal handleClose={handleCloseCreate} show={showCreate} />
       </div>
       {/* project 상세 보기 모달 */}
       <div>
         <ProjectDetailModal
           handleClose={handleCloseMore}
           show={showMore}
-          item={selectedListNo ? projectList[selectedListNo] : null}
+          item={selectedProject}
         />
       </div>
     </div>

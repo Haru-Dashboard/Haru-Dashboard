@@ -26,11 +26,23 @@ body {
 }
 
 /* width, height */
+.h-90 {
+  height: 90%;
+}
+.h-85 {
+  height: 85%;
+}
 .h-80 {
   height: 80%;
 }
 .h-70 {
   height: 70%;
+}
+.h-50 {
+  height: 50%;
+}
+.h-45 {
+  height: 45%;
 }
 .h-40 {
   height: 40%;
