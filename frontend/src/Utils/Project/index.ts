@@ -1,4 +1,4 @@
-type projectLink = {
+export type projectLink = {
   id?: number;
   name: string;
   url: string;
@@ -34,7 +34,7 @@ export type inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: link[];
+  links: projectLink[];
   startDate: Date;
   endDate: Date;
 };

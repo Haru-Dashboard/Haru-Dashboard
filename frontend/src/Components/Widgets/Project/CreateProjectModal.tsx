@@ -6,17 +6,14 @@ import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
-
+import { projectLink } from '../../../Utils/Project';
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
-type link = {
-  name: string;
-  url: string;
-};
+
 type inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: link[];
+  links: projectLink[];
   startDate: Date;
   endDate: Date;
 };
@@ -60,7 +57,11 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
   const addLabel = (event: any) => {
     event.preventDefault();
     if (event.key !== 'Enter') return;
-    setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
+    if (inputs.labels.length < 5) {
+      setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
+    } else {
+      alert('label은 5개까지 추가 가능합니다.');
+    }
     event.target.value = '';
   };
 
@@ -79,11 +80,15 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
   };
 
   const addNewLink = (event: any) => {
-    const newLink: link = {
+    const newLink: projectLink = {
       name: '',
       url: '',
     };
-    setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    if (inputs.links.length < 3) {
+      setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    } else {
+      alert('링크는 3개까지 추가 가능합니다.');
+    }
   };
 
   const createProject: React.FormEventHandler = async (e) => {
@@ -97,7 +102,7 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
     );
     if (file !== undefined) formData.append('file', file);
 
-    if (checkTokenValidate()) {
+    if (getAccessToken()) {
       const url = process.env.REACT_APP_BACKURL;
       await fetch(url + `projects`, {
         method: 'POST',
@@ -157,7 +162,6 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
             />
             {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
 
-            <p>작성한 태그가 뜨는 곳</p>
             {inputs.labels.map((label, idx) => (
               <span className="px-2" key={idx}>
                 {label}

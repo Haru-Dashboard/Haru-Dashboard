@@ -10,6 +10,7 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import { defaultURL } from '../../../API';
 import { project, link, inputs } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
+import { getFaviconSrc } from '../../../Utils';
 
 type projectDetail = {
   handleClose: () => void;
@@ -39,6 +40,8 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
 
   // 수정으로 모달이 바뀌었을 때
   useEffect(() => {
+    console.log(item);
+
     const stringLabel: Array<string> = [];
     const stringLink: Array<link> = [];
 
@@ -56,6 +59,10 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
 
     setInputs({ ...inputs, labels: stringLabel, links: stringLink });
   }, [isUpdate]);
+
+  useEffect(() => {
+    setIsUpdate(false);
+  }, [show]);
 
   // TODO: project 생성 fetch 함수
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,13 +92,17 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
     const { value } = e.currentTarget;
     console.log('addlabel');
 
-    if (e.key === 'Enter') {
+    if (e.key !== 'Enter') return;
+    if (inputs.labels.length < 5) {
       setInputs({
         ...inputs,
         labels: inputs.labels.concat(value),
       });
-      e.currentTarget.value = '';
+    } else {
+      alert('태그는 5개까지 추가 가능합니다.');
     }
+
+    e.currentTarget.value = '';
     // console.log(inputs.labels);
   };
 
@@ -131,7 +142,11 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
       name: '',
       url: '',
     };
-    setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    if (inputs.links.length < 3) {
+      setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    } else {
+      alert('링크는 3개까지 추가 가능합니다.');
+    }
   };
 
   const updateProject: React.FormEventHandler = async (e) => {
@@ -147,8 +162,8 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
     if (file !== undefined) formData.append('file', file);
     console.log(formData);
 
-    if (checkTokenValidate()) {
-      console.log('hi');
+    if (getAccessToken()) {
+      // console.log(getAccessToken());
 
       await fetch(defaultURL + URLNext, {
         method: 'PATCH',
@@ -247,17 +262,31 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                   </div>
                   <div className="d-flex justify-content-between">
                     <SmallTitle title="Links" color="#49649E" />
-                    {item.projectLinks.map((link) => {
-                      return <a href={link.url}>{link.name}</a>;
+                    {item.projectLinks.map((link, idx) => {
+                      return (
+                        <a
+                          href={link.url}
+                          key={idx}
+                          style={{ marginRight: '0.3rem' }}>
+                          <img
+                            width="18"
+                            height="18"
+                            src={getFaviconSrc(link.url)}
+                            alt={link.name}
+                          />
+                        </a>
+                      );
                     })}
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="primary" onClick={(e) => setIsUpdate(true)}>
-                    수정
+                  <Button
+                    variant="outline-primary"
+                    onClick={(e) => setIsUpdate(true)}>
+                    EDIT
                   </Button>
-                  <Button variant="primary" onClick={deleteProject}>
-                    삭제
+                  <Button variant="outline-danger" onClick={deleteProject}>
+                    DELETE
                   </Button>
                 </Modal.Footer>
               </div>
@@ -365,6 +394,9 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                     variant="outline-primary"
                     size="sm">
                     SAVE
+                  </Button>
+                  <Button variant="outline-danger" onClick={deleteProject}>
+                    DELETE
                   </Button>
                 </Modal.Footer>
               </div>

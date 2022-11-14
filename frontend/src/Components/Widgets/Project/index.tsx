@@ -13,68 +13,68 @@ import {
 
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([
-    {
-      id: 0,
-      title: '테스트 하드 코딩',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
-      startDate: '2022-11-11',
-      endDate: '2022-11-21',
-      projectLinks: [
-        {
-          id: 0,
-          name: '네이버',
-          url: 'https://www.naver.com',
-        },
-      ],
-      projectLabels: [
-        {
-          id: 0,
-          name: '프로젝트',
-        },
-        {
-          id: 1,
-          name: '알고리즘',
-        },
-      ],
-      imageInfo: {
-        id: 0,
-        imageUrl:
-          'https://www.bing.com/th?id=OVFT.LWO_waeKPIzt1YEa-QnGVi&pid=News',
-        originName: '뉴스',
-      },
-    },
-    {
-      id: 1,
-      title: '이미지 테스트',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
-      startDate: '2022-11-12',
-      endDate: '2022-11-22',
-      projectLinks: [
-        {
-          id: 0,
-          name: '구글',
-          url: 'https://www.google.com',
-        },
-      ],
-      projectLabels: [
-        {
-          id: 0,
-          name: '다섯글자아',
-        },
-        {
-          id: 1,
-          name: '여섯글자아',
-        },
-      ],
-      imageInfo: {
-        id: 0,
-        imageUrl:
-          'chrome-extension://fnacnoopaiadojkoojmobdjnlilhgikc/js/a00585464097c213e304.png',
-        originName: '뉴스',
-      },
-    },
+    // {
+    //   id: 0,
+    //   title: '테스트 하드 코딩',
+    //   content:
+    //     'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
+    //   startDate: '2022-11-11',
+    //   endDate: '2022-11-21',
+    //   projectLinks: [
+    //     {
+    //       id: 0,
+    //       name: '네이버',
+    //       link: 'https://www.naver.com',
+    //     },
+    //   ],
+    //   projectLabels: [
+    //     {
+    //       id: 0,
+    //       name: '프로젝트',
+    //     },
+    //     {
+    //       id: 1,
+    //       name: '알고리즘',
+    //     },
+    //   ],
+    //   imageInfo: {
+    //     id: 0,
+    //     imageUrl:
+    //       'https://www.bing.com/th?id=OVFT.LWO_waeKPIzt1YEa-QnGVi&pid=News',
+    //     originName: '뉴스',
+    //   },
+    // },
+    // {
+    //   id: 1,
+    //   title: '이미지 테스트',
+    //   content:
+    //     'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
+    //   startDate: '2022-11-12',
+    //   endDate: '2022-11-22',
+    //   projectLinks: [
+    //     {
+    //       id: 0,
+    //       name: '구글',
+    //       url: 'https://www.google.com',
+    //     },
+    //   ],
+    //   projectLabels: [
+    //     {
+    //       id: 0,
+    //       name: '다섯글자아',
+    //     },
+    //     {
+    //       id: 1,
+    //       name: '여섯글자아',
+    //     },
+    //   ],
+    //   imageInfo: {
+    //     id: 0,
+    //     imageUrl:
+    //       'chrome-extension://fnacnoopaiadojkoojmobdjnlilhgikc/js/a00585464097c213e304.png',
+    //     originName: '뉴스',
+    //   },
+    // },
   ]);
   const [pageNo, setPageNo] = useState(0);
 
@@ -147,7 +147,7 @@ const Project = () => {
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-center h-90">
+        <div className="d-flex justify-content-between h-90">
           {projectList.map((item: project, idx: number) => {
             return (
               <ProjectCard
