@@ -1,19 +1,23 @@
 import React from 'react';
-export default function CalendarMain({ schedule, setSelectedDate }: any) {
+export default function CalendarMain({
+  schedule,
+  setCalendarSelectedDate,
+  calendarSelectedDate,
+}: any) {
   //공용변수
   const numbers = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
   ];
-  const dateObj = new Date();
+  const dateObj = calendarSelectedDate;
   const thisYear = dateObj.getFullYear();
   const thisMonth = dateObj.getMonth();
 
   function ClickedCalendar(month: number, date: number) {
     const newDate1 = new Date();
-    newDate1.setMonth(newDate1.getMonth() + month);
+    newDate1.setMonth(calendarSelectedDate.getMonth() + month);
     newDate1.setDate(date);
-    setSelectedDate(newDate1);
+    setCalendarSelectedDate(newDate1);
   }
   const startDayOfThisMonth = new Date(thisYear, thisMonth, 1).getDay();
   const startDayOfNextMonth = new Date(thisYear, thisMonth + 1, 1).getDay();
@@ -191,8 +195,6 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
     );
   }
 
-  //
-  //
   return (
     <div className="calendar-maincontainer">
       <div className="calendar-weekends">
@@ -204,7 +206,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
         <div className="calendar-Weekends-content">Fri</div>
         <div className="calendar-Weekends-content saturday">Sat</div>
       </div>
-      {weekStartDay[5] < dateOfThisMonth ? (
+      {weekStartDay[5] <= dateOfThisMonth ? (
         <div className="calendar-dates cursor-pointer">
           <div className="calendar-dates-week6">
             {firstWeekDay(weekStartDay[0])}
@@ -225,7 +227,7 @@ export default function CalendarMain({ schedule, setSelectedDate }: any) {
             {lastWeekDay(weekStartDay[5])}
           </div>
         </div>
-      ) : weekStartDay[4] < dateOfThisMonth ? (
+      ) : weekStartDay[4] <= dateOfThisMonth ? (
         <div className="calendar-dates cursor-pointer">
           <div className="calendar-dates-week5">
             {firstWeekDay(weekStartDay[0])}
