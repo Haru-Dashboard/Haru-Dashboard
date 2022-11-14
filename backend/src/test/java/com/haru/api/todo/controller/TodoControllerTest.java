@@ -83,6 +83,7 @@ public class TodoControllerTest extends MvcTest {
                 .user(user)
                 .category(category2)
                 .title("프로그래머스 풀기")
+                .wed(true)
                 .mon(true)
                 .sun(true)
                 .build();
