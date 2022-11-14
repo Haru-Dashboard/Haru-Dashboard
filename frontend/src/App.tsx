@@ -3,6 +3,17 @@ import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
 
 function App() {
+  useEffect(() => {
+    const accessToken = new URL(location.toString()).searchParams.get(
+      'access_token',
+    );
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      // TODO: url 처리
+      chrome.tabs.update({ url: 'index.html' });
+    }
+  }, []);
+
   return (
     <div className="App">
       <div
