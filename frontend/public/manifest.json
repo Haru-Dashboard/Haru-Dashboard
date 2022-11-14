@@ -21,5 +21,9 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-  "permissions": ["geolocation", "tabs"]
+  "permissions": ["geolocation", "tabs"],
+  "web_accessible_resources": [{
+    "resources": ["*"],
+    "matches": ["<all_urls>"]
+  }]
 }
