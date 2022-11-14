@@ -1,51 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import { fetchNews } from '../../../API/News';
+import { isWithinDay } from '../../../Utils';
+import { newsData, newsItem } from '../../../Utils/News';
 import BigTitle from '../../Common/Title/BigTitle';
 import './index.css';
 
-const URL = 'https://api.bing.microsoft.com/v7.0/news/search?';
-const URLNext = new URLSearchParams({ q: '기술', setlang: 'ko' }).toString();
-const eMSEdgeKey = process.env.REACT_APP_MSEdgeKey;
-
 const News = () => {
-  const [index, setIndex] = useState(0);
-  const [news, setNews] = useState([
-    { name: '', url: '', image: { thumbnail: { contentUrl: '' } } },
-  ]);
+  const [index, setIndex] = useState<number>(0);
+  const [newsItemList, setNewsItemList] = useState<newsItem[]>([]);
 
   useEffect(() => {
-    // TODO: news를 저장한 시점이 현재로부터 일정 시간 이상이면 새로 fetch하는 로직 추가
-    const pastNews = localStorage.getItem('newsData');
-    if (pastNews !== null) {
-      setNews(JSON.parse(pastNews));
-    } else {
-      fetchNews();
+    let flag = true;
+    const tmpNewsData = localStorage.getItem('newsData');
+    if (tmpNewsData) {
+      const newsData: newsData = JSON.parse(tmpNewsData);
+      if (isWithinDay(newsData.time)) {
+        flag = false;
+        setNewsItemList(newsData.newsItemList);
+      }
+    }
+    if (flag) {
+      fetchNews().then((newsData) => {
+        setNewsItemList(newsData.newsItemList);
+      });
     }
   }, []);
 
-  const fetchNews = (): void => {
-    if (eMSEdgeKey !== undefined) {
-      fetch(URL + URLNext, {
-        method: 'GET',
-        headers: {
-          'Ocp-Apim-Subscription-Key': eMSEdgeKey,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.value !== null) {
-            localStorage.setItem('newsData', JSON.stringify(data.value));
-          }
-          setNews(data.value);
-        });
-    }
-  };
-
   const handleSelect = (
-    selectedIndex: number,
-    e: Record<string, unknown> | null,
+    eventKey: number,
+    event: Record<string, unknown> | null,
   ) => {
-    setIndex(selectedIndex);
+    setIndex(eventKey);
   };
 
   return (
@@ -57,10 +43,10 @@ const News = () => {
 
       {/* Carousel */}
       <Carousel activeIndex={index} onSelect={handleSelect} indicators={false}>
-        {news.map(
-          (newsItem, newsItemIdx) =>
+        {newsItemList.map(
+          (newsItem, idx) =>
             newsItem.image && (
-              <Carousel.Item key={newsItemIdx}>
+              <Carousel.Item key={idx}>
                 <a
                   className="carousel-anchor text-decoration-none text-reset d-inline-flex flex-column"
                   href={newsItem.url}>
