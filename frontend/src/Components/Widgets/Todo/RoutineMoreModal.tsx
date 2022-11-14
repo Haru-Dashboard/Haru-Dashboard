@@ -8,6 +8,7 @@ import { week } from '../../../Utils/Todo';
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { defaultURL } from '../../../API';
 import {
   checkTokenValidate,
@@ -97,14 +98,19 @@ const RoutineMoreModal = ({
     const filtered = availableDays.filter((item: week) => item.isClicked);
     setavailableDaysList(filtered);
   }, []);
+
+  useEffect(() => {
+    setIsUpdate(false);
+  }, [show]);
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <SmallTitle title="More" color="#49649E" />
-        </Modal.Header>
         {!isUpdate && (
           <div>
+            <Modal.Header closeButton>
+              <SmallTitle title="More" color="#49649E" />
+            </Modal.Header>
             <Modal.Body>
               <div className="d-flex justify-content-between mb-5">
                 {availableDays.map((item, idx: number) => {
@@ -138,17 +144,32 @@ const RoutineMoreModal = ({
               </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
-              <Button variant="secondary" onClick={(e) => setIsUpdate(true)}>
-                수정
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={(e) => setIsUpdate(true)}>
+                EDIT
               </Button>
-              <Button variant="secondary" onClick={onClickDelete}>
-                삭제
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={onClickDelete}>
+                DELETE
               </Button>
             </Modal.Footer>
           </div>
         )}
         {isUpdate && (
           <div>
+            <Modal.Header closeButton>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                color="#49649E"
+                className="me-3 hover"
+                onClick={(e) => setIsUpdate(false)}
+              />
+              <SmallTitle title="More" color="#49649E" />
+            </Modal.Header>
             <Modal.Body>
               <div>
                 {/* 날짜 선택 부분 */}
@@ -165,7 +186,8 @@ const RoutineMoreModal = ({
                   />
                   <Form.Control
                     type="text"
-                    placeholder={
+                    placeholder="Routine 이름을 입력해주세요"
+                    defaultValue={
                       listItem.title ? listItem.title : 'Routine 이름'
                     }
                     onChange={(e) => setWrittenContent(e.target.value)}
@@ -175,12 +197,6 @@ const RoutineMoreModal = ({
               </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={(e) => setIsUpdate(false)}>
-                돌아가기
-              </Button>
               <Button
                 variant="outline-primary"
                 size="sm"

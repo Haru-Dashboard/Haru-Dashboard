@@ -6,8 +6,8 @@ const CommonFilterBar = ({ handleCategory }: any) => {
     CommonFilterBar
     - local storage에 저장되어 있는 카테고리를 가져와 띄워 주기만 하는 컴포넌트
   */
-  const [localCategoryList, setLocalCategoryList] = useState(['전체']);
-  const [clickedFilter, setClickedFilter] = useState('전체');
+  const [localCategoryList, setLocalCategoryList] = useState(['ALL']);
+  const [clickedFilter, setClickedFilter] = useState('ALL');
   const localCategories = localStorage.getItem('category');
 
   useEffect(() => {
@@ -30,8 +30,10 @@ const CommonFilterBar = ({ handleCategory }: any) => {
   // localCategories에 변경 사항이 생길 때마다 갱신; okay
   useEffect(() => {
     if (localCategories) {
-      const arr = ['전체'];
-      setLocalCategoryList(arr.concat(JSON.parse(localCategories)));
+      // const arr = ['ALL'];
+      setLocalCategoryList(
+        localCategoryList.concat(JSON.parse(localCategories)),
+      );
     }
   }, [localCategories]);
 

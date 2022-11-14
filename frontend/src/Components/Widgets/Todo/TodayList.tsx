@@ -33,7 +33,7 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
     list 길이 확인 함수
     이 함수 안쓰고 바로 filterList.length로 DOM에서 처리하면 배열이 비었을 때 0이 같이 화면에 렌더링 됨
   */
-  const checkIsEmpty = (filtered: localToday[]) => {
+  const checkListLength = (filtered: localToday[]) => {
     if (filtered.length) {
       setIsEmpty(false);
     } else {
@@ -43,17 +43,17 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
 
   // 클릭한 필터에 맞게 필터링하는 함수
   const filterTodayList = () => {
-    if (clickedCategory === '전체') {
+    if (clickedCategory === 'ALL') {
       // 현재 filteredList가 localTodayList와 다른 경우
       if (filteredList !== localTodayList && localToday) {
-        checkIsEmpty(JSON.parse(localToday));
+        checkListLength(JSON.parse(localToday));
         setFilteredList(JSON.parse(localToday));
       }
     } else {
       const filtered = localTodayList.filter(
         (today) => today.category === clickedCategory,
       );
-      checkIsEmpty(filtered);
+      checkListLength(filtered);
       setFilteredList(filtered);
     }
   };
@@ -92,8 +92,8 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
         </div>
       </div>
       <div
-        className="sub-board"
-        style={{ height: '80%', overflowY: 'auto', overflowX: 'hidden' }}>
+        className="sub-board h-100"
+        style={{ overflowY: 'auto', overflowX: 'hidden' }}>
         <div className="px-2 h-100">
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
@@ -110,9 +110,11 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
             </div>
           )}
           {isEmpty && (
-            <p className="text-center pt-5 fw-bold">
-              {clickedCategory}에서 할 일을 추가해주세요!
-            </p>
+            <div className="py-3 px-2">
+              <p className="text-center fw-bold">
+                {clickedCategory}에서 할 일을 추가해주세요!
+              </p>
+            </div>
           )}
         </div>
       </div>

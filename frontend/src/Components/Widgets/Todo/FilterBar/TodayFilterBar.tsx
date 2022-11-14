@@ -8,8 +8,8 @@ export type todayFilterBar = {
 };
 
 const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
-  const [clickedFilter, setClickedFilter] = useState('전체');
-  const [filterList, setFilterList] = useState(['']);
+  const [clickedFilter, setClickedFilter] = useState('ALL');
+  const [filterList, setFilterList] = useState<Array<string>>([]);
   const [searchedWord, setSearchedword] = useState('');
   const [searchResult, setSearchResult] = useState(['']);
 
@@ -98,7 +98,7 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
         </Dropdown.Toggle>
 
         {/* TODO: align 수정 */}
-        <Dropdown.Menu align={{ lg: 'start' }} className="border border-0">
+        <Dropdown.Menu align={{ lg: 'end' }} className="border border-0">
           <Dropdown.Header className="px-1">
             <Form.Control
               autoFocus

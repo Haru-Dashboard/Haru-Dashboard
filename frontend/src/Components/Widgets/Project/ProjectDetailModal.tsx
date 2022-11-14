@@ -11,6 +11,8 @@ import { defaultURL } from '../../../API';
 import { project, link, inputs } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
 type projectDetail = {
   handleClose: () => void;
@@ -149,6 +151,27 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
     }
   };
 
+  const deleteLink = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    idx: number,
+  ) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLink = inputs.links;
+    if (currentLink.length === 1) {
+      alert('링크는 1개 이상 입력해주세요');
+    } else {
+      currentLink.splice(idx, 1);
+    }
+    // console.log(currentLink);
+    setInputs({
+      ...inputs,
+      links: currentLink,
+    });
+  };
+
   const updateProject: React.FormEventHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -262,30 +285,33 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                   </div>
                   <div className="d-flex justify-content-between">
                     <SmallTitle title="Links" color="#49649E" />
-                    {item.projectLinks.map((link, idx) => {
-                      return (
-                        <a
-                          href={link.url}
-                          key={idx}
-                          style={{ marginRight: '0.3rem' }}>
-                          <img
-                            width="18"
-                            height="18"
-                            src={getFaviconSrc(link.url)}
-                            alt={link.name}
-                          />
-                        </a>
-                      );
-                    })}
+                    <div className="d-flex justify-content-end">
+                      {item.projectLinks.map((link, idx) => {
+                        return (
+                          <a href={link.url} key={idx} className="me-2">
+                            <img
+                              width="24"
+                              height="24"
+                              src={getFaviconSrc(link.url)}
+                              alt={link.name}
+                            />
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
                     variant="outline-primary"
+                    size="sm"
                     onClick={(e) => setIsUpdate(true)}>
                     EDIT
                   </Button>
-                  <Button variant="outline-danger" onClick={deleteProject}>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={deleteProject}>
                     DELETE
                   </Button>
                 </Modal.Footer>
@@ -365,23 +391,31 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                     </Form.Group>
                     {inputs.links.map((link, idx) => (
                       <Form.Group
-                        className="d-flex justify-content-between"
+                        className="d-flex justify-content-between align-items-center"
                         key={idx}>
                         <Form.Control
                           type="text"
-                          placeholder="링크명"
+                          placeholder="Google"
                           className="my-2 me-2 border w-50"
                           defaultValue={link.name}
                           name={`link-name-${idx}`}
                           onChange={addLink}
                         />
                         <Form.Control
+                          required
+                          pattern="https://.*"
+                          placeholder="https://google.com"
                           type="url"
-                          placeholder="링크 url"
                           className="my-2 border"
                           name={`link-url-${idx}`}
                           defaultValue={link.url}
                           onChange={addLink}
+                        />
+                        <FontAwesomeIcon
+                          icon={faSquareMinus}
+                          color="#FA5252"
+                          className="col-1 p-0"
+                          onClick={(e) => deleteLink(e, idx)}
                         />
                       </Form.Group>
                     ))}
@@ -395,7 +429,10 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                     size="sm">
                     SAVE
                   </Button>
-                  <Button variant="outline-danger" onClick={deleteProject}>
+                  <Button
+                    variant="outline-danger"
+                    onClick={deleteProject}
+                    size="sm">
                     DELETE
                   </Button>
                 </Modal.Footer>

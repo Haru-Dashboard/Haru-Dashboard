@@ -12,70 +12,7 @@ import {
 } from '../../../API/Authentication';
 
 const Project = () => {
-  const [projectList, setProjectList] = useState<project[]>([
-    // {
-    //   id: 0,
-    //   title: '테스트 하드 코딩',
-    //   content:
-    //     'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
-    //   startDate: '2022-11-11',
-    //   endDate: '2022-11-21',
-    //   projectLinks: [
-    //     {
-    //       id: 0,
-    //       name: '네이버',
-    //       link: 'https://www.naver.com',
-    //     },
-    //   ],
-    //   projectLabels: [
-    //     {
-    //       id: 0,
-    //       name: '프로젝트',
-    //     },
-    //     {
-    //       id: 1,
-    //       name: '알고리즘',
-    //     },
-    //   ],
-    //   imageInfo: {
-    //     id: 0,
-    //     imageUrl:
-    //       'https://www.bing.com/th?id=OVFT.LWO_waeKPIzt1YEa-QnGVi&pid=News',
-    //     originName: '뉴스',
-    //   },
-    // },
-    // {
-    //   id: 1,
-    //   title: '이미지 테스트',
-    //   content:
-    //     'Lorem ipsum dolor sit amet consectetur adipisicing elit. In dolorum fugit quidem repudiandae nesciunt eum repellendus nemo odit repellat, nostrum, error ab commodi magni suscipit expedita optio, corrupti natus quaerat?',
-    //   startDate: '2022-11-12',
-    //   endDate: '2022-11-22',
-    //   projectLinks: [
-    //     {
-    //       id: 0,
-    //       name: '구글',
-    //       url: 'https://www.google.com',
-    //     },
-    //   ],
-    //   projectLabels: [
-    //     {
-    //       id: 0,
-    //       name: '다섯글자아',
-    //     },
-    //     {
-    //       id: 1,
-    //       name: '여섯글자아',
-    //     },
-    //   ],
-    //   imageInfo: {
-    //     id: 0,
-    //     imageUrl:
-    //       'chrome-extension://fnacnoopaiadojkoojmobdjnlilhgikc/js/a00585464097c213e304.png',
-    //     originName: '뉴스',
-    //   },
-    // },
-  ]);
+  const [projectList, setProjectList] = useState<project[]>([]);
   const [pageNo, setPageNo] = useState(0);
 
   useEffect(() => {
@@ -102,7 +39,13 @@ const Project = () => {
   // creation modal
   const [showCreate, setShowCreate] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
-  const handleShowCreate = () => setShowCreate(true);
+  const handleShowCreate = () => {
+    if (isLogined) {
+      setShowCreate(true);
+    } else {
+      alert('로그인 후에 이용 가능합니다.');
+    }
+  };
 
   // detail modal
   const [showMore, setShowMore] = useState(false);
@@ -139,26 +82,42 @@ const Project = () => {
     setShowMore(false);
   }
 
+  const [isLogined, setIsLogined] = useState(false);
+  useEffect(() => {
+    if (checkTokenValidate()) {
+      setIsLogined(true);
+    } else {
+      setIsLogined(false);
+    }
+  }, []);
   return (
-    <div className="w-100 h-100 p-3 sub-board">
+    <div className="w-100 h-100 p-3 main-board">
       <div className="h-100">
         <div className="d-flex justify-content-between align-items-center pe-3">
           <BigTitle title="In Progress" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-between h-90">
-          {projectList.map((item: project, idx: number) => {
-            return (
-              <ProjectCard
-                key={idx}
-                item={item}
-                handleShowMore={(e) => handleShowMore(item)}
-              />
-            );
-          })}
-        </div>
-        {/* Footer */}
+        {isLogined && (
+          <div className="d-flex justify-content-between h-90">
+            {projectList.map((item: project, idx: number) => {
+              return (
+                <ProjectCard
+                  key={idx}
+                  item={item}
+                  handleShowMore={(e) => handleShowMore(item)}
+                />
+              );
+            })}
+          </div>
+        )}
+        {!isLogined && (
+          <div className="pt-2">
+            <p className="fw-bold text-center" style={{ fontSize: '0.8rem' }}>
+              로그인 후에 이용 가능합니다.
+            </p>
+          </div>
+        )}
       </div>
       {/* project를 생성하는 모달 */}
       <div>
