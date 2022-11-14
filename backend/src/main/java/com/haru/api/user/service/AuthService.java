@@ -53,6 +53,6 @@ public class AuthService {
         String accessToken = tokenProvider.createAccessToken(authentication);
         String refreshToken = tokenProvider.createRefreshToken(authentication, response);
 
-        return AuthResponse.Token.build(accessToken, refreshToken);
+        return AuthResponse.Token.toEntity(accessToken, refreshToken);
     }
 }

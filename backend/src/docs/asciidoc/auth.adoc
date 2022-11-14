@@ -1,0 +1,19 @@
+= 인증 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== *토큰 재발급*
+
+`POST /api/auth/refresth`
+
+요청 HTTP Request
+include::{snippets}/token_refresh/http-request.adoc[]
+include::{snippets}/token_refresh/request-fields.adoc[]
+
+응답 HTTP Response
+include::{snippets}/token_refresh/http-response.adoc[]
+include::{snippets}/token_refresh/response-fields.adoc[]
