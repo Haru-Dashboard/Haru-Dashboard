@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import Time from './Time';
-import User from './User';
 import Weather from './Weather';
 import Settings from './Settings';
 import './index.css';
@@ -16,7 +15,6 @@ const Basic = () => {
       <section className="d-flex flex-row pb-3">
         <Time />
         <SearchBar />
-        <User />
       </section>
     </header>
   );
