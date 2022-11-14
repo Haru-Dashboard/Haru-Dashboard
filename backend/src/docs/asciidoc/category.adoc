@@ -1,0 +1,19 @@
+= 카테고리 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+== *카테고리 검색*
+
+`GET /api/categories?keyword=`
+
+요청 HTTP Request
+include::{snippets}/categories_search/http-request.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/categories_search/http-response.adoc[]
+include::{snippets}/categories_search/response-fields.adoc[]
