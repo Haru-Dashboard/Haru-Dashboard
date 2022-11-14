@@ -11,12 +11,12 @@ public class ProjectLinkResponse {
     public static class GetProjectLink {
         private Long id;
         private String name;
-        private String link;
+        private String url;
         public static ProjectLinkResponse.GetProjectLink build(ProjectLink projectLink) {
             return GetProjectLink.builder()
                     .id(projectLink.getId())
                     .name(projectLink.getName())
-                    .link(projectLink.getLink())
+                    .url(projectLink.getLink())
                     .build();
         }
     }
