@@ -14,3 +14,6 @@
 
 == *Project*
 - link:/docs/project.html[프로젝트 API]
+
+== *Category*
+- link:/docs/category.html[카테고리 API]
