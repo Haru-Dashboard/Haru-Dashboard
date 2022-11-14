@@ -12,7 +12,7 @@ public class AuthResponse {
         private String accessToken;
         private String refreshToken;
 
-        public static AuthResponse.Token build(String accessToken, String refreshToken) {
+        public static AuthResponse.Token toEntity(String accessToken, String refreshToken) {
             return Token.builder()
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
