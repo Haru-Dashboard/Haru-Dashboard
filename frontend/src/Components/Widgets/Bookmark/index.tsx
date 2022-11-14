@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { bookmark } from '../../../Utils/Bookmark';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import BigTitle from '../../Common/Title/BigTitle';
 import BookmarkItem from './BookmarkItem';
 import BookmarkModal from './BookmarkModal';
 import './index.css';
 
-export type bookmarkType = {
-  title: string;
-  url: string;
-};
-
 const Bookmark = () => {
-  const [bookmarks, setBookmarks] = useState<bookmarkType[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  const [bookmarks, setBookmarks] = useState<bookmark[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchBookmarksFromLocal();
@@ -62,9 +58,7 @@ const Bookmark = () => {
   return (
     <div className="widget-bookmark">
       {/* header */}
-      <div
-        // style={{ height: '10%' }}
-        className="d-flex justify-content-between align-items-center">
+      <div className="d-flex justify-content-between align-items-center">
         <BigTitle title="Bookmark" />
         <BtnPlus onClick={handleShow} />
       </div>

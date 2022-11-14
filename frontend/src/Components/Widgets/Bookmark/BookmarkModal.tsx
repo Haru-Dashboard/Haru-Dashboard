@@ -15,19 +15,15 @@ const BookmarkModal = ({
   addBookmark,
 }: bookmarkModalProps) => {
   return (
-    <Modal
-      show={showModal}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-      centered>
+    <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>북마크 추가</Modal.Title>
+        {/* TODO: title styling */}
+        <Modal.Title>Bookmark</Modal.Title>
       </Modal.Header>
       <Form onSubmit={addBookmark}>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>이름</Form.Label>
+            <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
               name="title"
@@ -48,10 +44,10 @@ const BookmarkModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            취소
+            Cancel
           </Button>
           <Button type="submit" variant="primary">
-            완료
+            Save
           </Button>
         </Modal.Footer>
       </Form>

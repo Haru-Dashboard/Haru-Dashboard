@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { getWeather, weatherData } from '../../../API/Weather';
+import { fetchWeather } from '../../../API/Weather';
+import { isWithinHour } from '../../../Utils';
+import { weatherData } from '../../../Utils/Weather';
 
 const Weather = () => {
   const [temperature, setTemperature] = useState<number>();
   const [icon, setIcon] = useState<string>();
 
   useEffect(() => {
-    const pastWeatherData = localStorage.getItem('weatherData');
-    if (pastWeatherData !== null) {
-      const weather: weatherData = JSON.parse(pastWeatherData);
-      setTemperature(weather['main']['temp']);
-      setIcon(weather['weather'][0]['icon']);
-    } else {
+    let flag = true;
+    const tmpWeatherData = localStorage.getItem('weatherData');
+    if (tmpWeatherData) {
+      const weatherData: weatherData = JSON.parse(tmpWeatherData);
+      if (isWithinHour(weatherData.time)) {
+        flag = false;
+        setTemperature(weatherData.main.temp);
+        setIcon(weatherData.weather[0].icon);
+      }
+    }
+    if (flag) {
       getCoords()
-        .then(getWeather)
-        .then((weather: weatherData) => {
-          localStorage.setItem('weatherData', JSON.stringify(weather));
-          setTemperature(weather['main']['temp']);
-          setIcon(weather['weather'][0]['icon']);
+        .then(fetchWeather)
+        .then((weatherData) => {
+          setTemperature(weatherData.main.temp);
+          setIcon(weatherData.weather[0].icon);
         });
     }
   }, []);
@@ -35,14 +41,15 @@ const Weather = () => {
 
   return (
     <>
-      {icon ? (
-        <div className="weather d-flex align-items-center">
+      {icon !== undefined && temperature !== undefined ? (
+        <div className="weather d-flex align-items-center text-white">
           <img
+            className="weather-img"
             src={`http://openweathermap.org/img/w/${icon}.png`}
             alt="weather icon"
           />
           {/* Note &#8451; is a Unicode for DEGREE CELSIUS */}
-          <span>{temperature?.toFixed(1)}&#8451;</span>
+          <span className="temperature">{temperature?.toFixed(1)}&#8451;</span>
         </div>
       ) : (
         <span style={{ width: '0px' }}></span>
