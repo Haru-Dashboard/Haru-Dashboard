@@ -1,2 +1,2 @@
 ### 구글 로그인
-http://localhost:8081/oauth2/authorize/google?redirect_uri=chrome-extension://epiifnjgnimepgnkbeeljnkajpehbeln/index.html
+http://k7a204.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=chrome-extension://epiifnjgnimepgnkbeeljnkajpehbeln/index.html

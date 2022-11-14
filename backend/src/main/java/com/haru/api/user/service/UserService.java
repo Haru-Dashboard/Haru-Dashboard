@@ -20,7 +20,7 @@ public class UserService {
 
     public UserResponse.UserInfo getUserInfo(CustomUserDetails user){
         User findUser = userRepository.findById(user.getUser().getId()).orElseThrow(UserNotFoundException::new);
-        return UserResponse.UserInfo.build(findUser);
+        return UserResponse.UserInfo.toEntity(findUser);
     }
 
 }
