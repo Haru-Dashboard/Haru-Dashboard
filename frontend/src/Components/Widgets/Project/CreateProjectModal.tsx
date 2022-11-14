@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import {
   checkTokenValidate,
   getAccessToken,
@@ -65,6 +67,21 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
     event.target.value = '';
   };
 
+  const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLabels = inputs.labels;
+    currentLabels.splice(idx, 1);
+    console.log(currentLabels);
+
+    setInputs({
+      ...inputs,
+      labels: currentLabels,
+    });
+  };
+
   // Handle inputs when target is link
   const addLink = (event: any) => {
     const value: string = event.target.value;
@@ -89,6 +106,26 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
     } else {
       alert('링크는 3개까지 추가 가능합니다.');
     }
+  };
+  const deleteLink = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    idx: number,
+  ) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLink = inputs.links;
+    if (currentLink.length === 1) {
+      alert('링크는 1개 이상 입력해주세요');
+    } else {
+      currentLink.splice(idx, 1);
+    }
+    // console.log(currentLink);
+    setInputs({
+      ...inputs,
+      links: currentLink,
+    });
   };
 
   const createProject: React.FormEventHandler = async (e) => {
@@ -145,6 +182,7 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
               />
             </Form.Group>
             <Form.Control
+              autoFocus
               type="text"
               placeholder="제목"
               name="title"
@@ -161,12 +199,16 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
               onChange={handleInputChange}
             />
             {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
-
-            {inputs.labels.map((label, idx) => (
-              <span className="px-2" key={idx}>
-                {label}
-              </span>
-            ))}
+            <div className="d-flex justify-content-start">
+              {inputs.labels.map((label, idx) => (
+                <div>
+                  <span className="px-2" key={idx}>
+                    {label}
+                  </span>
+                  <span onClick={(e) => deleteLabel(e, idx)}>X</span>
+                </div>
+              ))}
+            </div>
             <Form.Control
               type="text"
               placeholder="태그 추가하기"
@@ -195,20 +237,30 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
               />
             </Form.Group>
             {inputs.links.map((link, idx) => (
-              <Form.Group className="d-flex justify-content-between" key={idx}>
+              <Form.Group
+                className="d-flex justify-content-between align-items-center"
+                key={idx}>
                 <Form.Control
                   type="text"
-                  placeholder="링크명"
+                  placeholder="Google"
                   className="my-2 me-2 border w-50"
                   name={`link-name-${idx}`}
                   onChange={addLink}
                 />
                 <Form.Control
+                  required
                   type="url"
-                  placeholder="링크 url"
+                  pattern="https://.*"
+                  placeholder="https://google.com"
                   className="my-2 border"
                   name={`link-url-${idx}`}
                   onChange={addLink}
+                />
+                <FontAwesomeIcon
+                  icon={faSquareMinus}
+                  color="#FA5252"
+                  className="col-1 p-0"
+                  onClick={(e) => deleteLink(e, idx)}
                 />
               </Form.Group>
             ))}

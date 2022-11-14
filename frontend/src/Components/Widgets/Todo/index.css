@@ -10,9 +10,9 @@
 .sub-board {
   background-color: rgb(256, 256, 256, 0.1);
   margin: auto;
-  border-radius: 3.1rem;
+  border-radius: 1.5rem;
 }
 
-:hover.today-hover {
+:hover.hover {
   cursor: pointer;
 }

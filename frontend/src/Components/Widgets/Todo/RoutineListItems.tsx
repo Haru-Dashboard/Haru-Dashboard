@@ -41,7 +41,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
 
   return (
     <div>
-      <div className="row ms-2 mt-2 today-hover">
+      <div className="row ms-2 mt-2 hover">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}

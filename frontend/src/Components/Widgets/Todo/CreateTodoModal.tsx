@@ -142,6 +142,7 @@ const createTodoModal = ({
                 <div className="d-flex justify-content-between">
                   <TodayFilterBar handleCategory={handleCategory} />
                   <Form.Control
+                    autoFocus
                     type="text"
                     placeholder="Today"
                     onChange={(e) => setWrittenContent(e.target.value)}
@@ -175,6 +176,7 @@ const createTodoModal = ({
                 <div className="d-flex justify-content-between">
                   <RoutineFilterBar handleCategory={handleCategory} />
                   <Form.Control
+                    autoFocus
                     type="text"
                     placeholder="Routine 이름"
                     onChange={(e) => setWrittenContent(e.target.value)}

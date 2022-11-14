@@ -12,7 +12,7 @@ import {
 const RoutineFilterBar = ({ handleCategory, clicked }: routineFilterBar) => {
   const defaultURL = process.env.REACT_APP_BACKURL;
 
-  const [clickedFilter, setClickedFilter] = useState('전체');
+  const [clickedFilter, setClickedFilter] = useState('ALL');
   const [searchedWord, setSearchedword] = useState('');
   const [searchResult, setSearchResult] = useState<Array<string> | void>([]);
   const [localCategoryList, setLocalCategoryList] = useState(['']);
