@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import {
-  timeStringConverToBootstrapTime,
   datetimeTimeSettingTo0,
+  timeDateConverToBootstrapTime,
 } from './ScheduleDataType';
 import {
   checkTokenValidate,
@@ -22,6 +22,7 @@ export default function ScheduleManage(props: any) {
     color: -1,
     id: -1,
   });
+
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
@@ -109,69 +110,65 @@ export default function ScheduleManage(props: any) {
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>일정관리</Modal.Title>
+        <Modal.Title>Manage Schedules</Modal.Title>
       </Modal.Header>
       {showModal ? (
         <Form>
           <Modal.Body>
             <Form.Group>
-              <Form.Label>제목</Form.Label>
+              <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
                 name="title"
-                placeholder="제목"
+                placeholder="Title"
                 defaultValue={
                   schedule[scheduleNo] != null ? schedule[scheduleNo].title : ''
                 }
                 onChange={handleChange}
-                required
               />
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>시작일</Form.Label>
+              <Form.Label>Start Date</Form.Label>
               <Form.Control
                 type="datetime-local"
                 name="startDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeStringConverToBootstrapTime(
+                defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].startDate,
                 )}
-                required
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>종료일</Form.Label>
+              <Form.Label>End Date</Form.Label>
               <Form.Control
                 type="datetime-local"
                 name="endDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeStringConverToBootstrapTime(
+                defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].endDate,
                 )}
-                required
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>세부일정</Form.Label>
+              <Form.Label>Details</Form.Label>
               <Form.Control
                 type="text"
                 name="content"
                 defaultValue={schedule[scheduleNo].content}
-                placeholder="세부일정"
+                placeholder="Details"
                 onChange={handleChange}
-                required
               />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" onClick={removeSchedule} variant="primary">
-              삭제
+              Delete
             </Button>
             <Button onClick={handleSubmit} type="submit" variant="primary">
-              수정
+              Edit
             </Button>
           </Modal.Footer>
         </Form>

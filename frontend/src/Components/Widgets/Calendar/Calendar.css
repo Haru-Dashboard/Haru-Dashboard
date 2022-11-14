@@ -107,10 +107,14 @@
 .calendar-detail-date{
   height: 10%;
 }
+.calendar-detail-details{
+  height: 90%;
+  overflow: auto;
+
+}
 .calendar-detail-board {
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   text-align: center;
