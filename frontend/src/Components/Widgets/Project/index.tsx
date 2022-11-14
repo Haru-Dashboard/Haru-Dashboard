@@ -24,7 +24,7 @@ const Project = () => {
         {
           id: 0,
           name: '네이버',
-          link: 'https://www.naver.com',
+          url: 'https://www.naver.com',
         },
       ],
       projectLabels: [
@@ -55,7 +55,7 @@ const Project = () => {
         {
           id: 0,
           name: '구글',
-          link: 'https://www.google.com',
+          url: 'https://www.google.com',
         },
       ],
       projectLabels: [
@@ -116,7 +116,7 @@ const Project = () => {
       {
         id: -1,
         name: '',
-        link: '',
+        url: '',
       },
     ],
     projectLabels: [

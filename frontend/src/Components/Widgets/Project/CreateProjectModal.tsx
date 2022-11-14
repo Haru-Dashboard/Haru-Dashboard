@@ -31,6 +31,7 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
     startDate: new Date(),
     endDate: new Date(),
   });
+  const todayDate = new Date().toISOString().slice(0, 10);
 
   // TODO: project 생성 fetch 함수
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -176,6 +177,7 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
                 placeholder="시작일"
                 className="my-2 border"
                 name="startDate"
+                defaultValue={todayDate}
                 onChange={handleInputChange}
               />
               <p className="mb-0 p-3">~</p>
@@ -184,6 +186,7 @@ const CreateProjectModal = ({ handleClose, show, item }: any) => {
                 placeholder="종료일"
                 className="my-2 border"
                 name="endDate"
+                defaultValue={todayDate}
                 onChange={handleInputChange}
               />
             </Form.Group>

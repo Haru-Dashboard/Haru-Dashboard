@@ -6,8 +6,9 @@ import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
+import BtnPlus from '../../Common/Button/BtnPlus';
 import { defaultURL } from '../../../API';
-import { project } from '../../../Utils/Project';
+import { project, link, inputs } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
 
 type projectDetail = {
@@ -15,6 +16,8 @@ type projectDetail = {
   show: boolean;
   item: project;
 };
+
+const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
 
 const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
   const [isUpdate, setIsUpdate] = useState(false);
@@ -24,10 +27,139 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
   const [rootWidth, setRootWidth] = useState(0);
   const accessToken = localStorage.getItem('accessToken');
   const URLNext = 'projects/' + item.id;
+  const [file, setFile] = useState<File>();
+  const [inputs, setInputs] = useState<inputs>({
+    title: '',
+    content: '',
+    labels: [],
+    links: [{ name: '', url: '' }],
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
-  // Tproject 수정하기
-  const updateProject = (event: React.MouseEvent<HTMLButtonElement>) => {
+  // 수정으로 모달이 바뀌었을 때
+  useEffect(() => {
+    const stringLabel: Array<string> = [];
+    const stringLink: Array<link> = [];
+
+    item.projectLabels.map((label) => {
+      stringLabel.push(label.name);
+    });
+
+    item.projectLinks.map((link) => {
+      stringLink.push({
+        name: link.name,
+        url: link.url,
+      });
+    });
+    // console.log(stringLink);
+
+    setInputs({ ...inputs, labels: stringLabel, links: stringLink });
+  }, [isUpdate]);
+
+  // TODO: project 생성 fetch 함수
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const userFile = (target.files as FileList)[0];
+    if (userFile === undefined) return;
+
+    if (userFile.size > FILE_SIZE_MAX_LIMIT) {
+      target.value = '';
+      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      return;
+    }
+
+    setFile(userFile);
+  };
+
+  // Handle inputs when target is not label or link
+  const handleInputChange = (event: any) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  // Handle inputs when target is label
+  const addLabel = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    console.log('addlabel');
+
+    if (e.key === 'Enter') {
+      setInputs({
+        ...inputs,
+        labels: inputs.labels.concat(value),
+      });
+      e.currentTarget.value = '';
+    }
+    // console.log(inputs.labels);
+  };
+
+  const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLabels = inputs.labels;
+    currentLabels.splice(idx, 1);
+    console.log(currentLabels);
+
+    setInputs({
+      ...inputs,
+      labels: currentLabels,
+    });
+  };
+
+  // Handle inputs when target is link
+  const addLink = (event: any) => {
     event.preventDefault();
+    const value: string = event.target.value;
+    const key: 'name' | 'url' = event.target.name.split('-')[1];
+    const id = Number(event.target.name.split('-')[2]);
+    const newLinks = inputs.links.map((link, idx) =>
+      idx !== id ? link : { ...link, ...{ [key]: value } },
+    );
+
+    setInputs({
+      ...inputs,
+      links: newLinks,
+    });
+  };
+
+  const addNewLink = (event: any) => {
+    const newLink: link = {
+      name: '',
+      url: '',
+    };
+    setInputs({ ...inputs, links: [...inputs.links, newLink] });
+  };
+
+  const updateProject: React.FormEventHandler = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    // console.log(inputs, JSON.stringify(inputs));
+
+    // TODO: append inputs after checking inputs
+    formData.append(
+      'form',
+      new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
+    );
+    if (file !== undefined) formData.append('file', file);
+    console.log(formData);
+
+    if (checkTokenValidate()) {
+      console.log('hi');
+
+      await fetch(defaultURL + URLNext, {
+        method: 'PATCH',
+        headers: {
+          Authorization: getAccessToken(),
+        },
+        body: formData,
+      }).then((res) => {
+        console.log(res);
+      });
+    }
   };
 
   // 프로젝트 삭제하기
@@ -50,17 +182,6 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
       //
     }
   };
-  // Read project detail
-  // useEffect(() => {
-  //   fetch(defaultURL + URLNext, {
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: 'Bearer ' + accessToken,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setProject(data));
-  // }, [show]);
 
   return (
     <div>
@@ -127,7 +248,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                   <div className="d-flex justify-content-between">
                     <SmallTitle title="Links" color="#49649E" />
                     {item.projectLinks.map((link) => {
-                      return <a href={link.link}>{link.name}</a>;
+                      return <a href={link.url}>{link.name}</a>;
                     })}
                   </div>
                 </Modal.Body>
@@ -143,50 +264,107 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
             )}
             {isUpdate && (
               <div>
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    <div className="d-flex align-items-center">
-                      <SmallTitle title="My project" color="black" />
-                      <div className="ms-5 d-flex justify-content-between">
-                        {item.projectLabels.map((label) => {
-                          return (
-                            <p
-                              className="ms-1 mb-0"
-                              style={{ fontSize: '0.8rem' }}>
-                              {label.name}
-                            </p>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </Modal.Title>
+                <Modal.Header className="pb-1" closeButton>
+                  <SmallTitle title="In Progress" color="black" />
                 </Modal.Header>
-                <Modal.Body>
-                  <Form>
-                    <div
-                      className="w-70 bg-secondary mx-auto mb-3"
-                      style={{ height: '150px' }}>
-                      <img src={item.imageInfo.imageUrl} alt="" />
-                    </div>
+                <Form encType="multipart/form-data">
+                  <Modal.Body>
+                    {/* content */}
                     <Form.Group>
-                      <Form.Label>종료일</Form.Label>
                       <Form.Control
-                        type="datetime-local"
-                        name="startDate"
-                        required
+                        type="file"
+                        accept="image/*"
+                        className="my-2 border"
+                        onChange={handleFile}
                       />
                     </Form.Group>
-                    <div>content</div>
-                    <div className="text-end">
-                      {item.projectLinks.map((link) => {
-                        return <a href={link.link}>{link.name}</a>;
-                      })}
+                    <Form.Control
+                      type="text"
+                      placeholder="제목"
+                      name="title"
+                      className="my-2 border"
+                      defaultValue={item.title}
+                      onChange={handleInputChange}
+                    />
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      className="my-2"
+                      style={{ resize: 'none' }}
+                      placeholder="내용을 입력하세요"
+                      name="content"
+                      defaultValue={item.content}
+                      onChange={handleInputChange}
+                    />
+                    {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
+                    <div className="d-flex justify-content-start">
+                      {inputs.labels.map((label, idx) => (
+                        <div className="d-flex justify-content-start">
+                          <span className="px-2" key={idx}>
+                            {label}
+                          </span>
+                          <span onClick={(e) => deleteLabel(e, idx)}>X</span>
+                        </div>
+                      ))}
                     </div>
-                  </Form>
-                </Modal.Body>
+                    <Form.Control
+                      type="text"
+                      placeholder="태그 추가하기"
+                      className="my-2 border"
+                      name="labels"
+                      onKeyUp={addLabel}
+                    />
+
+                    <Form.Group className="d-flex justify-content-between">
+                      <Form.Control
+                        type="date"
+                        placeholder="시작일"
+                        className="my-2 border"
+                        name="startDate"
+                        defaultValue={item.startDate}
+                        onChange={handleInputChange}
+                      />
+                      <p className="mb-0 p-3">~</p>
+                      <Form.Control
+                        type="date"
+                        placeholder="종료일"
+                        className="my-2 border"
+                        name="endDate"
+                        defaultValue={item.endDate}
+                        onChange={handleInputChange}
+                      />
+                    </Form.Group>
+                    {inputs.links.map((link, idx) => (
+                      <Form.Group
+                        className="d-flex justify-content-between"
+                        key={idx}>
+                        <Form.Control
+                          type="text"
+                          placeholder="링크명"
+                          className="my-2 me-2 border w-50"
+                          defaultValue={link.name}
+                          name={`link-name-${idx}`}
+                          onChange={addLink}
+                        />
+                        <Form.Control
+                          type="url"
+                          placeholder="링크 url"
+                          className="my-2 border"
+                          name={`link-url-${idx}`}
+                          defaultValue={link.url}
+                          onChange={addLink}
+                        />
+                      </Form.Group>
+                    ))}
+                    <BtnPlus onClick={addNewLink} />
+                  </Modal.Body>
+                </Form>
                 <Modal.Footer>
-                  <Button variant="primary" onClick={updateProject}>
-                    저장
+                  <Button
+                    onClick={updateProject}
+                    variant="outline-primary"
+                    size="sm">
+                    SAVE
                   </Button>
                 </Modal.Footer>
               </div>

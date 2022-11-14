@@ -63,13 +63,13 @@ const ProjectCard = (props: projectCardProps) => {
           style={{ height: '5%', right: '1rem', bottom: '1rem' }}>
           {item.projectLinks.map((projectLink, idx) => (
             <a
-              href={projectLink.link}
+              href={projectLink.url}
               key={idx}
               style={{ marginRight: '0.3rem' }}>
               <img
                 width="18"
                 height="18"
-                src={getFaviconSrc(projectLink.link)}
+                src={getFaviconSrc(projectLink.url)}
                 alt={projectLink.name}
               />
             </a>
