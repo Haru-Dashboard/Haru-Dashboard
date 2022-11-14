@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { getFaviconSrc } from '../../../Utils';
-import { bookmarkType } from '.';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { bookmark } from '../../../Utils/Bookmark';
 
 type bookmarkItemProps = {
   idx: number;
-  bookmark: bookmarkType;
+  bookmark: bookmark;
   deleteBookmark: React.MouseEventHandler;
 };
 
 const BookmarkItem = ({ idx, bookmark, deleteBookmark }: bookmarkItemProps) => {
-  const [showEllipsis, setShowEllipsis] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
   const onMouseEnter = () => {
-    setShowEllipsis(true);
+    setShowDeleteButton(true);
   };
 
   const onMouseLeave = () => {
-    setShowEllipsis(false);
+    setShowDeleteButton(false);
   };
 
   return (
@@ -31,7 +31,7 @@ const BookmarkItem = ({ idx, bookmark, deleteBookmark }: bookmarkItemProps) => {
         className="bookmark-minus-button"
         onClick={deleteBookmark}
         style={{
-          visibility: showEllipsis ? 'visible' : 'hidden',
+          visibility: showDeleteButton ? 'visible' : 'hidden',
         }}>
         <FontAwesomeIcon
           data-idx={idx}
