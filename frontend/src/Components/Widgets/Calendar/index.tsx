@@ -11,9 +11,6 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import ScheduleAdd from './ScheduleAdd';
 import ScheduleManage from './ScheduleManage';
 function Calendar() {
-  const dateObj = new Date();
-  const thisYear = dateObj.getUTCFullYear();
-  const thisMonth = dateObj.getMonth();
   const [schedule, setSchedule] = useState([
     {
       title: '',
@@ -23,11 +20,14 @@ function Calendar() {
       id: -1,
     },
   ]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [calendarSelectedDate, setCalendarSelectedDate] = useState(new Date());
 
+  const [selectedNo, setSelectedNo] = useState(0);
   useEffect(() => {
     const backURL = process.env.REACT_APP_BACKURL;
-    const URLNext = `schedules?year=${thisYear}&month=${thisMonth}`;
+    const URLNext = `schedules?year=${new Date().getUTCFullYear()}&month=${
+      new Date().getMonth() + 1
+    }`;
     if (checkTokenValidate()) {
       setSchedule(schedule.filter((sch: any) => sch.id !== -1));
       fetch(backURL + URLNext, {
@@ -39,21 +39,33 @@ function Calendar() {
           setSchedule(data);
         });
     } else {
-      //
+      setSchedule(schedule.filter((sch: any) => sch.id !== -1));
     }
   }, []);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const handleAddClose = () => setShowAddModal(false);
   const handleAddShow = () => setShowAddModal(true);
-  const [selectedNo, setSelectedNo] = useState(0);
-
   const [showManageModal, setShowManageModal] = useState(false);
   const handleManageClose = () => setShowManageModal(false);
   const handleManageShow = (event: React.MouseEvent<HTMLButtonElement>) => {
     setShowManageModal(true);
     const button = event.currentTarget;
     setSelectedNo(parseInt(button.value));
+  };
+
+  const monthNext = () => {
+    const newDate = calendarSelectedDate;
+    newDate.setDate(1);
+    newDate.setMonth(newDate.getMonth() + 1);
+    setCalendarSelectedDate(newDate);
+  };
+
+  const monthBeofre = () => {
+    const newDate = calendarSelectedDate;
+    newDate.setDate(1);
+    newDate.setMonth(newDate.getMonth() - 1);
+    setCalendarSelectedDate(newDate);
   };
   return (
     <div className="calendar-board cursor-default">
@@ -75,13 +87,19 @@ function Calendar() {
         <BtnPlus onClick={handleAddShow} />
       </div>
       <div className="w-100 h-100 d-flex">
+        {/*        <Button onClick={monthBeofre}>Preview</Button>*/}
         <div className="calendar-main">
-          <CalendarMain schedule={schedule} setSelectedDate={setSelectedDate} />
+          <CalendarMain
+            schedule={schedule}
+            setCalendarSelectedDate={setCalendarSelectedDate}
+            calendarSelectedDate={calendarSelectedDate}
+          />
         </div>
+        {/*<Button onClick={monthNext}>Next</Button>*/}
         <div className="calendar-detail">
           <CalendarDetail
             schedule={schedule}
-            selectedDate={selectedDate}
+            calendarSelectedDate={calendarSelectedDate}
             handleManageShow={handleManageShow}
           />
         </div>
