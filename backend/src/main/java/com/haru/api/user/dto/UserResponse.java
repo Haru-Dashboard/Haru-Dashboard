@@ -15,7 +15,7 @@ public class UserResponse {
         private String name;
         private String refreshToken;
 
-        public static UserInfo build(User user) {
+        public static UserInfo toEntity(User user) {
             return UserInfo.builder()
                     .userId(user.getId())
                     .email(user.getEmail())
