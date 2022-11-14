@@ -14,6 +14,7 @@ import com.haru.api.project.domain.repository.ProjectRepository;
 import com.haru.api.project.dto.ProjectLinkRequest;
 import com.haru.api.project.dto.ProjectRequest;
 import com.haru.api.project.dto.ProjectResponse;
+import com.haru.api.project.exception.ProjectLimitException;
 import com.haru.api.project.exception.ProjectNotFoundException;
 import com.haru.api.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,11 @@ public class ProjectService {
     private final ProjectLabelRepository projectLabelRepository;
     private final S3FileRepository fileRepository;
     private final S3Service s3Service;
+    private static final int MAX_USER_PROJECT_NUM = 15;
 
     @Transactional
     public ProjectResponse.OnlyId create(ProjectRequest.CreateOrUpdate request, MultipartFile file, User user) {
+        if (projectRepository.countByUser(user) >= MAX_USER_PROJECT_NUM) throw new ProjectLimitException();
         Project project = Project.create(request, user);
         if (!request.getLinks().isEmpty()) {
             List<ProjectLinkRequest.Create> links = request.getLinks();
