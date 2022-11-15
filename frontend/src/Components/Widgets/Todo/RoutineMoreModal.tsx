@@ -11,10 +11,7 @@ import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { defaultURL } from '../../../API';
 import Swal from 'sweetalert2';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const RoutineMoreModal = ({
   handleClose,
@@ -63,7 +60,7 @@ const RoutineMoreModal = ({
       sat: selectedDayList[6].isClicked,
     };
 
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(defaultURL + url, {
         method: 'PATCH',
         headers: {
@@ -82,7 +79,7 @@ const RoutineMoreModal = ({
 
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {

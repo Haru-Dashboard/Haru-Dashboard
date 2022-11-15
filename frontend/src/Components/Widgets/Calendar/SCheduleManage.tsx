@@ -7,10 +7,7 @@ import {
   datetimeTimeSettingTo0,
   timeDateConverToBootstrapTime,
 } from './ScheduleDataType';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 
 export default function ScheduleManage(props: any) {
@@ -29,7 +26,7 @@ export default function ScheduleManage(props: any) {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {
@@ -90,7 +87,7 @@ export default function ScheduleManage(props: any) {
     }
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'PATCH',
         headers: {

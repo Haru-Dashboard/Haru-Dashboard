@@ -4,10 +4,7 @@ import SmallTitle from '../../Common/Title/SmallTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import { projectLink } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
@@ -158,7 +155,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
       });
     } else {
       formData.append('file', file);
-      if (getAccessToken()) {
+      if (tokenExists()) {
         const url = process.env.REACT_APP_BACKURL;
         await fetch(url + `projects`, {
           method: 'POST',

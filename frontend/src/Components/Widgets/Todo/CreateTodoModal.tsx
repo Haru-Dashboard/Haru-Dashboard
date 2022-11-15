@@ -6,10 +6,7 @@ import SmallTitle from '../../Common/Title/SmallTitle';
 import SelectDayBar from './SelectDayBar';
 import { week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   const [isToday, setIsToday] = useState(true);
@@ -87,7 +84,7 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(defaultURL + url, {
         method: 'POST',
         headers: {

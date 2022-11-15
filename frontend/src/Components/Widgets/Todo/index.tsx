@@ -7,10 +7,7 @@ import CreateTodoModal from './CreateTodoModal';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import Swal from 'sweetalert2';
 import './index.css';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists } from '../../../API/Authentication';
 
 const Todo = () => {
   const [show, setShow] = useState(false);
@@ -20,7 +17,7 @@ const Todo = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       setIsLogined(true);
       setShow(true);
     } else {
