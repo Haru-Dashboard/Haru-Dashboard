@@ -8,7 +8,7 @@ import './index.css';
 const Basic = () => {
   return (
     <header>
-      <section className="d-flex justify-content-between align-items-center">
+      <section className="d-flex justify-content-between align-items-center py-2">
         <Weather />
         <Settings />
       </section>

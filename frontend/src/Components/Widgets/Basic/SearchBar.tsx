@@ -1,48 +1,38 @@
 import React, { useState } from 'react';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
 
-  //TODO
-  // const isURL = (value: string): boolean => {};
-
-  /**
-   * When event.target[0].value is URL, open the page
-   *
-   * When event.target[0].value is query, search query on google
-   * @param e React.FormEvent<HTMLFormElement>
-   *
-   */
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    const target = e.target as typeof e.target & {
-      '0': { value: string };
-    };
-    const { value } = target[0];
-    // if (isURL(value)) {
-    //   e.preventDefault();
-    //   chrome.tabs.update({ url: value });
-    // }
-  };
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-
   return (
     <div className="search-bar w-50 d-flex align-items-end">
+      {/* Note: GET https://www.google.com/search?q={query} */}
       <form
-        className="w-100 h-75"
+        className="w-100 h-75 position-relative"
         action="http://www.google.com/search"
-        method="get"
-        onSubmit={onSubmit}>
-        {/* Note: GET https://www.google.com/search?q={query} */}
+        method="get">
+        <FontAwesomeIcon
+          className="position-absolute"
+          icon={faMagnifyingGlass}
+          style={{
+            width: '1.3rem',
+            height: '1.3rem',
+            left: '0.8rem',
+            top: '50%',
+            transform: 'translate(0, -50%)',
+          }}
+        />
         <input
-          className="w-100 h-100 border border-0 rounded-pill px-3"
+          className="search-bar-input w-100 h-100 border border-0 rounded-pill position-absolute"
           type="text"
           onChange={onChange}
           name="q"
           value={query}
-          placeholder="search google or type a url"
+          placeholder="search google"
           style={{ backgroundColor: 'rgb(256, 256, 256, 0.3)' }}
         />
       </form>
