@@ -10,13 +10,11 @@ public class UserResponse {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class UserInfo {
-        private Long userId;
         private String email;
         private String name;
 
         public static UserInfo toEntity(User user) {
             return UserInfo.builder()
-                    .userId(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
                     .build();

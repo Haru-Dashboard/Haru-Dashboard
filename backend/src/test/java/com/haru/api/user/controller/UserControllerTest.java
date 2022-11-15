@@ -58,7 +58,6 @@ public class UserControllerTest extends MvcTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         responseFields(
-                                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("유저 식별자"),
                                 fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
                         )
