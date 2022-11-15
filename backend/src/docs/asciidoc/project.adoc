@@ -51,7 +51,7 @@ include::{snippets}/projects_list/response-fields.adoc[]
 
 include::{snippets}/projects_update/http-request.adoc[]
 include::{snippets}/projects_update/path-parameters.adoc[]
-include::{snippets}/projects_update/request-fields.adoc[]
+include::{snippets}/projects_update/request-parts.adoc[]
 
 성공 응답 HTTP Response
 

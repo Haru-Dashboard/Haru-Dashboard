@@ -6,6 +6,7 @@ import com.haru.api.file.entity.S3File;
 import com.haru.api.project.domain.entity.Project;
 import com.haru.api.project.domain.entity.ProjectLabel;
 import com.haru.api.project.domain.entity.ProjectLink;
+import com.haru.api.project.dto.ProjectLinkRequest;
 import com.haru.api.project.dto.ProjectRequest;
 import com.haru.api.project.dto.ProjectResponse;
 import com.haru.api.project.service.ProjectService;
@@ -23,6 +24,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -36,6 +38,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.fileUpload;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -216,7 +219,7 @@ public class ProjectControllerTest extends MvcTest {
     @Test
     @DisplayName("Project 목록 조회")
     public void getList() throws Exception{
-        List<ProjectResponse.GetProject> response = projectList.stream().map(project -> ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
+        List<ProjectResponse.GetProject> response = projectList.stream().map(project -> ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
         given(projectService.getProjectList(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(get("/api/projects")
@@ -240,7 +243,7 @@ public class ProjectControllerTest extends MvcTest {
                                 fieldWithPath("[].endDate").type(JsonFieldType.STRING).description("종료일"),
                                 fieldWithPath("[].projectLinks[].id").type(JsonFieldType.NUMBER).description("프로젝트 링크 식별자"),
                                 fieldWithPath("[].projectLinks[].name").type(JsonFieldType.STRING).description("링크 이름"),
-                                fieldWithPath("[].projectLinks[].link").type(JsonFieldType.STRING).description("링크 주소"),
+                                fieldWithPath("[].projectLinks[].url").type(JsonFieldType.STRING).description("링크 주소"),
                                 fieldWithPath("[].projectLabels[].id").type(JsonFieldType.NUMBER).description("프로젝트 라벨 식별자"),
                                 fieldWithPath("[].projectLabels[].name").type(JsonFieldType.STRING).description("라벨 이름"),
                                 fieldWithPath("[].imageInfo.id").type(JsonFieldType.NUMBER).description("이미지 식별자"),
@@ -250,13 +253,13 @@ public class ProjectControllerTest extends MvcTest {
                                 fieldWithPath("[].imageInfo.imageUrl").type(JsonFieldType.STRING).description("파일 링크")
                         )
                         ));
-        verify(projectService).getProject(any(), any());
+        verify(projectService).getProjectList(any(), any());
     }
 
     @Test
     @DisplayName("Project 상세 조회")
     public void getProject() throws Exception {
-        ProjectResponse.GetProject response = ProjectResponse.GetProject.build(project1, S3FileResponse.GetImage.build(project1.getFile(), project1.getFile().getUrl()));
+        ProjectResponse.GetProject response = ProjectResponse.GetProject.toEntity(project1, S3FileResponse.GetImage.build(project1.getFile(), project1.getFile().getUrl()));
         given(projectService.getProject(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(get("/api/projects/{projectId}", 1L));
@@ -277,7 +280,7 @@ public class ProjectControllerTest extends MvcTest {
                     fieldWithPath("endDate").type(JsonFieldType.STRING).description("종료일"),
                     fieldWithPath("projectLinks[].id").type(JsonFieldType.NUMBER).description("프로젝트 링크 식별자"),
                     fieldWithPath("projectLinks[].name").type(JsonFieldType.STRING).description("링크 이름"),
-                    fieldWithPath("projectLinks[].link").type(JsonFieldType.STRING).description("링크 주소"),
+                    fieldWithPath("projectLinks[].url").type(JsonFieldType.STRING).description("링크 주소"),
                     fieldWithPath("projectLabels[].id").type(JsonFieldType.NUMBER).description("프로젝트 라벨 식별자"),
                     fieldWithPath("projectLabels[].name").type(JsonFieldType.STRING).description("라벨 이름"),
                     fieldWithPath("imageInfo.id").type(JsonFieldType.NUMBER).description("이미지 식별자"),
@@ -293,19 +296,36 @@ public class ProjectControllerTest extends MvcTest {
     @Test
     @DisplayName("Project 생성")
     public void create() throws Exception {
+        List<String> projectLabels = new ArrayList<>();
+        projectLabels.add(projectLabel1.getName());
+        projectLabels.add(projectLabel2.getName());
+        List<ProjectLinkRequest.Create> projectLinkCreateList = new ArrayList<>();
+        ProjectLinkRequest.Create projectLinkCreate1, projectLinkCreate2;
+        projectLinkCreate1 = ProjectLinkRequest.Create.builder()
+                .name("github")
+                .url("https://www.github.com")
+                .build();
+        projectLinkCreate2 = ProjectLinkRequest.Create.builder()
+                .name("jira")
+                .url("https://www.jira.com")
+                .build();
+        projectLinkCreateList.add(projectLinkCreate1);
+        projectLinkCreateList.add(projectLinkCreate2);
         ProjectRequest.CreateOrUpdate request = ProjectRequest.CreateOrUpdate.builder()
             .title("PetClinic")
             .content("first Spring project")
             .startDate(LocalDate.now().plusDays(10L))
             .endDate(LocalDate.now().plusDays(40L))
+            .labels(projectLabels)
+            .links(projectLinkCreateList)
             .build();
 
-        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.build(project1);
+        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.toEntity(project1);
 
         String jsonRequest = objectMapper.writeValueAsString(request);
         MockMultipartFile form = new MockMultipartFile("form", "form", "application/json", jsonRequest.getBytes(StandardCharsets.UTF_8));
         InputStream inputStream = new ClassPathResource("dummy/image.png").getInputStream();
-        MockMultipartFile file = new MockMultipartFile("file", "image.png", "image/png", inputStream.readAllBytes());
+        MockMultipartFile file = new MockMultipartFile("file", "image.png", "image/png", InputStream.nullInputStream());
 
         given(projectService.create(any(), any(), any())).willReturn(response);
 
@@ -336,26 +356,45 @@ public class ProjectControllerTest extends MvcTest {
     @Test
     @DisplayName("Project 수정")
     public void update() throws Exception {
+        List<String> projectLabels = new ArrayList<>();
+        projectLabels.add(projectLabel1.getName());
+        projectLabels.add(projectLabel2.getName());
+        List<ProjectLinkRequest.Create> projectLinkCreateList = new ArrayList<>();
+        ProjectLinkRequest.Create projectLinkCreate1, projectLinkCreate2;
+        projectLinkCreate1 = ProjectLinkRequest.Create.builder()
+            .name("github")
+            .url("https://www.github.com/testing")
+            .build();
+        projectLinkCreate2 = ProjectLinkRequest.Create.builder()
+            .name("mattermost")
+            .url("https://www.mattermost.com/update")
+            .build();
+        projectLinkCreateList.add(projectLinkCreate1);
+        projectLinkCreateList.add(projectLinkCreate2);
         ProjectRequest.CreateOrUpdate request = ProjectRequest.CreateOrUpdate.builder()
-            .title("PetClinic")
-            .content("first Spring project")
-            .startDate(LocalDate.now().plusDays(10L))
-            .endDate(LocalDate.now().plusDays(40L))
+            .title("petDoctor")
+            .content("update project")
+            .startDate(LocalDate.now().plusDays(5L))
+            .endDate(LocalDate.now().plusDays(20L))
+            .labels(projectLabels)
+            .links(projectLinkCreateList)
             .build();
 
-        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.build(project1);
+        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.toEntity(project1);
 
         String jsonRequest = objectMapper.writeValueAsString(request);
         MockMultipartFile form = new MockMultipartFile("form", "form", "application/json", jsonRequest.getBytes(StandardCharsets.UTF_8));
         InputStream inputStream = new ClassPathResource("dummy/image.png").getInputStream();
-        MockMultipartFile file = new MockMultipartFile("file", "image.png", "image/png", inputStream.readAllBytes());
+        MockMultipartFile file = new MockMultipartFile("file", "image.png", "image/png", InputStream.nullInputStream());
 
-        given(projectService.create(any(), any(), any())).willReturn(response);
+        given(projectService.update(any(), any(), any(), any())).willReturn(response);
 
-        ResultActions results = mvc.perform(multipart("/api/projects/{projectId}", 1L)
+        MockMultipartHttpServletRequestBuilder builder = fileUpload("/api/projects/{projectId}", 1L);
+
+        ResultActions results = mvc.perform(builder
             .file(form)
             .file(file)
-            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .contentType(MediaType.MULTIPART_MIXED)
             .accept(MediaType.APPLICATION_JSON)
             .characterEncoding("UTF-8")
         );
@@ -366,7 +405,7 @@ public class ProjectControllerTest extends MvcTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
-                    parameterWithName("projectId").description("프로젝트 식별자")
+                        parameterWithName("projectId").description("프로젝트 식별자")
                 ),
                 requestParts(
                     partWithName("form").description("프로젝트 생성 정보 - JSON"),
@@ -376,13 +415,13 @@ public class ProjectControllerTest extends MvcTest {
                     fieldWithPath("id").type(JsonFieldType.NUMBER).description("프로젝트 식별자")
                 )
             ));
-        verify(projectService).create(any(ProjectRequest.CreateOrUpdate.class), any(MultipartFile.class), any(User.class));
+        verify(projectService).update(any(), any(), any(), any());
     }
 
     @Test
     @DisplayName("project 삭제")
     public void delete() throws Exception {
-        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.build(project1);
+        ProjectResponse.OnlyId response = ProjectResponse.OnlyId.toEntity(project1);
         given(projectService.delete(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(RestDocumentationRequestBuilders.delete("/api/projects/{projectId}", 1L));
