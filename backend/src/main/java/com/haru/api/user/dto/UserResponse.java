@@ -10,16 +10,33 @@ public class UserResponse {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class UserInfo {
-        private Long userId;
         private String email;
         private String name;
-        private String refreshToken;
 
         public static UserInfo toEntity(User user) {
             return UserInfo.builder()
-                    .userId(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
+                    .build();
+        }
+
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Login {
+        private Long userId;
+        private String name;
+        private String accessToken;
+        private String refreshToken;
+
+        public static Login toEntity(User user, String accessToken) {
+            return Login.builder()
+                    .userId(user.getId())
+                    .name(user.getName())
+                    .accessToken(accessToken)
                     .refreshToken(user.getRefreshToken())
                     .build();
         }
