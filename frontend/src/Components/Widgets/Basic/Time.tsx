@@ -11,22 +11,26 @@ const Time = () => {
   }, []);
 
   return (
-    <div className="datetime w-25 d-flex flex-column justify-content-end">
-      <div className="date fs-6">
+    <div className="datetime w-25 text-white">
+      <span className="date fs-6">
         {time.toLocaleString('en-US', {
           month: 'short',
           day: 'numeric',
         })}
-      </div>
-      <div className="time fs-4 fw-bolder">
-        {`${
+      </span>
+      <br />
+      <span className="fs-2 fw-bolder me-1">
+        {
           time
             .toLocaleString('en-US', {
               hour: '2-digit',
               minute: '2-digit',
             })
             .split(' ')[0]
-        } ${
+        }
+      </span>
+      <span className="fs-6 fw-bolder">
+        {
           // Note AM or PM
           time
             .toLocaleString('en-US', {
@@ -34,8 +38,8 @@ const Time = () => {
               minute: '2-digit',
             })
             .split(' ')[1]
-        }`}
-      </div>
+        }
+      </span>
     </div>
   );
 };
