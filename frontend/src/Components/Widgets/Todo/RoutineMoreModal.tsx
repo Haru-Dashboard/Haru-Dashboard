@@ -8,6 +8,7 @@ import { week } from '../../../Utils/Todo';
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { defaultURL } from '../../../API';
 import {
   checkTokenValidate,
@@ -19,6 +20,7 @@ const RoutineMoreModal = ({
   show,
   listItem,
   setIsCompleted,
+  handleUpdateEmit,
   isCompleted,
 }: any) => {
   const availableDays: Array<week> = [
@@ -33,13 +35,14 @@ const RoutineMoreModal = ({
 
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
-  const [clickedCategory, setClickedCategory] = useState('전체');
+  const [clickedCategory, setClickedCategory] = useState<string>();
   const [writtenContent, setWrittenContent] = useState('');
   const [availableDaysList, setavailableDaysList] = useState<Array<week>>([]);
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
     setSelectedDayList(selectedList);
+    // console.log('handleselecteddaylist, ', selectedList);
   };
 
   // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
@@ -59,6 +62,9 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
+    // console.log('onclickupdate, ', selectedDayList);
+    console.log(data);
+
     if (checkTokenValidate()) {
       fetch(defaultURL + url, {
         method: 'PATCH',
@@ -70,11 +76,12 @@ const RoutineMoreModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          //
+          handleUpdateEmit(true);
+          handleClose();
         });
     }
-    location.reload();
   };
+
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
     if (checkTokenValidate()) {
@@ -87,24 +94,33 @@ const RoutineMoreModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          //
+          alert('삭제되었습니다');
+          handleUpdateEmit(true);
+          handleClose();
         });
     }
-    location.reload();
   };
 
   useEffect(() => {
     const filtered = availableDays.filter((item: week) => item.isClicked);
     setavailableDaysList(filtered);
+    handleSelectedDayList(availableDays);
+    setClickedCategory(listItem.category);
+    setWrittenContent(listItem.content);
   }, []);
+
+  useEffect(() => {
+    setIsUpdate(false);
+  }, [show]);
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <SmallTitle title="More" color="#49649E" />
-        </Modal.Header>
         {!isUpdate && (
           <div>
+            <Modal.Header closeButton>
+              <SmallTitle title="More" color="#49649E" />
+            </Modal.Header>
             <Modal.Body>
               <div className="d-flex justify-content-between mb-5">
                 {availableDays.map((item, idx: number) => {
@@ -138,17 +154,32 @@ const RoutineMoreModal = ({
               </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
-              <Button variant="secondary" onClick={(e) => setIsUpdate(true)}>
-                수정
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={(e) => setIsUpdate(true)}>
+                EDIT
               </Button>
-              <Button variant="secondary" onClick={onClickDelete}>
-                삭제
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={onClickDelete}>
+                DELETE
               </Button>
             </Modal.Footer>
           </div>
         )}
         {isUpdate && (
           <div>
+            <Modal.Header closeButton>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                color="#49649E"
+                className="me-3 hover"
+                onClick={(e) => setIsUpdate(false)}
+              />
+              <SmallTitle title="More" color="#49649E" />
+            </Modal.Header>
             <Modal.Body>
               <div>
                 {/* 날짜 선택 부분 */}
@@ -165,7 +196,8 @@ const RoutineMoreModal = ({
                   />
                   <Form.Control
                     type="text"
-                    placeholder={
+                    placeholder="Routine 이름을 입력해주세요"
+                    defaultValue={
                       listItem.title ? listItem.title : 'Routine 이름'
                     }
                     onChange={(e) => setWrittenContent(e.target.value)}
@@ -175,12 +207,6 @@ const RoutineMoreModal = ({
               </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={(e) => setIsUpdate(false)}>
-                돌아가기
-              </Button>
               <Button
                 variant="outline-primary"
                 size="sm"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectCreationModal from './ProjectCreationModal';
+import CreateProjectModal from './CreateProjectModal';
 import ProjectDetailModal from './ProjectDetailModal';
 import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
@@ -14,6 +14,8 @@ import {
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
   const [pageNo, setPageNo] = useState(0);
+  const [isLogined, setIsLogined] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     fetchProjectList(pageNo);
@@ -39,43 +41,103 @@ const Project = () => {
   // creation modal
   const [showCreate, setShowCreate] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
-  const handleShowCreate = () => setShowCreate(true);
+  const handleShowCreate = () => {
+    if (isLogined) {
+      setShowCreate(true);
+    } else {
+      alert('로그인 후에 이용 가능합니다.');
+    }
+  };
 
   // detail modal
   const [showMore, setShowMore] = useState(false);
-  const [selectedListNo, setSelectedListNo] = useState<number>();
-  const handleCloseMore = () => setShowMore(false);
-  function handleShowMore(id: number) {
-    setSelectedListNo(id);
+  const [selectedProject, setSelectedProject] = useState<project>({
+    id: -1,
+    title: '',
+    content: '',
+    startDate: '',
+    endDate: '',
+    projectLinks: [
+      {
+        id: -1,
+        name: '',
+        url: '',
+      },
+    ],
+    projectLabels: [
+      {
+        id: -1,
+        name: '',
+      },
+    ],
+    imageInfo: {
+      id: -1,
+      imageUrl: '',
+      originName: '',
+    },
+  });
+  function handleShowMore(item: project) {
+    setSelectedProject(item);
     setShowMore(true);
   }
+  function handleCloseMore() {
+    setShowMore(false);
+  }
+
+  function handleSaved(bool: boolean) {
+    setIsSaved(bool);
+  }
+
+  useEffect(() => {
+    fetchProjectList(pageNo);
+    setIsSaved(false);
+  }, [isSaved]);
+
+  useEffect(() => {
+    if (checkTokenValidate()) {
+      setIsLogined(true);
+    } else {
+      setIsLogined(false);
+    }
+  }, []);
 
   return (
-    <div className="w-100 h-100 p-3 sub-board">
+    <div className="w-100 h-100 px-3 main-board">
       <div className="h-100">
-        <div className="d-flex justify-content-between pe-3">
+        <div className="d-flex justify-content-between align-items-center px-3 pt-2">
           <BigTitle title="In Progress" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="d-flex justify-content-center">
-          {projectList.map((item, idx) => {
-            return (
-              <ProjectCard
-                key={idx}
-                item={item}
-                handleShowMore={handleShowMore}
-              />
-            );
-          })}
+        <div className="px-3 h-80">
+          {isLogined && (
+            <div className="mx-auto d-flex justify-content-around h-100">
+              {projectList.map((item: project, idx: number) => {
+                return (
+                  <ProjectCard
+                    key={idx}
+                    item={item}
+                    handleShowMore={(e) => handleShowMore(item)}
+                  />
+                );
+              })}
+            </div>
+          )}
+          {!isLogined && (
+            <div className="pt-2">
+              <p className="fw-bold text-center" style={{ fontSize: '0.8rem' }}>
+                로그인 후에 이용 가능합니다.
+              </p>
+            </div>
+          )}
         </div>
-        {/* Footer */}
       </div>
       {/* project를 생성하는 모달 */}
       <div>
-        <ProjectCreationModal
+        <CreateProjectModal
           handleClose={handleCloseCreate}
           show={showCreate}
+          handleSaved={handleSaved}
         />
       </div>
       {/* project 상세 보기 모달 */}
@@ -83,7 +145,8 @@ const Project = () => {
         <ProjectDetailModal
           handleClose={handleCloseMore}
           show={showMore}
-          item={selectedListNo ? projectList[selectedListNo] : null}
+          item={selectedProject}
+          handleSaved={handleSaved}
         />
       </div>
     </div>

@@ -2,26 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
-
+import { projectLink } from '../../../Utils/Project';
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
-type link = {
-  name: string;
-  url: string;
-};
+
 type inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: link[];
+  links: projectLink[];
   startDate: Date;
   endDate: Date;
 };
 
-const ProjectCreationModal = ({ handleClose, show }: any) => {
+const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   const [file, setFile] = useState<File>();
   const [inputs, setInputs] = useState<inputs>({
     title: '',
@@ -31,6 +30,7 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
     startDate: new Date(),
     endDate: new Date(),
   });
+  const todayDate = new Date().toISOString().slice(0, 10);
 
   // TODO: project 생성 fetch 함수
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,8 +59,27 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
   const addLabel = (event: any) => {
     event.preventDefault();
     if (event.key !== 'Enter') return;
-    setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
+    if (inputs.labels.length < 5) {
+      setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
+    } else {
+      alert('label은 5개까지 추가 가능합니다.');
+    }
     event.target.value = '';
+  };
+
+  const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLabels = inputs.labels;
+    currentLabels.splice(idx, 1);
+    console.log(currentLabels);
+
+    setInputs({
+      ...inputs,
+      labels: currentLabels,
+    });
   };
 
   // Handle inputs when target is link
@@ -78,11 +97,35 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
   };
 
   const addNewLink = (event: any) => {
-    const newLink: link = {
+    const newLink: projectLink = {
       name: '',
       url: '',
     };
-    setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    if (inputs.links.length < 3) {
+      setInputs({ ...inputs, links: [...inputs.links, newLink] });
+    } else {
+      alert('링크는 3개까지 추가 가능합니다.');
+    }
+  };
+  const deleteLink = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    idx: number,
+  ) => {
+    e.preventDefault();
+    // if (e.key === 'Enter') return;
+    console.log('onclicklabel', idx, inputs.labels[idx]);
+
+    const currentLink = inputs.links;
+    if (currentLink.length === 1) {
+      alert('링크는 1개 이상 입력해주세요');
+    } else {
+      currentLink.splice(idx, 1);
+    }
+    // console.log(currentLink);
+    setInputs({
+      ...inputs,
+      links: currentLink,
+    });
   };
 
   const createProject: React.FormEventHandler = async (e) => {
@@ -96,7 +139,7 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
     );
     if (file !== undefined) formData.append('file', file);
 
-    if (checkTokenValidate()) {
+    if (getAccessToken()) {
       const url = process.env.REACT_APP_BACKURL;
       await fetch(url + `projects`, {
         method: 'POST',
@@ -115,6 +158,8 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
             startDate: new Date(),
             endDate: new Date(),
           });
+          handleSaved(true);
+          handleClose();
         },
         // close Modal?
       );
@@ -132,6 +177,7 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
             {/* content */}
             <Form.Group>
               <Form.Control
+                required
                 type="file"
                 accept="image/*"
                 className="my-2 border"
@@ -139,6 +185,8 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
               />
             </Form.Group>
             <Form.Control
+              required
+              autoFocus
               type="text"
               placeholder="제목"
               name="title"
@@ -146,6 +194,7 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
               onChange={handleInputChange}
             />
             <Form.Control
+              required
               as="textarea"
               rows={3}
               className="my-2"
@@ -155,15 +204,17 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
               onChange={handleInputChange}
             />
             {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
-
-            <p>작성한 태그가 뜨는 곳</p>
-            {inputs.labels.map((label, idx) => (
-              <span className="px-2" key={idx}>
-                {label}
-              </span>
-            ))}
+            <div className="d-flex justify-content-start">
+              {inputs.labels.map((label, idx) => (
+                <div key={idx}>
+                  <span className="px-2">{label}</span>
+                  <span onClick={(e) => deleteLabel(e, idx)}>X</span>
+                </div>
+              ))}
+            </div>
             <Form.Control
               type="text"
+              maxLength={5}
               placeholder="태그 추가하기"
               className="my-2 border"
               name="labels"
@@ -172,50 +223,66 @@ const ProjectCreationModal = ({ handleClose, show }: any) => {
 
             <Form.Group className="d-flex justify-content-between">
               <Form.Control
+                required
                 type="date"
                 placeholder="시작일"
                 className="my-2 border"
                 name="startDate"
+                defaultValue={todayDate}
                 onChange={handleInputChange}
               />
               <p className="mb-0 p-3">~</p>
               <Form.Control
+                required
                 type="date"
                 placeholder="종료일"
                 className="my-2 border"
                 name="endDate"
+                defaultValue={todayDate}
                 onChange={handleInputChange}
               />
             </Form.Group>
             {inputs.links.map((link, idx) => (
-              <Form.Group className="d-flex justify-content-between" key={idx}>
+              <Form.Group
+                className="d-flex justify-content-between align-items-center"
+                key={idx}>
                 <Form.Control
+                  required
                   type="text"
-                  placeholder="링크명"
+                  placeholder="New Link"
                   className="my-2 me-2 border w-50"
                   name={`link-name-${idx}`}
                   onChange={addLink}
                 />
                 <Form.Control
+                  required
                   type="url"
-                  placeholder="링크 url"
+                  pattern="https://.*"
+                  placeholder="https://google.com"
+                  defaultValue={'https://www.'}
                   className="my-2 border"
                   name={`link-url-${idx}`}
                   onChange={addLink}
+                />
+                <FontAwesomeIcon
+                  icon={faSquareMinus}
+                  color="#FA5252"
+                  className="col-1 p-0"
+                  onClick={(e) => deleteLink(e, idx)}
                 />
               </Form.Group>
             ))}
             <BtnPlus onClick={addNewLink} />
           </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-primary" size="sm" onClick={createProject}>
+              SAVE
+            </Button>
+          </Modal.Footer>
         </Form>
-        <Modal.Footer>
-          <Button onClick={createProject} variant="outline-primary" size="sm">
-            SAVE
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
 };
 
-export default ProjectCreationModal;
+export default CreateProjectModal;

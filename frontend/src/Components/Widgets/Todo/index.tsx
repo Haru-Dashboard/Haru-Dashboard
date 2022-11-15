@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BigTitle from '../../Common/Title/BigTitle';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import RoutineList from './RoutineList';
@@ -6,21 +6,30 @@ import TodayList from './TodayList';
 import CreateTodoModal from './CreateTodoModal';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import './index.css';
+import {
+  checkTokenValidate,
+  getAccessToken,
+} from '../../../API/Authentication';
 
 const Todo = () => {
   const [show, setShow] = useState(false);
   const [isTodayRemoved, setIsTodayRemoved] = useState(false);
-  const [today, setToday] = useState(new Date().getDay());
+  const [isLogined, setIsLogined] = useState(false);
+  const [isCreated, setisCreated] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    if (checkTokenValidate()) {
+      setIsLogined(true);
+      setShow(true);
+    } else {
+      setIsLogined(false);
+      alert('로그인 후에 이용 가능합니다.');
+    }
+  };
 
-  const onClickDone = () => {
-    // localStorage에 있는 todo today 지우기
-    localStorage.removeItem('today');
-    // 바로 반영시키기
-    setIsTodayRemoved(true);
-    setToday(today + 1);
+  const handleSaved = (bool: boolean) => {
+    setisCreated(bool);
   };
 
   return (
@@ -34,24 +43,20 @@ const Todo = () => {
         <BigTitle title="Todo" />
         <BtnPlus onClick={handleShow} />
       </div>
-      <div style={{ height: '90%' }}>
-        <div style={{ height: '38%' }}>
-          <RoutineList />
+      <div className="h-90">
+        <div className="h-40">
+          <RoutineList isCreated={isCreated} />
         </div>
-        <div style={{ height: '45%' }}>
+        <div className="h-50">
           <TodayList isTodayRemoved={isTodayRemoved} />
-        </div>
-        <div className="d-flex justify-content-end">
-          <button
-            className="bg-transparent"
-            onClick={onClickDone}
-            style={{ borderColor: '#927695', borderRadius: '20px' }}>
-            <SmallTitle color="#927695" title="Done!" />
-          </button>
         </div>
       </div>
       <div>
-        <CreateTodoModal handleClose={handleClose} show={show} />
+        <CreateTodoModal
+          handleClose={handleClose}
+          show={show}
+          handleSaved={handleSaved}
+        />
       </div>
     </section>
   );
