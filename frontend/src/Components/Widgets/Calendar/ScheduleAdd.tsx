@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
 import {
-  checkTokenValidate,
+  tokenExists,
   getAccessToken,
 } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
@@ -30,7 +30,7 @@ export default function ScheduleAdd(props: any) {
     const URLNext = 'schedules';
 
     const backURL = process.env.REACT_APP_BACKURL;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       if (inputs.title == null || inputs.title == '') {
       } else if (inputs.content == null || inputs.content == '') {
       } else {

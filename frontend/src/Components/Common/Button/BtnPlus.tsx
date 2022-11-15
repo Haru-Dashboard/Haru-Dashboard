@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './BtnPlus.css';
-import { checkTokenValidate } from '../../../API/Authentication';
 
 interface BtnPlusProps {
   onClick?: React.MouseEventHandler;

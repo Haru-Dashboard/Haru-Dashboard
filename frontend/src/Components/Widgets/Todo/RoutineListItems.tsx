@@ -8,10 +8,7 @@ import {
 import Swal from 'sweetalert2';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -27,7 +24,7 @@ const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
   };
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(defaultURL + url, {
         method: 'DELETE',
         headers: {
