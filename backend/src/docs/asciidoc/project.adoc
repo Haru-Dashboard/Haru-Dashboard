@@ -1,0 +1,71 @@
+= 프로젝트 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+== *프로젝트 생성*
+
+`POST /api/projects`
+
+요청 HTTP Request
+include::{snippets}/projects_create/http-request.adoc[]
+include::{snippets}/projects_create/request-parts.adoc[]
+
+응답 HTTP Response
+include::{snippets}/projects_create/http-response.adoc[]
+include::{snippets}/projects_create/response-fields.adoc[]
+
+== *프로젝트 상세 조회*
+
+`GET /api/projects/{projectId}`
+
+요청 HTTP Request
+include::{snippets}/projects_detail/http-request.adoc[]
+include::{snippets}/projects_detail/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/projects_detail/http-response.adoc[]
+include::{snippets}/projects_detail/response-fields.adoc[]
+
+== *프로젝트 목록 조회*
+
+`GET /api/projects`
+
+요청 HTTP Request
+include::{snippets}/projects_list/http-request.adoc[]
+include::{snippets}/projects_list/request-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/projects_list/http-response.adoc[]
+include::{snippets}/projects_list/response-fields.adoc[]
+
+== *프로젝트 정보 수정*
+
+`PATCH /api/projects/{projectId}`
+
+요청 HTTP Request
+
+include::{snippets}/projects_update/http-request.adoc[]
+include::{snippets}/projects_update/path-parameters.adoc[]
+include::{snippets}/projects_update/request-parts.adoc[]
+
+성공 응답 HTTP Response
+
+include::{snippets}/projects_update/http-response.adoc[]
+include::{snippets}/projects_update/response-fields.adoc[]
+
+== *프로젝트 삭제*
+
+`DELETE /api/projects/{projectId}`
+
+요청 HTTP Request
+include::{snippets}/projects_delete/http-request.adoc[]
+include::{snippets}/projects_delete/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/projects_delete/http-response.adoc[]
+include::{snippets}/projects_delete/response-fields.adoc[]
