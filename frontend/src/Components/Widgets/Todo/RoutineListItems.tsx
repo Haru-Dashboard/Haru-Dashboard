@@ -5,6 +5,7 @@ import {
   faSquare,
   faSquareCheck,
 } from '@fortawesome/free-regular-svg-icons';
+import Swal from 'sweetalert2';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
 import {
@@ -35,7 +36,12 @@ const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
         },
       }).then((res) => {
         handleDelete(true);
-        alert('삭제되었습니다');
+        Swal.fire({
+          text: '삭제되었습니다',
+          icon: 'success',
+          showConfirmButton: true,
+          timer: 1000,
+        });
       });
     }
   };

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { defaultURL } from '../../../API';
+import Swal from 'sweetalert2';
 import {
   checkTokenValidate,
   getAccessToken,
@@ -91,9 +92,13 @@ const RoutineMoreModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          alert('삭제되었습니다');
           handleUpdateEmit(true);
-          handleClose();
+          Swal.fire({
+            text: '삭제되었습니다',
+            icon: 'success',
+            showConfirmButton: true,
+            timer: 1000,
+          }).then(() => handleClose());
         });
     }
   };

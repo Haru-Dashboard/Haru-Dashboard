@@ -41,7 +41,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
-      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      Swal.fire({
+        text: '업로드 가능한 최대 용량은 5MB입니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
       return;
     }
 
@@ -63,7 +68,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     if (inputs.labels.length < 5) {
       setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
     } else {
-      alert('label은 5개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '태그는 5개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
     event.target.value = '';
   };
@@ -100,7 +110,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     if (inputs.links.length < 3) {
       setInputs({ ...inputs, links: [...inputs.links, newLink] });
     } else {
-      alert('링크는 3개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '링크는 3개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
   };
   const deleteLink = (
@@ -110,7 +125,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     e.preventDefault();
     const currentLink = inputs.links;
     if (currentLink.length === 1) {
-      alert('링크는 1개 이상 입력해주세요');
+      Swal.fire({
+        text: '링크는 1개 이상 입력해주세요',
+        icon: 'info',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     } else {
       currentLink.splice(idx, 1);
     }
@@ -131,7 +151,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     );
     if (file === undefined) {
       Swal.fire({
-        title: '이미지를 선택해주세요',
+        text: '이미지를 선택해주세요',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
