@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/refresh")
-    public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response, @RequestBody AuthRequest.Token token) {
-        return ResponseEntity.ok().body(authService.refreshToken(request, response, token));
+    public ResponseEntity refreshToken(HttpServletRequest request,@RequestBody AuthRequest.Token token) {
+        return ResponseEntity.ok().body(authService.refreshToken(request, token));
     }
 }

@@ -59,7 +59,7 @@ public class AuthControllerTest extends MvcTest {
                 .build();
         String content = objectMapper.writeValueAsString(request);
         AuthResponse.Token response = AuthResponse.Token.toEntity(accessToken);
-        given(authService.refreshToken(any(), any(), any())).willReturn(response);
+        given(authService.refreshToken(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(post("/api/auth/refresh")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -80,6 +80,6 @@ public class AuthControllerTest extends MvcTest {
                                 fieldWithPath("accessToken").type(JsonFieldType.STRING).description("access-Token")
                         )
                 ));
-        verify(authService).refreshToken(any(), any(), any());
+        verify(authService).refreshToken(any(), any());
     }
 }
