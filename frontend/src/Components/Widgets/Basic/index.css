@@ -1,0 +1,27 @@
+header {
+  aspect-ratio: 2000 / 175;
+}
+
+.weather-img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.temperature {
+  font-size: 0.8rem;
+}
+
+.datetime {
+  line-height: 1.2;
+}
+
+.search-bar-input {
+  padding-left: 2.7rem;
+  padding-right: 1.5rem;
+}
+
+/* Chrome, Firefox, Opera, Safari 10.1+ */
+input::placeholder {
+  color: rgb(256, 256, 256, 0.6);
+  font-weight: lighter;
+}

@@ -1,0 +1,14 @@
+.pjt-card {
+  background-color: rgba(255,255,255,0.5);  
+  border-radius: 1rem;
+}
+.fs-sm {
+  font-size: 0.8rem;
+}
+.h-60px {
+  height: 60px;
+}
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}
