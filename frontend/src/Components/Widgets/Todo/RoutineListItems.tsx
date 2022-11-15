@@ -12,7 +12,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 
-const RoutineListItems = ({ listItem, setFilteredList }: any) => {
+const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
@@ -34,14 +34,20 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           'Content-Type': 'application/json',
         },
       }).then((res) => {
-        //
+        handleDelete(true);
+        alert('삭제되었습니다');
       });
     }
   };
 
+  // const [isSaved, setIsSaved] = useState(false);
+  const handleUpdateEmit = (bool: boolean) => {
+    handleUpdate(bool);
+  };
+
   return (
     <div>
-      <div className="row ms-2 mt-2 today-hover">
+      <div className="row ms-2 mt-2 hover">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}
@@ -73,7 +79,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           color="#FA5252"
           onClick={onClickDelete}
           key={listItem.todoId}
-          className="col-1 p-0 ms-1"
+          className="col-1 p-0 ms-1 hover"
         />
       </div>
       <div>
@@ -82,6 +88,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           show={show}
           listItem={listItem}
           setIsCompleted={setIsCompleted}
+          handleUpdateEmit={handleUpdateEmit}
           isCompleted={isCompleted}
         />
       </div>

@@ -11,18 +11,13 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 
-const createTodoModal = ({
-  handleClose,
-  show,
-  listItem,
-  setIsCompleted,
-  isCompleted,
-}: any) => {
+const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   const [isToday, setIsToday] = useState(true);
   // const [ todayList, setTodayList ] = useState([{}])
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
   const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
+  const [isSaved, setIsSaved] = useState(false);
   const [data, setData] = useState({});
 
   // 사용자가 생성한 todo를 localStorage에 저장하기
@@ -40,7 +35,7 @@ const createTodoModal = ({
       arr.push({
         id: tid + 1,
         category: `${clickedCategory}`,
-        title: `${writtenContent}`,
+        content: `${writtenContent}`,
       });
       localStorage.setItem('today', JSON.stringify(arr));
     } else {
@@ -51,7 +46,7 @@ const createTodoModal = ({
           {
             id: 0,
             category: clickedCategory,
-            title: writtenContent,
+            content: writtenContent,
           },
         ]),
       );
@@ -103,10 +98,10 @@ const createTodoModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          //
+          handleSaved(true);
+          handleClose();
         });
     }
-    location.reload();
   };
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
@@ -142,6 +137,7 @@ const createTodoModal = ({
                 <div className="d-flex justify-content-between">
                   <TodayFilterBar handleCategory={handleCategory} />
                   <Form.Control
+                    autoFocus
                     type="text"
                     placeholder="Today"
                     onChange={(e) => setWrittenContent(e.target.value)}
@@ -175,6 +171,7 @@ const createTodoModal = ({
                 <div className="d-flex justify-content-between">
                   <RoutineFilterBar handleCategory={handleCategory} />
                   <Form.Control
+                    autoFocus
                     type="text"
                     placeholder="Routine 이름"
                     onChange={(e) => setWrittenContent(e.target.value)}

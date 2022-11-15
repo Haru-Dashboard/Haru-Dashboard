@@ -25,7 +25,7 @@ const TodoMoreModal = ({
           </div>
           <div className="d-flex justify-content-between">
             <SmallTitle title="content" color="#49649E" />
-            <p>{listItem.title}</p>
+            <p>{listItem.content}</p>
           </div>
           <div className="d-flex justify-content-between">
             <SmallTitle title="Done" color="#49649E" />

@@ -31,15 +31,12 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
       localStorage.setItem('today', JSON.stringify(list)); // ok
       setFilteredList(list);
     }
-  };
-
-  const onClickMore = () => {
-    handleShow();
+    alert('삭제되었습니다');
   };
 
   return (
     <div>
-      <div className="row ms-2 mt-2 today-hover" onClick={onClickMore}>
+      <div className="row ms-2 mt-2 hover">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}
@@ -58,7 +55,7 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
         </div>
         <div
           className="col-6 p-0 m-0 overflow-hidden"
-          onClick={onClickMore}
+          onClick={handleShow}
           style={{
             whiteSpace: 'nowrap',
             textDecoration: isCompleted ? 'line-through' : 'none',
@@ -71,7 +68,7 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
           color="#FA5252"
           onClick={(e) => onClickDelete(listItem.id)}
           key={listItem.id}
-          className="col-1 p-0 ms-1"
+          className="col-1 p-0 ms-1 hover"
         />
       </div>
       <div>

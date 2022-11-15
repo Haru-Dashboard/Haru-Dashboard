@@ -10,9 +10,8 @@ const BigTitle = ({ title }: bigTitleProps) => {
     <div className="big-title text-center d-flex align-items-center">
       <img
         src={`icon/haru-icon-${title}-title.png`}
-        className="me-2"
+        className="me-2 big-title-img"
         alt={title}
-        style={{ width: '32px', height: '32px' }}
       />
       <span>{title}</span>
     </div>
