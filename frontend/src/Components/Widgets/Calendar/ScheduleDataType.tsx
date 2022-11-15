@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 export type ScheduleDataType = {
   schedule: {
     id: number;
@@ -44,4 +46,11 @@ export function datetimeTimeSettingTo0(date: Date): Date {
 
 export function getCountry(): string {
   return 'kr';
+}
+export function connectionfailed(): void {
+  Swal.fire({
+    icon: 'error',
+    title: 'Do you have an internet connection?',
+    text: 'If so, there is a problem with the server.',
+  });
 }

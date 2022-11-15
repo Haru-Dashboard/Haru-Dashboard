@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { datetimeTimeSettingTo0 } from './ScheduleDataType';
+import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
 import {
   checkTokenValidate,
   getAccessToken,
@@ -53,15 +53,17 @@ export default function ScheduleAdd(props: any) {
           .then((response) => response.json())
           .then((data) => {
             setSchedule([...schedule, inputs]);
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved',
+              showConfirmButton: false,
+              timer: 1000,
+            });
             handleClose();
           });
       }
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Do you have an internet connection?',
-        text: 'If so, there is a problem with the server.',
-      });
+      connectionfailed();
     }
   };
   return (
@@ -112,7 +114,7 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="outline-primary">
             Save
           </Button>
         </Modal.Footer>
