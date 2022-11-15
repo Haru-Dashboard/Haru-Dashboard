@@ -5,6 +5,7 @@ import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { project } from '../../../Utils/Project';
+import Swal from 'sweetalert2';
 import './index.css';
 import {
   checkTokenValidate,
@@ -45,7 +46,12 @@ const Project = () => {
     if (isLogined) {
       setShowCreate(true);
     } else {
-      alert('로그인 후에 이용 가능합니다.');
+      Swal.fire({
+        text: '로그인 후에 이용 가능합니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
   };
 

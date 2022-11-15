@@ -62,7 +62,6 @@ const ProjectDetailModal = ({
         url: link.url,
       });
     });
-    // console.log(stringLink);
 
     setInputs({
       title: item.title,
@@ -86,7 +85,12 @@ const ProjectDetailModal = ({
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
-      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      Swal.fire({
+        text: '업로드 가능한 최대 용량은 5MB입니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
       return;
     }
 
@@ -104,7 +108,6 @@ const ProjectDetailModal = ({
   // Handle inputs when target is label
   const addLabel = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    console.log('addlabel');
 
     if (e.key !== 'Enter') return;
     if (inputs.labels.length < 5) {
@@ -113,21 +116,21 @@ const ProjectDetailModal = ({
         labels: inputs.labels.concat(value),
       });
     } else {
-      alert('태그는 5개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '태그는 5개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
 
     e.currentTarget.value = '';
-    // console.log(inputs.labels);
   };
 
   const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLabels = inputs.labels;
     currentLabels.splice(idx, 1);
-    console.log(currentLabels);
 
     setInputs({
       ...inputs,
@@ -159,7 +162,12 @@ const ProjectDetailModal = ({
     if (inputs.links.length < 3) {
       setInputs({ ...inputs, links: [...inputs.links, newLink] });
     } else {
-      alert('링크는 3개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '링크는 3개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
   };
 
@@ -168,16 +176,17 @@ const ProjectDetailModal = ({
     idx: number,
   ) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLink = inputs.links;
     if (currentLink.length === 1) {
-      alert('링크는 1개 이상 입력해주세요');
+      Swal.fire({
+        text: '링크는 1개 이상 입력해주세요',
+        icon: 'info',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     } else {
       currentLink.splice(idx, 1);
     }
-    // console.log(currentLink);
     setInputs({
       ...inputs,
       links: currentLink,
@@ -187,7 +196,6 @@ const ProjectDetailModal = ({
   const updateProject: React.FormEventHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    // console.log(inputs, JSON.stringify(inputs));
 
     // TODO: append inputs after checking inputs
     formData.append(
@@ -195,9 +203,8 @@ const ProjectDetailModal = ({
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
     if (file === undefined) {
-      console.log('file is undefined');
       Swal.fire({
-        title: '이미지를 선택해주세요',
+        text: '이미지를 선택해주세요',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
@@ -205,8 +212,6 @@ const ProjectDetailModal = ({
     } else {
       formData.append('file', file);
       if (getAccessToken()) {
-        // console.log(getAccessToken());
-
         await fetch(defaultURL + URLNext, {
           method: 'PATCH',
           headers: {
@@ -214,13 +219,11 @@ const ProjectDetailModal = ({
           },
           body: formData,
         }).then((res) => {
-          // console.log(res);
           handleSaved(true);
           handleClose();
         });
       }
     }
-    // console.log('form data, ', formData);
   };
 
   // 프로젝트 삭제하기
@@ -238,8 +241,12 @@ const ProjectDetailModal = ({
         .then((response) => response.json())
         .then((data) => {
           handleSaved(true);
-          alert('삭제되었습니다');
-          handleClose();
+          Swal.fire({
+            text: '삭제되었습니다',
+            icon: 'success',
+            showConfirmButton: true,
+            timer: 1000,
+          }).then(() => handleClose());
         });
     } else {
       //
@@ -379,10 +386,8 @@ const ProjectDetailModal = ({
                     {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
                     <div className="d-flex justify-content-start">
                       {inputs.labels.map((label, idx) => (
-                        <div className="d-flex justify-content-start">
-                          <span className="px-2" key={idx}>
-                            {label}
-                          </span>
+                        <div className="d-flex justify-content-start" key={idx}>
+                          <span className="px-2">{label}</span>
                           <span onClick={(e) => deleteLabel(e, idx)}>X</span>
                         </div>
                       ))}

@@ -5,6 +5,7 @@ import RoutineList from './RoutineList';
 import TodayList from './TodayList';
 import CreateTodoModal from './CreateTodoModal';
 import BtnPlus from '../../Common/Button/BtnPlus';
+import Swal from 'sweetalert2';
 import './index.css';
 import {
   checkTokenValidate,
@@ -24,7 +25,12 @@ const Todo = () => {
       setShow(true);
     } else {
       setIsLogined(false);
-      alert('로그인 후에 이용 가능합니다.');
+      Swal.fire({
+        text: '로그인 후에 이용 가능합니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
   };
 
