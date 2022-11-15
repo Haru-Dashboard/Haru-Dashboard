@@ -210,7 +210,7 @@ const ProjectDetailModal = ({
       formData.append('file', file);
       if (getAccessToken()) {
         await fetch(defaultURL + URLNext, {
-          method: 'PATCH',
+          method: 'POST',
           headers: {
             Authorization: getAccessToken(),
           },
