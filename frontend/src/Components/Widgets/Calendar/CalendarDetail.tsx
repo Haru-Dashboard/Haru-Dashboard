@@ -2,7 +2,7 @@ import React from 'react';
 import { isDateBetweenTwoDates } from './ScheduleDataType';
 
 type calendarDetailPorps = {
-  selectedDate: Date;
+  calendarSelectedDate: Date;
   schedule: {
     id: number;
     title: string;
@@ -15,7 +15,7 @@ type calendarDetailPorps = {
 //detail에서 보여줄 스케쥴들(5개)
 export default function CalendarDetail({
   schedule,
-  selectedDate,
+  calendarSelectedDate,
   handleManageShow,
 }: calendarDetailPorps) {
   const calendarDetails =
@@ -24,7 +24,7 @@ export default function CalendarDetail({
           isDateBetweenTwoDates(
             new Date(index.startDate),
             new Date(index.endDate),
-            selectedDate,
+            calendarSelectedDate,
           ) ? (
             <div className="calendar-schedule-detail" key={tmpKey}>
               <button
@@ -55,9 +55,9 @@ export default function CalendarDetail({
   return (
     <div className="calendar-detail-board">
       <div className="calendar-detail-date">
-        {new Date().getMonth() + 1}.{new Date().getDate()}
+        {calendarSelectedDate.getMonth() + 1}.{calendarSelectedDate.getDate()}
       </div>
-      {calendarDetails}
+      <div className="calendar-detail-details">{calendarDetails}</div>
     </div>
   );
 }

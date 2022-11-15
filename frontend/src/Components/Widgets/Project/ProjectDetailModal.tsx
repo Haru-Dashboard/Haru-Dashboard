@@ -13,6 +13,7 @@ import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
+import Swal from 'sweetalert2';
 
 type projectDetail = {
   handleClose: () => void;
@@ -193,24 +194,33 @@ const ProjectDetailModal = ({
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
-    if (file !== undefined) formData.append('file', file);
-    // console.log('form data, ', formData);
-
-    if (getAccessToken()) {
-      // console.log(getAccessToken());
-
-      await fetch(defaultURL + URLNext, {
-        method: 'PATCH',
-        headers: {
-          Authorization: getAccessToken(),
-        },
-        body: formData,
-      }).then((res) => {
-        // console.log(res);
-        handleSaved(true);
-        handleClose();
+    if (file === undefined) {
+      console.log('file is undefined');
+      Swal.fire({
+        title: '이미지를 선택해주세요',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
       });
+    } else {
+      formData.append('file', file);
+      if (getAccessToken()) {
+        // console.log(getAccessToken());
+
+        await fetch(defaultURL + URLNext, {
+          method: 'PATCH',
+          headers: {
+            Authorization: getAccessToken(),
+          },
+          body: formData,
+        }).then((res) => {
+          // console.log(res);
+          handleSaved(true);
+          handleClose();
+        });
+      }
     }
+    // console.log('form data, ', formData);
   };
 
   // 프로젝트 삭제하기

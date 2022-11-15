@@ -8,3 +8,7 @@
 .h-60px {
   height: 60px;
 }
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}

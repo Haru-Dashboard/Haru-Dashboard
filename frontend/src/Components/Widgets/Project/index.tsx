@@ -102,14 +102,14 @@ const Project = () => {
   }, []);
 
   return (
-    <div className="w-100 h-100 p-3 main-board">
+    <div className="w-100 h-100 px-3 main-board">
       <div className="h-100">
-        <div className="d-flex justify-content-between align-items-center pe-3">
+        <div className="d-flex justify-content-between align-items-center px-3 pt-2">
           <BigTitle title="In Progress" />
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        <div className="px-3">
+        <div className="px-3 h-80">
           {isLogined && (
             <div className="mx-auto d-flex justify-content-around h-100">
               {projectList.map((item: project, idx: number) => {

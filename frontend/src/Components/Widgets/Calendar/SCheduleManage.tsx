@@ -3,13 +3,15 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import {
-  timeStringConverToBootstrapTime,
+  connectionfailed,
   datetimeTimeSettingTo0,
+  timeDateConverToBootstrapTime,
 } from './ScheduleDataType';
 import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
+import Swal from 'sweetalert2';
 
 export default function ScheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
@@ -22,6 +24,7 @@ export default function ScheduleManage(props: any) {
     color: -1,
     id: -1,
   });
+
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
@@ -36,13 +39,16 @@ export default function ScheduleManage(props: any) {
         .then((response) => response.json())
         .then((datas) => {
           setSchedule(schedule.filter((sch: any) => sch.id !== datas.id));
-          //
-          //
-          //
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted',
+            showConfirmButton: false,
+            timer: 1000,
+          });
           handleClose();
         });
     } else {
-      //
+      connectionfailed();
     }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,79 +105,87 @@ export default function ScheduleManage(props: any) {
           setSchedule(schedule.filter((sch: any) => sch.id !== tmp));
           setInputs((val) => ({ ...val, id: tmp }));
           setSchedule((val: any) => [...val, inputs]);
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            showConfirmButton: false,
+            timer: 1000,
+          });
           handleClose();
         });
     } else {
-      //
+      connectionfailed();
     }
   };
 
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>일정관리</Modal.Title>
+        <Modal.Title>Manage Schedules</Modal.Title>
       </Modal.Header>
       {showModal ? (
         <Form>
           <Modal.Body>
             <Form.Group>
-              <Form.Label>제목</Form.Label>
+              <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
                 name="title"
-                placeholder="제목"
+                placeholder="Title"
                 defaultValue={
                   schedule[scheduleNo] != null ? schedule[scheduleNo].title : ''
                 }
                 onChange={handleChange}
-                required
               />
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>시작일</Form.Label>
+              <Form.Label>Start Date</Form.Label>
               <Form.Control
                 type="datetime-local"
                 name="startDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeStringConverToBootstrapTime(
+                defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].startDate,
                 )}
-                required
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>종료일</Form.Label>
+              <Form.Label>End Date</Form.Label>
               <Form.Control
                 type="datetime-local"
                 name="endDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeStringConverToBootstrapTime(
+                defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].endDate,
                 )}
-                required
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>세부일정</Form.Label>
+              <Form.Label>Details</Form.Label>
               <Form.Control
                 type="text"
                 name="content"
                 defaultValue={schedule[scheduleNo].content}
-                placeholder="세부일정"
+                placeholder="Details"
                 onChange={handleChange}
-                required
               />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="button" onClick={removeSchedule} variant="primary">
-              삭제
+            <Button
+              type="button"
+              onClick={removeSchedule}
+              variant="outline-primary">
+              Delete
             </Button>
-            <Button onClick={handleSubmit} type="submit" variant="primary">
-              수정
+            <Button
+              onClick={handleSubmit}
+              type="submit"
+              variant="outline-primary">
+              Edit
             </Button>
           </Modal.Footer>
         </Form>

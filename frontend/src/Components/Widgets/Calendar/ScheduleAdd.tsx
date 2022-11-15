@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import {
-  timeDateConverToBootstrapTime,
-  datetimeTimeSettingTo0,
-} from './ScheduleDataType';
+import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
 import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
-
+import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
   const sampledatetime = datetimeTimeSettingTo0(new Date());
@@ -27,17 +24,15 @@ export default function ScheduleAdd(props: any) {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (event: any): void => {
     event.preventDefault();
 
-    const URLNext = `schedules`;
+    const URLNext = 'schedules';
 
     const backURL = process.env.REACT_APP_BACKURL;
     if (checkTokenValidate()) {
       if (inputs.title == null || inputs.title == '') {
-        alert('타이틀이 없습니다.');
       } else if (inputs.content == null || inputs.content == '') {
-        alert('내용이 없습니다.');
       } else {
         if (inputs.startDate == null) {
           setInputs((values) => ({ ...values, startDate: sampledatetime }));
@@ -58,63 +53,69 @@ export default function ScheduleAdd(props: any) {
           .then((response) => response.json())
           .then((data) => {
             setSchedule([...schedule, inputs]);
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved',
+              showConfirmButton: false,
+              timer: 1000,
+            });
             handleClose();
           });
       }
+    } else {
+      connectionfailed();
     }
   };
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>일정추가</Modal.Title>
+        <Modal.Title>New Schedule</Modal.Title>
       </Modal.Header>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Modal.Body>
           <Form.Group>
-            <Form.Label>제목</Form.Label>
+            <Form.Label>Titles</Form.Label>
             <Form.Control
               type="text"
               name="title"
-              placeholder="제목"
+              placeholder="Titles"
               onChange={handleChange}
               required
             />
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>시작일</Form.Label>
+            <Form.Label>Start Date</Form.Label>
             <Form.Control
               type="datetime-local"
               name="startDate"
               onChange={handleChange}
-              defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>종료일</Form.Label>
+            <Form.Label>End Date</Form.Label>
             <Form.Control
               type="datetime-local"
               name="endDate"
               onChange={handleChange}
-              defaultValue={timeDateConverToBootstrapTime(new Date())}
               required
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>세부일정</Form.Label>
+            <Form.Label>Details</Form.Label>
             <Form.Control
               type="text"
               name="content"
-              placeholder="세부일정"
+              placeholder="Details"
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleSubmit} variant="primary">
-            저장
+          <Button type="submit" variant="outline-primary">
+            Save
           </Button>
         </Modal.Footer>
       </Form>
