@@ -58,18 +58,18 @@ public class ProjectService {
             project.updateS3File(savedImage);
         }
         Project savedProject = projectRepository.save(project);
-        return ProjectResponse.OnlyId.build(savedProject);
+        return ProjectResponse.OnlyId.toEntity(savedProject);
     }
 
     public ProjectResponse.GetProject getProject(Long projectId, User user) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
-        return ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
+        return ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
     }
 
     public List<ProjectResponse.GetProject> getProjectList(Pageable pageable, User user) {
         List<Project> projects = projectRepository.findAllByUserOrderByCreatedAtDesc(pageable, user);
-        return projects.stream().map(project -> ProjectResponse.GetProject.build(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
+        return projects.stream().map(project -> ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
     }
 
     @Transactional
@@ -94,7 +94,7 @@ public class ProjectService {
             project.updateS3File(savedImage);
         }
         project.update(request);
-        return ProjectResponse.OnlyId.build(project);
+        return ProjectResponse.OnlyId.toEntity(project);
     }
 
     @Transactional
@@ -102,6 +102,6 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
         projectRepository.delete(project);
-        return ProjectResponse.OnlyId.build(project);
+        return ProjectResponse.OnlyId.toEntity(project);
     }
 }
