@@ -17,7 +17,7 @@ public class ProjectResponse {
     public static class OnlyId {
         private Long id;
 
-        public static ProjectResponse.OnlyId build(Project project) {
+        public static ProjectResponse.OnlyId toEntity(Project project) {
             return ProjectResponse.OnlyId.builder()
                     .id(project.getId())
                     .build();
@@ -40,7 +40,7 @@ public class ProjectResponse {
         private List<ProjectLinkResponse.GetProjectLink> projectLinks;
         private List<ProjectLabelResponse.GetProjectLabel> projectLabels;
         private S3FileResponse.GetImage imageInfo;
-        public static ProjectResponse.GetProject build(Project project, S3FileResponse.GetImage imageInfo) {
+        public static ProjectResponse.GetProject toEntity(Project project, S3FileResponse.GetImage imageInfo) {
             GetProjectBuilder response = GetProject.builder()
                     .id(project.getId())
                     .title(project.getTitle())
