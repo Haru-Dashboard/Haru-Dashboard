@@ -9,6 +9,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 import { projectLink } from '../../../Utils/Project';
+import Swal from 'sweetalert2';
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
 
 type inputs = {
@@ -69,13 +70,8 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
 
   const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLabels = inputs.labels;
     currentLabels.splice(idx, 1);
-    console.log(currentLabels);
-
     setInputs({
       ...inputs,
       labels: currentLabels,
@@ -112,16 +108,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     idx: number,
   ) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLink = inputs.links;
     if (currentLink.length === 1) {
       alert('링크는 1개 이상 입력해주세요');
     } else {
       currentLink.splice(idx, 1);
     }
-    // console.log(currentLink);
     setInputs({
       ...inputs,
       links: currentLink,
@@ -137,32 +129,40 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
-    if (file !== undefined) formData.append('file', file);
-
-    if (getAccessToken()) {
-      const url = process.env.REACT_APP_BACKURL;
-      await fetch(url + `projects`, {
-        method: 'POST',
-        headers: {
-          Authorization: getAccessToken(),
-        },
-        body: formData,
-      }).then(
-        () => {
-          setFile(undefined);
-          setInputs({
-            title: '',
-            content: '',
-            labels: [],
-            links: [{ name: '', url: '' }],
-            startDate: new Date(),
-            endDate: new Date(),
-          });
-          handleSaved(true);
-          handleClose();
-        },
-        // close Modal?
-      );
+    if (file === undefined) {
+      Swal.fire({
+        title: '이미지를 선택해주세요',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
+    } else {
+      formData.append('file', file);
+      if (getAccessToken()) {
+        const url = process.env.REACT_APP_BACKURL;
+        await fetch(url + `projects`, {
+          method: 'POST',
+          headers: {
+            Authorization: getAccessToken(),
+          },
+          body: formData,
+        }).then(
+          () => {
+            setFile(undefined);
+            setInputs({
+              title: '',
+              content: '',
+              labels: [],
+              links: [{ name: '', url: '' }],
+              startDate: new Date(),
+              endDate: new Date(),
+            });
+            handleSaved(true);
+            handleClose();
+          },
+          // close Modal?
+        );
+      }
     }
   };
 

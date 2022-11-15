@@ -42,7 +42,6 @@ const RoutineMoreModal = ({
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
     setSelectedDayList(selectedList);
-    // console.log('handleselecteddaylist, ', selectedList);
   };
 
   // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
@@ -62,8 +61,6 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
-    // console.log('onclickupdate, ', selectedDayList);
-    console.log(data);
 
     if (checkTokenValidate()) {
       fetch(defaultURL + url, {
@@ -211,7 +208,7 @@ const RoutineMoreModal = ({
                 variant="outline-primary"
                 size="sm"
                 onClick={onClickUpdate}>
-                저장
+                SAVE
               </Button>
             </Modal.Footer>
           </div>

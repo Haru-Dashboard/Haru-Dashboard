@@ -62,7 +62,6 @@ const ProjectDetailModal = ({
         url: link.url,
       });
     });
-    // console.log(stringLink);
 
     setInputs({
       title: item.title,
@@ -104,7 +103,6 @@ const ProjectDetailModal = ({
   // Handle inputs when target is label
   const addLabel = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    console.log('addlabel');
 
     if (e.key !== 'Enter') return;
     if (inputs.labels.length < 5) {
@@ -117,17 +115,12 @@ const ProjectDetailModal = ({
     }
 
     e.currentTarget.value = '';
-    // console.log(inputs.labels);
   };
 
   const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLabels = inputs.labels;
     currentLabels.splice(idx, 1);
-    console.log(currentLabels);
 
     setInputs({
       ...inputs,
@@ -168,16 +161,12 @@ const ProjectDetailModal = ({
     idx: number,
   ) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLink = inputs.links;
     if (currentLink.length === 1) {
       alert('링크는 1개 이상 입력해주세요');
     } else {
       currentLink.splice(idx, 1);
     }
-    // console.log(currentLink);
     setInputs({
       ...inputs,
       links: currentLink,
@@ -187,7 +176,6 @@ const ProjectDetailModal = ({
   const updateProject: React.FormEventHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    // console.log(inputs, JSON.stringify(inputs));
 
     // TODO: append inputs after checking inputs
     formData.append(
@@ -195,7 +183,6 @@ const ProjectDetailModal = ({
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
     if (file === undefined) {
-      console.log('file is undefined');
       Swal.fire({
         title: '이미지를 선택해주세요',
         icon: 'error',
@@ -205,8 +192,6 @@ const ProjectDetailModal = ({
     } else {
       formData.append('file', file);
       if (getAccessToken()) {
-        // console.log(getAccessToken());
-
         await fetch(defaultURL + URLNext, {
           method: 'PATCH',
           headers: {
@@ -214,13 +199,11 @@ const ProjectDetailModal = ({
           },
           body: formData,
         }).then((res) => {
-          // console.log(res);
           handleSaved(true);
           handleClose();
         });
       }
     }
-    // console.log('form data, ', formData);
   };
 
   // 프로젝트 삭제하기
@@ -379,10 +362,8 @@ const ProjectDetailModal = ({
                     {/* TODO: 태그를 INPUT 창에 입력하면 P태그 부분에 태그 형식으로 뜨도록 */}
                     <div className="d-flex justify-content-start">
                       {inputs.labels.map((label, idx) => (
-                        <div className="d-flex justify-content-start">
-                          <span className="px-2" key={idx}>
-                            {label}
-                          </span>
+                        <div className="d-flex justify-content-start" key={idx}>
+                          <span className="px-2">{label}</span>
                           <span onClick={(e) => deleteLabel(e, idx)}>X</span>
                         </div>
                       ))}
