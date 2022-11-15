@@ -7,6 +7,7 @@ import {
   faSquareCheck,
 } from '@fortawesome/free-regular-svg-icons';
 import TodoMoreModal from './TodoMoreModal';
+import Swal from 'sweetalert2';
 
 const TodayListItems = ({ listItem, setFilteredList }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -31,7 +32,12 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
       localStorage.setItem('today', JSON.stringify(list)); // ok
       setFilteredList(list);
     }
-    alert('삭제되었습니다');
+    Swal.fire({
+      text: '삭제되었습니다',
+      icon: 'success',
+      showConfirmButton: true,
+      timer: 1000,
+    });
   };
 
   return (

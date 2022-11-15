@@ -116,7 +116,9 @@ const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
               {/* <Dropdown.Item href="#/action-1">빈경우</Dropdown.Item> */}
               {filterList.map((filter: string, idx: number) => {
                 return (
-                  <div className="d-flex justify-content-between align-items-center my-1">
+                  <div
+                    className="d-flex justify-content-between align-items-center my-1"
+                    key={idx}>
                     <Dropdown.Item
                       href="#/action-1"
                       key={idx}

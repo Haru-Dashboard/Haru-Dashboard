@@ -9,6 +9,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 import { projectLink } from '../../../Utils/Project';
+import Swal from 'sweetalert2';
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
 
 type inputs = {
@@ -40,7 +41,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
-      alert('업로드 가능한 최대 용량은 5MB입니다. ');
+      Swal.fire({
+        text: '업로드 가능한 최대 용량은 5MB입니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
       return;
     }
 
@@ -62,20 +68,20 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     if (inputs.labels.length < 5) {
       setInputs({ ...inputs, labels: [...inputs.labels, event.target.value] });
     } else {
-      alert('label은 5개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '태그는 5개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
     event.target.value = '';
   };
 
   const deleteLabel = (e: React.MouseEvent<HTMLSpanElement>, idx: number) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLabels = inputs.labels;
     currentLabels.splice(idx, 1);
-    console.log(currentLabels);
-
     setInputs({
       ...inputs,
       labels: currentLabels,
@@ -104,7 +110,12 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     if (inputs.links.length < 3) {
       setInputs({ ...inputs, links: [...inputs.links, newLink] });
     } else {
-      alert('링크는 3개까지 추가 가능합니다.');
+      Swal.fire({
+        icon: 'info',
+        text: '링크는 3개까지 추가할 수 있습니다',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     }
   };
   const deleteLink = (
@@ -112,16 +123,17 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     idx: number,
   ) => {
     e.preventDefault();
-    // if (e.key === 'Enter') return;
-    console.log('onclicklabel', idx, inputs.labels[idx]);
-
     const currentLink = inputs.links;
     if (currentLink.length === 1) {
-      alert('링크는 1개 이상 입력해주세요');
+      Swal.fire({
+        text: '링크는 1개 이상 입력해주세요',
+        icon: 'info',
+        showConfirmButton: true,
+        timer: 1000,
+      });
     } else {
       currentLink.splice(idx, 1);
     }
-    // console.log(currentLink);
     setInputs({
       ...inputs,
       links: currentLink,
@@ -137,32 +149,40 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
-    if (file !== undefined) formData.append('file', file);
-
-    if (getAccessToken()) {
-      const url = process.env.REACT_APP_BACKURL;
-      await fetch(url + `projects`, {
-        method: 'POST',
-        headers: {
-          Authorization: getAccessToken(),
-        },
-        body: formData,
-      }).then(
-        () => {
-          setFile(undefined);
-          setInputs({
-            title: '',
-            content: '',
-            labels: [],
-            links: [{ name: '', url: '' }],
-            startDate: new Date(),
-            endDate: new Date(),
-          });
-          handleSaved(true);
-          handleClose();
-        },
-        // close Modal?
-      );
+    if (file === undefined) {
+      Swal.fire({
+        text: '이미지를 선택해주세요',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
+    } else {
+      formData.append('file', file);
+      if (getAccessToken()) {
+        const url = process.env.REACT_APP_BACKURL;
+        await fetch(url + `projects`, {
+          method: 'POST',
+          headers: {
+            Authorization: getAccessToken(),
+          },
+          body: formData,
+        }).then(
+          () => {
+            setFile(undefined);
+            setInputs({
+              title: '',
+              content: '',
+              labels: [],
+              links: [{ name: '', url: '' }],
+              startDate: new Date(),
+              endDate: new Date(),
+            });
+            handleSaved(true);
+            handleClose();
+          },
+          // close Modal?
+        );
+      }
     }
   };
 

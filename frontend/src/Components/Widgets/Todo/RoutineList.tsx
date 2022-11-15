@@ -90,7 +90,6 @@ const routineList = ({ isCreated }: any) => {
   const filterTodayList = () => {
     if (clickedCategory === 'ALL') {
       // 전체 리스트 다 띄우기
-      console.log('into all, ', todayRoutineList);
       checkListLength(todayRoutineList);
       setFilteredList(todayRoutineList);
     } else {
@@ -126,7 +125,6 @@ const routineList = ({ isCreated }: any) => {
 
   // 선택된 category가 바뀌면 필터링 진행
   useEffect(() => {
-    // console.log(clickedCategory);
     filterTodayList();
   }, [clickedCategory]);
 
