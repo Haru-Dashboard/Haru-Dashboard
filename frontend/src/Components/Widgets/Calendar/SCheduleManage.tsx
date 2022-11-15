@@ -149,6 +149,7 @@ export default function ScheduleManage(props: any) {
                 defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].startDate,
                 )}
+                required
               />
             </Form.Group>
             <Form.Group>
@@ -161,6 +162,7 @@ export default function ScheduleManage(props: any) {
                 defaultValue={timeDateConverToBootstrapTime(
                   schedule[scheduleNo].endDate,
                 )}
+                required
               />
             </Form.Group>
             <Form.Group>
