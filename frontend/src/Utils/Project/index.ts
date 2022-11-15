@@ -35,6 +35,6 @@ export type inputs = {
   content: string;
   labels: string[];
   links: projectLink[];
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate: Date | string;
 };

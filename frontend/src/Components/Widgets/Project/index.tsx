@@ -14,6 +14,8 @@ import {
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
   const [pageNo, setPageNo] = useState(0);
+  const [isLogined, setIsLogined] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     fetchProjectList(pageNo);
@@ -82,7 +84,15 @@ const Project = () => {
     setShowMore(false);
   }
 
-  const [isLogined, setIsLogined] = useState(false);
+  function handleSaved(bool: boolean) {
+    setIsSaved(bool);
+  }
+
+  useEffect(() => {
+    fetchProjectList(pageNo);
+    setIsSaved(false);
+  }, [isSaved]);
+
   useEffect(() => {
     if (checkTokenValidate()) {
       setIsLogined(true);
@@ -90,6 +100,7 @@ const Project = () => {
       setIsLogined(false);
     }
   }, []);
+
   return (
     <div className="w-100 h-100 p-3 main-board">
       <div className="h-100">
@@ -98,30 +109,36 @@ const Project = () => {
           <BtnPlus onClick={handleShowCreate} />
         </div>
         {/* Body */}
-        {isLogined && (
-          <div className="d-flex justify-content-between h-90">
-            {projectList.map((item: project, idx: number) => {
-              return (
-                <ProjectCard
-                  key={idx}
-                  item={item}
-                  handleShowMore={(e) => handleShowMore(item)}
-                />
-              );
-            })}
-          </div>
-        )}
-        {!isLogined && (
-          <div className="pt-2">
-            <p className="fw-bold text-center" style={{ fontSize: '0.8rem' }}>
-              로그인 후에 이용 가능합니다.
-            </p>
-          </div>
-        )}
+        <div className="px-3">
+          {isLogined && (
+            <div className="mx-auto d-flex justify-content-around h-100">
+              {projectList.map((item: project, idx: number) => {
+                return (
+                  <ProjectCard
+                    key={idx}
+                    item={item}
+                    handleShowMore={(e) => handleShowMore(item)}
+                  />
+                );
+              })}
+            </div>
+          )}
+          {!isLogined && (
+            <div className="pt-2">
+              <p className="fw-bold text-center" style={{ fontSize: '0.8rem' }}>
+                로그인 후에 이용 가능합니다.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
       {/* project를 생성하는 모달 */}
       <div>
-        <CreateProjectModal handleClose={handleCloseCreate} show={showCreate} />
+        <CreateProjectModal
+          handleClose={handleCloseCreate}
+          show={showCreate}
+          handleSaved={handleSaved}
+        />
       </div>
       {/* project 상세 보기 모달 */}
       <div>
@@ -129,6 +146,7 @@ const Project = () => {
           handleClose={handleCloseMore}
           show={showMore}
           item={selectedProject}
+          handleSaved={handleSaved}
         />
       </div>
     </div>

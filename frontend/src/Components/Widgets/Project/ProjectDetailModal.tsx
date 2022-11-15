@@ -16,13 +16,19 @@ import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
 type projectDetail = {
   handleClose: () => void;
+  handleSaved: (bool: boolean) => void;
   show: boolean;
   item: project;
 };
 
 const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
 
-const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
+const ProjectDetailModal = ({
+  handleClose,
+  show,
+  item,
+  handleSaved,
+}: projectDetail) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [imgHeight, setImgHeight] = useState(0);
   const [imgWidth, setImgWidth] = useState(0);
@@ -42,8 +48,6 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
 
   // 수정으로 모달이 바뀌었을 때
   useEffect(() => {
-    console.log(item);
-
     const stringLabel: Array<string> = [];
     const stringLink: Array<link> = [];
 
@@ -59,9 +63,16 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
     });
     // console.log(stringLink);
 
-    setInputs({ ...inputs, labels: stringLabel, links: stringLink });
+    setInputs({
+      title: item.title,
+      content: item.content,
+      labels: stringLabel,
+      links: stringLink,
+      startDate: item.startDate.split('.').join('-'),
+      endDate: item.endDate.split('.').join('-'),
+    });
   }, [isUpdate]);
-
+  // startDate: new Date(item.startDate).toISOString().slice(0, 10),
   useEffect(() => {
     setIsUpdate(false);
   }, [show]);
@@ -142,7 +153,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
   const addNewLink = (event: any) => {
     const newLink: link = {
       name: '',
-      url: '',
+      url: 'https://www.',
     };
     if (inputs.links.length < 3) {
       setInputs({ ...inputs, links: [...inputs.links, newLink] });
@@ -183,7 +194,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
     if (file !== undefined) formData.append('file', file);
-    console.log(formData);
+    // console.log('form data, ', formData);
 
     if (getAccessToken()) {
       // console.log(getAccessToken());
@@ -195,7 +206,9 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
         },
         body: formData,
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
+        handleSaved(true);
+        handleClose();
       });
     }
   };
@@ -214,6 +227,8 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
       })
         .then((response) => response.json())
         .then((data) => {
+          handleSaved(true);
+          alert('삭제되었습니다');
           handleClose();
         });
     } else {
@@ -395,7 +410,7 @@ const ProjectDetailModal = ({ handleClose, show, item }: projectDetail) => {
                         key={idx}>
                         <Form.Control
                           type="text"
-                          placeholder="Google"
+                          placeholder="New Link"
                           className="my-2 me-2 border w-50"
                           defaultValue={link.name}
                           name={`link-name-${idx}`}
