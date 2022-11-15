@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests() // 사용권한 체크
                 .antMatchers("/docs/**").permitAll() // restdocs 주소는 누구나 접근 가능
                 .antMatchers("/api/users/**").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/files/**").permitAll() //TODO: 테스트 종료 후 삭제 필요
                 .anyRequest().authenticated(); // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
 

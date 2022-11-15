@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -24,8 +23,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,7 +33,7 @@ public class AuthControllerTest extends MvcTest {
     @MockBean
     private AuthService authService;
     private User user;
-    private String accessToken, refreshToken;
+    private String accessToken;
 
 
     @BeforeEach
@@ -50,7 +47,6 @@ public class AuthControllerTest extends MvcTest {
                 .role(Role.USER)
                 .build();
         accessToken = "accessToken";
-        refreshToken = "refreshToken";
 
     }
 
@@ -62,7 +58,7 @@ public class AuthControllerTest extends MvcTest {
                 .refreshToken("refreshToken")
                 .build();
         String content = objectMapper.writeValueAsString(request);
-        AuthResponse.Token response = AuthResponse.Token.toEntity(accessToken, refreshToken);
+        AuthResponse.Token response = AuthResponse.Token.toEntity(accessToken);
         given(authService.refreshToken(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(post("/api/auth/refresh")
@@ -81,10 +77,8 @@ public class AuthControllerTest extends MvcTest {
                                 fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("refresh-Token")
                          ),
                         responseFields(
-                                fieldWithPath("accessToken").type(JsonFieldType.STRING).description("access-Token"),
-                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("refresh-Token")
-
-                                )
+                                fieldWithPath("accessToken").type(JsonFieldType.STRING).description("access-Token")
+                        )
                 ));
         verify(authService).refreshToken(any(), any());
     }

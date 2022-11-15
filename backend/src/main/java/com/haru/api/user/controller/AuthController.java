@@ -1,8 +1,6 @@
 package com.haru.api.user.controller;
 
 import com.haru.api.user.dto.AuthRequest;
-import com.haru.api.user.security.userdetails.CurrentUser;
-import com.haru.api.user.security.userdetails.CustomUserDetails;
 import com.haru.api.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/refresh")
-    public ResponseEntity refreshToken(@RequestBody AuthRequest.Token request, HttpServletResponse response, @CurrentUser CustomUserDetails customUserDetails) {
-        return ResponseEntity.ok().body(authService.refreshToken(request, response));
+    public ResponseEntity refreshToken(HttpServletRequest request,@RequestBody AuthRequest.Token token) {
+        return ResponseEntity.ok().body(authService.refreshToken(request, token));
     }
 }

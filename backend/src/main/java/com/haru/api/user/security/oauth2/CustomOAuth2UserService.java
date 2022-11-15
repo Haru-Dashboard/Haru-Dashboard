@@ -27,7 +27,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        System.out.println("Request에서 가져온 토큰 : " + oAuth2UserRequest.getAccessToken().getTokenValue());
         return process(oAuth2UserRequest, oAuth2User);
     }
 

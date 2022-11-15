@@ -7,12 +7,12 @@ import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -57,7 +57,49 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(Authentication authentication, HttpServletResponse response) {
+    public String generateAccessToken(User user){
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
+
+        return Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setSubject(String.valueOf(user.getId()))
+                .claim(AUTHORITIES_KEY, "USER")
+                .setIssuer("debrains")
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .compact();
+    }
+
+    public String generateRefreshToken(User user, HttpServletResponse response){
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
+
+        String refreshToken =  Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setSubject(String.valueOf(user.getId()))
+                .setIssuer("debrains")
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .compact();
+
+        ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN_KEY, refreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("Lax")
+                .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH/1000)
+                .path("/")
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+
+
+
+
+        return refreshToken;
+    }
+
+    public void createRefreshToken(Authentication authentication, HttpServletResponse response) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
 
@@ -70,7 +112,16 @@ public class JwtTokenProvider {
 
         saveRefreshToken(authentication, refreshToken);
 
-        return refreshToken;
+        ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN_KEY, refreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("Lax")
+                .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH/1000)
+                .path("/")
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+
     }
 
     private void saveRefreshToken(Authentication authentication, String refreshToken) {
@@ -91,7 +142,7 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         Long id = Long.valueOf(claims.getSubject());
-        System.out.println("id: " + id);
+
         Optional<User> findUser = userRepository.findById(id);
 
         CustomUserDetails principal = new CustomUserDetails(authorities, findUser.get());

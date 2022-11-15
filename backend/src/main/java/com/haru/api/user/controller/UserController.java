@@ -1,6 +1,5 @@
 package com.haru.api.user.controller;
 
-import com.haru.api.user.domain.entity.User;
 import com.haru.api.user.dto.UserRequest;
 import com.haru.api.user.dto.UserResponse;
 import com.haru.api.user.security.userdetails.CustomUserDetails;
@@ -11,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,5 +26,12 @@ public class UserController {
     public ResponseEntity<UserResponse.UserInfo> getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok().body(userService.getUserInfo(user));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResponse.Login> login(@RequestBody UserRequest.Login request, HttpServletResponse response){
+        return ResponseEntity.ok().body(userService.login(request, response));
+    }
+
+
 
 }
