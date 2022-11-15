@@ -7,10 +7,7 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import { project } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
 import './index.css';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
@@ -25,7 +22,7 @@ const Project = () => {
   function fetchProjectList(pageNo: number) {
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = `projects?page=${pageNo}&size=3`;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'GET',
         headers: { Authorization: getAccessToken() },
@@ -100,7 +97,7 @@ const Project = () => {
   }, [isSaved]);
 
   useEffect(() => {
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       setIsLogined(true);
     } else {
       setIsLogined(false);

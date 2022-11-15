@@ -3,10 +3,7 @@ import CalendarMain from './CalendarMain';
 import './Calendar.css';
 import CalendarDetail from './CalendarDetail';
 import BigTitle from '../../Common/Title/BigTitle';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import ScheduleAdd from './ScheduleAdd';
 import ScheduleManage from './ScheduleManage';
@@ -28,7 +25,7 @@ function Calendar() {
     const URLNext = `schedules?year=${new Date().getUTCFullYear()}&month=${
       new Date().getMonth() + 1
     }`;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       setSchedule(schedule.filter((sch: any) => sch.id !== -1));
       fetch(backURL + URLNext, {
         method: 'GET',

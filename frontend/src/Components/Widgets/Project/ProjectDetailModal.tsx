@@ -2,10 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { defaultURL } from '../../../API';
 import { project, link, inputs } from '../../../Utils/Project';
@@ -231,7 +228,7 @@ const ProjectDetailModal = ({
     event.preventDefault();
     const backURL = process.env.REACT_APP_BACKURL;
     const URLNext = 'projects/' + item.id;
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'DELETE',
         headers: {

@@ -6,10 +6,7 @@ import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  checkTokenValidate,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const routineList = ({ isCreated }: any) => {
   const [clickedCategory, setClickedCategory] = useState('ALL');
@@ -34,7 +31,7 @@ const routineList = ({ isCreated }: any) => {
   };
 
   const getRoutine = () => {
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       const url = `todos?day=${days[todayDate]}`;
       fetch(defaultURL + url, {
         method: 'GET',
@@ -67,7 +64,7 @@ const routineList = ({ isCreated }: any) => {
     }
   };
   useEffect(() => {
-    if (checkTokenValidate()) {
+    if (tokenExists()) {
       setIsLogined(true);
       getRoutine();
     } else {
