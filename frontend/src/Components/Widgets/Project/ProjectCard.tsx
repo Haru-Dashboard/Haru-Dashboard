@@ -45,7 +45,7 @@ const ProjectCard = (props: projectCardProps) => {
             </div>
           )}
           {item.projectLabels.length <= 2 && (
-            <div>
+            <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
               {item.projectLabels.map((projectLabel, idx) => (
                 <Badge
                   pill

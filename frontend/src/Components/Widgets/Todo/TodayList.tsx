@@ -17,7 +17,7 @@ type isTodayRemoved = {
 
 const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
   // clickedCategory는 필터링할 때 사용하기
-  const [clickedCategory, setClickedCategory] = useState('전체');
+  const [clickedCategory, setClickedCategory] = useState('ALL');
   const [localTodayList, setLocalTodayList] = useState<localToday[]>([]);
   const [filteredList, setFilteredList] = useState<localToday[]>([]);
   const [isEmpty, setIsEmpty] = useState(false);

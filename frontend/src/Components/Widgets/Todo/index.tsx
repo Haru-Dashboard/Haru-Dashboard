@@ -15,6 +15,7 @@ const Todo = () => {
   const [show, setShow] = useState(false);
   const [isTodayRemoved, setIsTodayRemoved] = useState(false);
   const [isLogined, setIsLogined] = useState(false);
+  const [isCreated, setisCreated] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -25,6 +26,10 @@ const Todo = () => {
       setIsLogined(false);
       alert('로그인 후에 이용 가능합니다.');
     }
+  };
+
+  const handleSaved = (bool: boolean) => {
+    setisCreated(bool);
   };
 
   return (
@@ -40,14 +45,18 @@ const Todo = () => {
       </div>
       <div className="h-90">
         <div className="h-40">
-          <RoutineList />
+          <RoutineList isCreated={isCreated} />
         </div>
         <div className="h-50">
           <TodayList isTodayRemoved={isTodayRemoved} />
         </div>
       </div>
       <div>
-        <CreateTodoModal handleClose={handleClose} show={show} />
+        <CreateTodoModal
+          handleClose={handleClose}
+          show={show}
+          handleSaved={handleSaved}
+        />
       </div>
     </section>
   );

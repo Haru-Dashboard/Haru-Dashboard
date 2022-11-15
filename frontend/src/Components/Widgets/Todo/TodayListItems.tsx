@@ -71,7 +71,7 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
           color="#FA5252"
           onClick={(e) => onClickDelete(listItem.id)}
           key={listItem.id}
-          className="col-1 p-0 ms-1"
+          className="col-1 p-0 ms-1 hover"
         />
       </div>
       <div>

@@ -20,6 +20,7 @@ const RoutineMoreModal = ({
   show,
   listItem,
   setIsCompleted,
+  handleUpdateEmit,
   isCompleted,
 }: any) => {
   const availableDays: Array<week> = [
@@ -34,13 +35,14 @@ const RoutineMoreModal = ({
 
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
-  const [clickedCategory, setClickedCategory] = useState('전체');
+  const [clickedCategory, setClickedCategory] = useState<string>();
   const [writtenContent, setWrittenContent] = useState('');
   const [availableDaysList, setavailableDaysList] = useState<Array<week>>([]);
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
   const handleSelectedDayList = (selectedList: Array<week>) => {
     setSelectedDayList(selectedList);
+    // console.log('handleselecteddaylist, ', selectedList);
   };
 
   // filterBar 컴포넌트에서 넘어온 선택된 카테고리 state에 저장하기
@@ -60,6 +62,9 @@ const RoutineMoreModal = ({
       fri: selectedDayList[5].isClicked,
       sat: selectedDayList[6].isClicked,
     };
+    // console.log('onclickupdate, ', selectedDayList);
+    console.log(data);
+
     if (checkTokenValidate()) {
       fetch(defaultURL + url, {
         method: 'PATCH',
@@ -71,11 +76,12 @@ const RoutineMoreModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          //
+          handleUpdateEmit(true);
+          handleClose();
         });
     }
-    location.reload();
   };
+
   const onClickDelete = () => {
     const url = `todos/${listItem.todoId}`;
     if (checkTokenValidate()) {
@@ -88,15 +94,19 @@ const RoutineMoreModal = ({
       })
         .then((res) => res.json())
         .then((data) => {
-          //
+          alert('삭제되었습니다');
+          handleUpdateEmit(true);
+          handleClose();
         });
     }
-    location.reload();
   };
 
   useEffect(() => {
     const filtered = availableDays.filter((item: week) => item.isClicked);
     setavailableDaysList(filtered);
+    handleSelectedDayList(availableDays);
+    setClickedCategory(listItem.category);
+    setWrittenContent(listItem.content);
   }, []);
 
   useEffect(() => {

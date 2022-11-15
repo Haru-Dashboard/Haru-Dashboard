@@ -12,7 +12,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 
-const RoutineListItems = ({ listItem, setFilteredList }: any) => {
+const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
   const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
@@ -34,9 +34,15 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           'Content-Type': 'application/json',
         },
       }).then((res) => {
-        //
+        handleDelete(true);
+        alert('삭제되었습니다');
       });
     }
+  };
+
+  // const [isSaved, setIsSaved] = useState(false);
+  const handleUpdateEmit = (bool: boolean) => {
+    handleUpdate(bool);
   };
 
   return (
@@ -73,7 +79,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           color="#FA5252"
           onClick={onClickDelete}
           key={listItem.todoId}
-          className="col-1 p-0 ms-1"
+          className="col-1 p-0 ms-1 hover"
         />
       </div>
       <div>
@@ -82,6 +88,7 @@ const RoutineListItems = ({ listItem, setFilteredList }: any) => {
           show={show}
           listItem={listItem}
           setIsCompleted={setIsCompleted}
+          handleUpdateEmit={handleUpdateEmit}
           isCompleted={isCompleted}
         />
       </div>

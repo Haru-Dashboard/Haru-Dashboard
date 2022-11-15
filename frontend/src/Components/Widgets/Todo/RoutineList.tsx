@@ -11,7 +11,7 @@ import {
   getAccessToken,
 } from '../../../API/Authentication';
 
-const routineList = ({ today }: any) => {
+const routineList = ({ isCreated }: any) => {
   const [clickedCategory, setClickedCategory] = useState('ALL');
   const [isEmpty, setIsEmpty] = useState(false);
   const [filteredList, setFilteredList] = useState<Array<routineData>>([]);
@@ -22,17 +22,19 @@ const routineList = ({ today }: any) => {
   const [show, setShow] = useState(false);
   const [todayDate] = useState(new Date().getDay());
   const [isLogined, setIsLogined] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const category = localStorage.getItem('category');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   // filter bar component에서 클릭된 카테고리 가져오는 함수
   const handleCategory = (clicked: string) => {
     setClickedCategory(clicked);
   };
 
-  useEffect(() => {
+  const getRoutine = () => {
     if (checkTokenValidate()) {
-      setIsLogined(true);
       const url = `todos?day=${days[todayDate]}`;
       fetch(defaultURL + url, {
         method: 'GET',
@@ -42,11 +44,32 @@ const routineList = ({ today }: any) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setTodayRoutineList(data);
           setFilteredList(data);
           checkListLength(data);
+
+          // routine의 category를 local에 저장
+          data.map((datum: routineData) => {
+            if (category) {
+              const arr = JSON.parse(category);
+              if (!arr.includes(datum.category)) {
+                arr.push(datum.category.trim());
+                localStorage.setItem('category', JSON.stringify(arr));
+              }
+            } else {
+              localStorage.setItem(
+                'category',
+                JSON.stringify([datum.category.trim()]),
+              );
+            }
+          });
         });
+    }
+  };
+  useEffect(() => {
+    if (checkTokenValidate()) {
+      setIsLogined(true);
+      getRoutine();
     } else {
       setIsLogined(false);
     }
@@ -79,6 +102,18 @@ const routineList = ({ today }: any) => {
       setFilteredList(filtered);
     }
   };
+  const onClickReload = () => {
+    getRoutine();
+    setClickedCategory('ALL');
+  };
+
+  const handleDelete = (bool: boolean) => {
+    setIsSaved(bool);
+  };
+
+  const handleUpdate = (bool: boolean) => {
+    setIsSaved(bool);
+  };
 
   // 새로운 todo가 추가되면 리스트 변경
   const localToday = localStorage.getItem('today');
@@ -91,13 +126,20 @@ const routineList = ({ today }: any) => {
 
   // 선택된 category가 바뀌면 필터링 진행
   useEffect(() => {
-    console.log(clickedCategory);
+    // console.log(clickedCategory);
     filterTodayList();
   }, [clickedCategory]);
 
-  const onClickReload = () => {
-    location.reload();
-  };
+  // create 여부 저장
+  useEffect(() => {
+    setIsSaved(isCreated);
+  }, [isCreated]);
+
+  // routine CUD가 되면 갱신
+  useEffect(() => {
+    onClickReload();
+    setIsSaved(false);
+  }, [isSaved]);
 
   return (
     <div style={{ fontSize: '0.8rem' }} className="h-100">
@@ -124,7 +166,14 @@ const routineList = ({ today }: any) => {
                 <div className="container h-100 px-0 py-3">
                   {filteredList != null
                     ? filteredList.map((item: routineData, idx: number) => {
-                        return <RoutineListItems listItem={item} key={idx} />;
+                        return (
+                          <RoutineListItems
+                            listItem={item}
+                            key={idx}
+                            handleDelete={handleDelete}
+                            handleUpdate={handleUpdate}
+                          />
+                        );
                       })
                     : ''}
                 </div>
@@ -144,9 +193,6 @@ const routineList = ({ today }: any) => {
             </div>
           )}
         </div>
-      </div>
-      <div>
-        {/* <RoutineMoreModal handleClose={handleClose} show={show} /> */}
       </div>
     </div>
   );
