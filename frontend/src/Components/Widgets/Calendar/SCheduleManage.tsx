@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import {
+  connectionfailed,
   datetimeTimeSettingTo0,
   timeDateConverToBootstrapTime,
 } from './ScheduleDataType';
@@ -10,6 +11,7 @@ import {
   checkTokenValidate,
   getAccessToken,
 } from '../../../API/Authentication';
+import Swal from 'sweetalert2';
 
 export default function ScheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
@@ -37,13 +39,16 @@ export default function ScheduleManage(props: any) {
         .then((response) => response.json())
         .then((datas) => {
           setSchedule(schedule.filter((sch: any) => sch.id !== datas.id));
-          //
-          //
-          //
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted',
+            showConfirmButton: false,
+            timer: 1000,
+          });
           handleClose();
         });
     } else {
-      //
+      connectionfailed();
     }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,10 +105,16 @@ export default function ScheduleManage(props: any) {
           setSchedule(schedule.filter((sch: any) => sch.id !== tmp));
           setInputs((val) => ({ ...val, id: tmp }));
           setSchedule((val: any) => [...val, inputs]);
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            showConfirmButton: false,
+            timer: 1000,
+          });
           handleClose();
         });
     } else {
-      //
+      connectionfailed();
     }
   };
 
@@ -164,10 +175,16 @@ export default function ScheduleManage(props: any) {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="button" onClick={removeSchedule} variant="primary">
+            <Button
+              type="button"
+              onClick={removeSchedule}
+              variant="outline-primary">
               Delete
             </Button>
-            <Button onClick={handleSubmit} type="submit" variant="primary">
+            <Button
+              onClick={handleSubmit}
+              type="submit"
+              variant="outline-primary">
               Edit
             </Button>
           </Modal.Footer>
