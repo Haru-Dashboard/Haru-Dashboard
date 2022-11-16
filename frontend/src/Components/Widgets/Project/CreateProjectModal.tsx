@@ -7,7 +7,7 @@ import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import { projectLink } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
-const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
+const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
 type inputs = {
   title: string;
@@ -39,7 +39,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
       Swal.fire({
-        text: '업로드 가능한 최대 용량은 5MB입니다',
+        text: '업로드 가능한 최대 용량은 1MB입니다',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
