@@ -25,10 +25,13 @@
   width: 60%;
 }
 .calendar-detail {
-  height: 80%;
-  width: 40%;
+  margin-top: 2%;
+  height: 76%;
+  width: 38%;
+  margin-left: 2%;
 }
 .calendar-maincontainer {
+  position: relative;
   width: 100%;
   height: 90%;
 }
@@ -50,6 +53,7 @@
   margin-bottom: 1%;
 }
 .calendar-dates-row {
+  font-weight: bold;
   display: flex;
   height: 100%;
 }
@@ -84,13 +88,14 @@
 }
 .date-column-dates {
   position: relative;
+  height: 75%;
   font-size: 0.8rem;
   left: 5%;
   text-align: left;
 }
 .date-column-content {
   width: 100%;
-  height: 50%;
+  height: 30%;
   font-size: 0.5rem;
   text-align: center;
   position: relative;
@@ -106,6 +111,7 @@
 }
 .calendar-detail-date{
   height: 10%;
+  font-weight: bold;
 }
 .calendar-detail-details{
   height: 90%;
@@ -146,3 +152,22 @@
   font-weight: bold;
 }
 
+.month-change{
+  position: absolute;
+  text-align: left;
+  width: 30%;
+  right: 0%;
+  height: 10%;
+  font-size: 0.8rem;
+  top: -14.5%;
+  font-weight: bold;
+  display: flex;
+}
+.month-change-pn{
+width: 7%;
+}
+.month-change-ym{
+  width: 68%;
+  text-align: center;
+  margin-left:5%;
+}
