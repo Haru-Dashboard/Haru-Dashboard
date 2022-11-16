@@ -9,6 +9,21 @@ public class UserResponse {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class OnlyId {
+        private Long id;
+
+        public static OnlyId toEntity(User user) {
+            return OnlyId.builder()
+                    .id(user.getId())
+                    .build();
+        }
+
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class UserInfo {
         private String email;
         private String name;
