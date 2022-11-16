@@ -9,9 +9,15 @@ import {
 import TodoMoreModal from './TodoMoreModal';
 import Swal from 'sweetalert2';
 
-const TodayListItems = ({ listItem, setFilteredList }: any) => {
-  const [isCompleted, setIsCompleted] = useState(false);
+const TodayListItems = ({
+  listItem,
+  isCompleted,
+  setFilteredList,
+  handleIsCompleted,
+}: any) => {
+  // const [isCompleted, setIsCompleted] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
+  // const [isCompleted, setIsCompleted] = useState(false);
   const localToday = localStorage.getItem('today');
   const [show, setShow] = useState(false);
 
@@ -40,6 +46,31 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
     });
   };
 
+  // todo toggling
+  const saveIsCompleted = () => {
+    /*
+      localstorage에서 현재 저장된 목록을 가져온다.
+      목록을 순회하면서 id가 선택된 todo와 같은 인덱스를 찾는다
+      해당 인덱스에 splice를 써서 isCompleted만 바꿔서 다시 넣는다
+      그리고 다시 로컬 스토리지에 저장한다.
+     */
+    if (localToday) {
+      const localTodayList = JSON.parse(localToday);
+      localTodayList.map((today: localToday, idx: number) => {
+        if (today.id === listItem.id) {
+          localTodayList.splice(idx, 1, {
+            id: today.id,
+            category: today.category,
+            content: today.content,
+            isCompleted: !today.isCompleted,
+          });
+        }
+      });
+      localStorage.setItem('today', JSON.stringify(localTodayList));
+      handleIsCompleted();
+    }
+  };
+
   return (
     <div>
       <div className="row ms-2 mt-2 hover">
@@ -48,7 +79,7 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
           icon={isCompleted ? faSquareCheck : faSquare}
           color="#FFFFFF"
           className="col-1 p-0"
-          onClick={(e) => setIsCompleted(!isCompleted)}
+          onClick={saveIsCompleted}
         />
         <div
           className="col-2 p-0 mx-1 my-0 text-center overflow-hidden border border-0 rounded"
@@ -83,7 +114,7 @@ const TodayListItems = ({ listItem, setFilteredList }: any) => {
           handleClose={handleClose}
           show={show}
           listItem={listItem}
-          setIsCompleted={setIsCompleted}
+          saveIsCompleted={saveIsCompleted}
           isCompleted={isCompleted}
         />
       </div>
