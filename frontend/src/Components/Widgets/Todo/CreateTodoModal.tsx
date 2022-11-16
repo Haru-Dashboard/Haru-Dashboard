@@ -7,6 +7,7 @@ import SelectDayBar from './SelectDayBar';
 import { week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
+import Swal from 'sweetalert2';
 
 const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   const [isToday, setIsToday] = useState(true);
@@ -105,6 +106,18 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   const handleSelectedDayList = (selectedList: Array<week>) => {
     setSelectedDayList(selectedList);
   };
+
+  useEffect(() => {
+    if (!isToday && !tokenExists()) {
+      setIsToday(true);
+      Swal.fire({
+        text: '로그인 후에 이용 가능합니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
+    }
+  }, [isToday]);
 
   return (
     <div>
