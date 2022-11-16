@@ -7,15 +7,33 @@ import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
-  const sampledatetime = datetimeTimeSettingTo0(new Date());
+  const sampleStartTime = new Date(
+    new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +new Date().getHours() +
+      ':00',
+  );
+  const sampleEndTime = new Date(
+    new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +(new Date().getHours() + 2) +
+      ':00',
+  );
   const [inputs, setInputs] = useState({
     title: '',
-    startDate: sampledatetime,
-    endDate: sampledatetime,
+    startDate: sampleStartTime,
+    endDate: sampleEndTime,
     content: '',
     color: -1,
   });
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -32,12 +50,12 @@ export default function ScheduleAdd(props: any) {
       } else if (inputs.content == null || inputs.content == '') {
       } else {
         if (inputs.startDate == null) {
-          setInputs((values) => ({ ...values, startDate: sampledatetime }));
-          inputs.startDate = sampledatetime;
+          setInputs((values) => ({ ...values, startDate: sampleStartTime }));
+          inputs.startDate = sampleStartTime;
         }
         if (inputs.endDate == null) {
-          setInputs((values) => ({ ...values, endDate: sampledatetime }));
-          inputs.endDate = sampledatetime;
+          setInputs((values) => ({ ...values, endDate: sampleEndTime }));
+          inputs.endDate = sampleEndTime;
         }
         fetch(backURL + URLNext, {
           method: 'POST',
@@ -87,7 +105,16 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="startDate"
               onChange={handleChange}
-              required
+              defaultValue={
+                new Date().getFullYear() +
+                '-' +
+                (new Date().getMonth() + 1) +
+                '-' +
+                new Date().getDate() +
+                'T' +
+                +new Date().getHours() +
+                ':00'
+              }
             />
           </Form.Group>
           <Form.Group>
@@ -96,7 +123,16 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="endDate"
               onChange={handleChange}
-              required
+              defaultValue={
+                new Date().getFullYear() +
+                '-' +
+                (new Date().getMonth() + 1) +
+                '-' +
+                new Date().getDate() +
+                'T' +
+                +(new Date().getHours() + 2) +
+                ':00'
+              }
             />
           </Form.Group>
           <Form.Group>
