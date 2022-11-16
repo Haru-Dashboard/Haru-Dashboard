@@ -28,17 +28,18 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
 
-    public AuthResponse.Token refreshToken(HttpServletRequest request, AuthRequest.Token token) {
+    public AuthResponse.Token refreshToken(AuthRequest.Token request) {
         // 1. Validation Refresh Token
-
-        String oldRefreshToken = CookieUtil.getCookie(request, cookieKey)
-                .map(Cookie::getValue).orElseThrow(() -> new RuntimeException("no Refresh Token Cookie"));
+        String oldRefreshToken = request.getRefreshToken();
+        if(oldRefreshToken == null){
+            throw new RuntimeException("no Refresh Token");
+        }
         if (!tokenProvider.validateToken(oldRefreshToken)) {
             throw new RuntimeException("Not Validated Refresh Token");
         }
 
         // 2. 유저정보 얻기
-        String oldAccessToken = token.getAccessToken();
+        String oldAccessToken = request.getAccessToken();
         Authentication authentication = tokenProvider.getAuthentication(oldAccessToken);
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
@@ -54,7 +55,6 @@ public class AuthService {
 
         // 4. JWT 갱신
         String accessToken = tokenProvider.createAccessToken(authentication);
-
         return AuthResponse.Token.toEntity(accessToken);
     }
 }

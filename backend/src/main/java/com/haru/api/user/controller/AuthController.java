@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/refresh")
-    public ResponseEntity refreshToken(HttpServletRequest request,@RequestBody AuthRequest.Token token) {
-        return ResponseEntity.ok().body(authService.refreshToken(request, token));
+    public ResponseEntity refreshToken(@RequestBody AuthRequest.Token request) {
+        return ResponseEntity.ok().body(authService.refreshToken(request));
     }
 }
