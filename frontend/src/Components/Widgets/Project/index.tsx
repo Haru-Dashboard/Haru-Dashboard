@@ -107,9 +107,11 @@ const Project = () => {
   return (
     <div className="w-100 h-100 px-3 pjt-board">
       <div className="h-100">
-        <div className="d-flex justify-content-between align-items-center px-3 pt-2">
-          <BigTitle title="In Progress" />
-          <BtnPlus onClick={handleShowCreate} />
+        <div className="px-3 pt-2">
+          <div className="d-flex justify-content-between align-items-center pt-2 pe-4">
+            <BigTitle title="In Progress" />
+            <BtnPlus onClick={handleShowCreate} />
+          </div>
         </div>
         {/* Body */}
         <div className="px-3 h-80">

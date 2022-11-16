@@ -36,10 +36,10 @@ const Todo = () => {
         <BtnPlus onClick={handleShow} />
       </div>
       <div className="h-90">
-        <div className="h-40">
+        <div className="h-45">
           <RoutineList isCreated={isCreated} />
         </div>
-        <div className="h-50">
+        <div className="h-45">
           <TodayList isTodayRemoved={isTodayRemoved} />
         </div>
       </div>
