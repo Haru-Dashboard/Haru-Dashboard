@@ -18,3 +18,7 @@ Content-Type: application/json;charset=UTF-8
 client.global.set("authorizationToken", "Bearer " + response.body.accessToken);
 client.log("Auth Token : " + client.global.get("authorizationToken"));
 %}
+
+### 유저 로그아웃
+GET {{apiUrl}}/users/logout
+Authorization: {{authorizationToken}}

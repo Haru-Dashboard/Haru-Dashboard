@@ -64,4 +64,23 @@ public class UserControllerTest extends MvcTest {
                 ));
         verify(userService).getUserInfo(any());
     }
+
+    @Test
+    @DisplayName("유저 로그아웃")
+    public void logout() throws Exception{
+        UserResponse.OnlyId response = UserResponse.OnlyId.toEntity(user);
+        given(userService.logout(any())).willReturn(response);
+
+        ResultActions results = mvc.perform(get("/api/users/logout"));
+
+        results.andExpect(status().isOk())
+                .andDo(document("user_logout",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 식별자")
+                        )
+                ));
+        verify(userService).logout(any());
+    }
 }
