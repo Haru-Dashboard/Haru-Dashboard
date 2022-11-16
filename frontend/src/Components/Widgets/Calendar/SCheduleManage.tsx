@@ -118,7 +118,7 @@ export default function ScheduleManage(props: any) {
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>Manage Schedules</Modal.Title>
+        <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       {showModal ? (
         <Form>
