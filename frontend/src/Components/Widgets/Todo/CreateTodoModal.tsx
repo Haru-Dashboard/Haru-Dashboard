@@ -26,11 +26,11 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
     // 이미 작성된 것이 있으면 배열 형태로 파싱해서 state에 저장하기
     if (localToday) {
       const arr = JSON.parse(localToday);
-      const tid = Number(arr[arr.length - 1].id);
+      // TODO: localToday가 '[]' 이면 아래 코드에서 에러가 발생
 
       // localStorage에 저장하기
       arr.push({
-        id: tid + 1,
+        id: arr.length ? Number(arr[arr.length - 1].id) + 1 : 0,
         category: `${clickedCategory}`,
         content: `${writtenContent}`,
       });
