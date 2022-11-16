@@ -99,7 +99,7 @@ public class JwtTokenProvider {
         return refreshToken;
     }
 
-    public void createRefreshToken(Authentication authentication, HttpServletResponse response) {
+    public String createRefreshToken(Authentication authentication) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
 
@@ -112,15 +112,7 @@ public class JwtTokenProvider {
 
         saveRefreshToken(authentication, refreshToken);
 
-        ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN_KEY, refreshToken)
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("Lax")
-                .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH/1000)
-                .path("/")
-                .build();
-
-        response.addHeader("Set-Cookie", cookie.toString());
+        return refreshToken;
 
     }
 
