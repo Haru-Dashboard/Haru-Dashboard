@@ -52,6 +52,10 @@
   height: 20%;
   margin-bottom: 1%;
 }
+.calendar-dates-week4 {
+  height: 25%;
+  margin-bottom: 1%;
+}
 .calendar-dates-row {
   font-weight: bold;
   display: flex;
@@ -165,6 +169,7 @@
 }
 .month-change-pn{
 width: 7%;
+cursor: pointer;
 }
 .month-change-ym{
   width: 68%;
