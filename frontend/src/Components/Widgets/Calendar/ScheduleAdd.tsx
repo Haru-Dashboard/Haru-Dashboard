@@ -3,10 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
-import {
-  tokenExists,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
@@ -69,7 +66,7 @@ export default function ScheduleAdd(props: any) {
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>New Schedule</Modal.Title>
+        <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
