@@ -10,6 +10,5 @@ public class AuthRequest {
     public static class Token{
         private String accessToken;
         private String refreshToken;
-
     }
 }
