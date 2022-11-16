@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
 import { project } from '../../../Utils/Project';

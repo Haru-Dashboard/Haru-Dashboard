@@ -30,10 +30,11 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   });
   const todayDate = new Date().toISOString().slice(0, 10);
 
-  // TODO: project 생성 fetch 함수
+  // project 생성 fetch 함수
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
+
     if (userFile === undefined) return;
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {

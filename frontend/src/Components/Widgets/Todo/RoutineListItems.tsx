@@ -83,14 +83,19 @@ any) => {
   };
 
   const handleIsCompleted = (localRoutineList: Array<localRoutine>) => {
-    console.log(localRoutineList);
     localRoutineList.map((routine: localRoutine) => {
       if (routine.id === listItem.todoId) {
-        console.log('same');
         setIsCompleted(routine.isCompleted);
       }
     });
   };
+
+  useEffect(() => {
+    const localRoutine = localStorage.getItem('routine');
+    if (localRoutine) {
+      handleIsCompleted(JSON.parse(localRoutine));
+    }
+  }, []);
 
   return (
     <div>
