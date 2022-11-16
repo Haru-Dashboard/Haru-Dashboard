@@ -39,4 +39,10 @@ public class UserService {
 
     }
 
+    @Transactional
+    public UserResponse.OnlyId logout(User user){
+        user.updateRefreshToken(null);
+        userRepository.save(user);
+        return UserResponse.OnlyId.toEntity(user);
+    }
 }
