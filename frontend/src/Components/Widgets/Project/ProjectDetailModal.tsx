@@ -36,7 +36,7 @@ const ProjectDetailModal = ({
   const [rootWidth, setRootWidth] = useState(0);
   const accessToken = localStorage.getItem('accessToken');
   const URLNext = 'projects/' + item.id;
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File>(new File([], ''));
   const [inputs, setInputs] = useState<inputs>({
     title: '',
     content: '',
@@ -203,28 +203,19 @@ const ProjectDetailModal = ({
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
-    if (file === undefined) {
-      Swal.fire({
-        text: '이미지를 선택해주세요',
-        icon: 'error',
-        showConfirmButton: true,
-        timer: 1000,
+    formData.append('file', file);
+    if (getAccessToken()) {
+      await fetch(defaultURL + URLNext, {
+        method: 'POST',
+        headers: {
+          Authorization: getAccessToken(),
+        },
+        body: formData,
+      }).then((res) => {
+        handleSaved(true);
+        handleClose();
+        setFile(new File([], ''));
       });
-    } else {
-      formData.append('file', file);
-      if (getAccessToken()) {
-        await fetch(defaultURL + URLNext, {
-          method: 'POST',
-          headers: {
-            Authorization: getAccessToken(),
-          },
-          body: formData,
-        }).then((res) => {
-          handleSaved(true);
-          handlePageNo();
-          handleClose();
-        });
-      }
     }
   };
 
