@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.web.servlet.MockMvc;
 
-@AutoConfigureRestDocs(uriScheme = "https", uriHost = "k7a204.p.ssafy.io", uriPort = 443)
 @Import({
         WebMvcConfig.class,
         JwtTokenProvider.class,
