@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 type projectDetail = {
   handleClose: () => void;
   handleSaved: (bool: boolean) => void;
+  handlePageNo: () => void;
   show: boolean;
   item: project;
 };
@@ -23,6 +24,7 @@ const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
 const ProjectDetailModal = ({
   handleClose,
+  handlePageNo,
   show,
   item,
   handleSaved,
@@ -78,6 +80,8 @@ const ProjectDetailModal = ({
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
+    console.log('handle file, ', userFile);
+
     if (userFile === undefined) return;
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
@@ -217,6 +221,7 @@ const ProjectDetailModal = ({
           body: formData,
         }).then((res) => {
           handleSaved(true);
+          handlePageNo();
           handleClose();
         });
       }
@@ -243,12 +248,26 @@ const ProjectDetailModal = ({
             icon: 'success',
             showConfirmButton: true,
             timer: 1000,
-          }).then(() => handleClose());
+          }).then(() => {
+            handlePageNo();
+            handleClose();
+          });
         });
     } else {
       //
     }
   };
+
+  useEffect(() => {
+    setFile(undefined);
+    // console.log('project detail modal');
+    // const currentFile = new File(['image'], item.imageInfo.originName, {
+    //   type: 'image/png',
+    // });
+    // console.log(currentFile);
+
+    // setFile(currentFile);
+  }, [isUpdate]);
 
   return (
     <div>
