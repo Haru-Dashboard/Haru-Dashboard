@@ -77,7 +77,6 @@ export async function reissueToken(accessToken: string): Promise<void> {
 export function clearToken(): void {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  localStorage.removeItem('userName');
 }
 
 export function logout() {
