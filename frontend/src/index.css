@@ -9,6 +9,7 @@ body {
 
 .App {
   background-image: url('../public/img/haru-default-bg-1440.png');
+  /* background-image: url('../public/img/blur-night.jpeg'); */
   width: 100vw;
   min-width: fit-content;
   max-width: 100%;
@@ -41,6 +42,12 @@ body {
 .h-60 {
   height: 60%;
 }
+.h-48 {
+  height: 48%;
+}
+.h-45 {
+  height: 45%;
+}
 .h-50 {
   height: 50%;
 }
@@ -55,6 +62,12 @@ body {
 }
 .w-70 {
   width: 70%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-40 {
+  width: 40%;
 }
 .w-30 {
   width: 30%;

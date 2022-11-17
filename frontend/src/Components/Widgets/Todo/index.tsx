@@ -12,23 +12,12 @@ import { tokenExists } from '../../../API/Authentication';
 const Todo = () => {
   const [show, setShow] = useState(false);
   const [isTodayRemoved, setIsTodayRemoved] = useState(false);
-  const [isLogined, setIsLogined] = useState(false);
+  // const [isLogined, setIsLogined] = useState(false);
   const [isCreated, setisCreated] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (tokenExists()) {
-      setIsLogined(true);
-      setShow(true);
-    } else {
-      setIsLogined(false);
-      Swal.fire({
-        text: '로그인 후에 이용 가능합니다',
-        icon: 'error',
-        showConfirmButton: true,
-        timer: 1000,
-      });
-    }
+    setShow(true);
   };
 
   const handleSaved = (bool: boolean) => {
@@ -46,11 +35,11 @@ const Todo = () => {
         <BigTitle title="Todo" />
         <BtnPlus onClick={handleShow} />
       </div>
-      <div className="h-90">
-        <div className="h-40">
+      <div className="h-90 pb-2">
+        <div className="h-45">
           <RoutineList isCreated={isCreated} />
         </div>
-        <div className="h-50">
+        <div className="h-45">
           <TodayList isTodayRemoved={isTodayRemoved} />
         </div>
       </div>

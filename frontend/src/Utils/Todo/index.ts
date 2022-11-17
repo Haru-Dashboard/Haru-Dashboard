@@ -27,8 +27,10 @@ export type week = {
 };
 
 export type routineData = {
+  todoId?: number;
   category: string;
   content: string;
+  isCompleted?: boolean;
   mon: boolean;
   tue: boolean;
   wed: boolean;
@@ -41,4 +43,9 @@ export type routineData = {
 export type routineFilterBar = {
   handleCategory: (clicked: string) => void;
   clicked?: string;
+};
+
+export type localRoutine = {
+  id: number;
+  isCompleted: boolean;
 };

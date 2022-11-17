@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
 import { project } from '../../../Utils/Project';
@@ -12,7 +12,7 @@ const ProjectCard = (props: projectCardProps) => {
   const { item, handleShowMore } = props;
   return (
     <div
-      className="w-30 h-100 p-2"
+      className="h-100 px-2 py-1"
       onClick={() => handleShowMore(item.id)}
       key={item.id}>
       <div className="p-2 h-100 pjt-card">

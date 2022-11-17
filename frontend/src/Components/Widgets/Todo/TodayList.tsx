@@ -9,6 +9,7 @@ export type localToday = {
   id: number;
   category: string;
   content: string;
+  isCompleted: boolean;
 };
 
 type isTodayRemoved = {
@@ -58,6 +59,10 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
     }
   };
 
+  const handleIsCompleted = () => {
+    filterTodayList();
+  };
+
   // 새로운 todo가 추가되면 리스트 변경
   useEffect(() => {
     if (localToday) {
@@ -102,7 +107,9 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
                 return (
                   <TodayListItems
                     listItem={filtered}
+                    isCompleted={filtered.isCompleted}
                     setFilteredList={setFilteredList}
+                    handleIsCompleted={handleIsCompleted}
                     key={k}
                   />
                 );

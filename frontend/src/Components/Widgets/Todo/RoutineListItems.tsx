@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSquareMinus,
@@ -9,11 +9,15 @@ import Swal from 'sweetalert2';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
+import { localRoutine } from '../../../Utils/Todo';
 
-const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
+const RoutineListItems = ({
+  listItem,
+  handleDelete,
+  handleUpdate,
+}: // handleIsCompleted,
+any) => {
   const [isCompleted, setIsCompleted] = useState(false);
-  // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
-  const localToday = localStorage.getItem('today');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -48,24 +52,69 @@ const RoutineListItems = ({ listItem, handleDelete, handleUpdate }: any) => {
     handleUpdate(bool);
   };
 
+  // todo toggling
+  const saveIsCompleted = () => {
+    /*
+      localstorage에서 현재 저장된 목록을 가져온다.
+      목록을 순회하면서 id가 선택된 todo와 같은 인덱스를 찾는다
+      해당 인덱스에 splice를 써서 isCompleted만 바꿔서 다시 넣는다
+      그리고 다시 로컬 스토리지에 저장한다.
+     */
+    const localRoutine = localStorage.getItem('routine');
+
+    if (localRoutine) {
+      const localRoutineList: Array<localRoutine> = JSON.parse(localRoutine);
+
+      // console.log(localRoutineList);
+      localRoutineList.map((routine: localRoutine, idx: number) => {
+        if (routine.id === listItem.todoId) {
+          // console.log(routine.id, !routine.isCompleted);
+
+          localRoutineList.splice(idx, 1, {
+            id: routine.id,
+            isCompleted: !routine.isCompleted,
+          });
+          // console.log(localRoutineList);
+        }
+      });
+      localStorage.setItem('routine', JSON.stringify(localRoutineList));
+      handleIsCompleted(localRoutineList);
+    }
+  };
+
+  const handleIsCompleted = (localRoutineList: Array<localRoutine>) => {
+    localRoutineList.map((routine: localRoutine) => {
+      if (routine.id === listItem.todoId) {
+        setIsCompleted(routine.isCompleted);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const localRoutine = localStorage.getItem('routine');
+    if (localRoutine) {
+      handleIsCompleted(JSON.parse(localRoutine));
+    }
+  }, []);
+
   return (
     <div>
-      <div className="row ms-2 mt-2 hover">
+      <div className="row ms-2 mt-2 hover align-items-center">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}
           color="#FFFFFF"
           className="col-1 p-0"
-          onClick={(e) => setIsCompleted(!isCompleted)}
+          onClick={saveIsCompleted}
         />
         <div
-          className="col-2 p-0 mx-1 my-0 text-center overflow-hidden border border-0 rounded"
+          className="col-2 px-0 py-1 mx-1 my-0 text-center overflow-hidden border border-0 rounded"
           style={{
-            fontSize: '12px',
+            fontSize: '0.5rem',
             backgroundColor: '#DFBBB1',
             whiteSpace: 'nowrap',
           }}>
-          {listItem.category}
+          {listItem.category.slice(0, 4)}
         </div>
         <div
           className="col-6 p-0 m-0 overflow-hidden"
