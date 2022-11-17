@@ -56,7 +56,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +
@@ -104,7 +109,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +
@@ -137,7 +147,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +

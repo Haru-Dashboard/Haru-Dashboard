@@ -176,3 +176,6 @@ cursor: pointer;
   text-align: center;
   margin-left:5%;
 }
+.date-column-today{
+  outline:2px solid #6464C8;
+}
