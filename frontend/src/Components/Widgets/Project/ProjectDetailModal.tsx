@@ -249,16 +249,6 @@ const ProjectDetailModal = ({
     }
   };
 
-  useEffect(() => {
-    // setFile(undefined);
-    // console.log('project detail modal');
-    // const currentFile = new File(['image'], item.imageInfo.originName, {
-    //   type: 'image/png',
-    // });
-    // console.log(currentFile);
-    // setFile(currentFile);
-  }, [isUpdate]);
-
   return (
     <div>
       <Modal show={show} onHide={handleClose} className="h-100">
