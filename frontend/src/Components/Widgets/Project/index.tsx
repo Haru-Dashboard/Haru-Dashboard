@@ -38,7 +38,7 @@ const Project = () => {
           if (data.length) {
             setProjectList(data.reverse());
             setPagedProjectList(data.slice(pageNo, pageNo + 3));
-            setTotalPageNo(Math.ceil(data.length / 3) - 1);
+            setTotalPageNo(Math.ceil(data.length / 3));
           }
         });
     }
@@ -114,24 +114,21 @@ const Project = () => {
   const [showAfter, setShowAfter] = useState(true);
 
   function onClickBefore() {
-    if (pageNo === 0) {
-      setShowBefore(false);
-    } else {
-      setPageNo(pageNo - 1);
-      setPagedProjectList(
-        projectList.slice((pageNo - 1) * 3, (pageNo - 1) * 3 + 3),
-      );
-    }
+    const beforePage = (pageNo + totalPageNo - 1) % totalPageNo;
+    setPageNo(beforePage);
+    setPagedProjectList(projectList.slice(beforePage * 3, beforePage * 3 + 3));
+
+    // if (pageNo === 0) {
+    //   setShowBefore(false);
+    // } else {
+    //   setPageNo(pageNo - 1);
+    // }
   }
   function onClickAfter() {
-    if (pageNo === totalPageNo) {
-      setShowAfter(false);
-    } else {
-      setPageNo(pageNo + 1);
-      setPagedProjectList(
-        projectList.slice((pageNo + 1) * 3, (pageNo + 1) * 3 + 3),
-      );
-    }
+    // console.log((pageNo + totalPageNo + 1) % totalPageNo);
+    const nextPage = (pageNo + totalPageNo + 1) % totalPageNo;
+    setPageNo(nextPage);
+    setPagedProjectList(projectList.slice(nextPage * 3, nextPage * 3 + 3));
   }
 
   function handlePageNo() {
@@ -184,15 +181,15 @@ const Project = () => {
         {/* Body */}
         <div className="px-3 h-80">
           {isLogined && (
-            <div className="h-100 mx-auto d-flex justify-content-around align-items-center h-100">
+            <div className="h-100 mx-auto d-flex justify-content-around align-items-center">
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                className={showBefore ? 'hover' : ''}
-                color={showBefore ? 'black' : 'grey'}
+                className={'hover'}
+                color={'black'}
                 onClick={onClickBefore}
               />
-              <div className="container">
-                <div className="row">
+              <div className="container h-100">
+                <div className="row h-100">
                   {pagedProjectList.map((item: project, idx: number) => {
                     return (
                       <div className="col-4">
@@ -208,8 +205,8 @@ const Project = () => {
               </div>
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className={showAfter ? 'hover' : ''}
-                color={showAfter ? 'black' : 'grey'}
+                className={'hover'}
+                color={'black'}
                 onClick={onClickAfter}
               />
             </div>

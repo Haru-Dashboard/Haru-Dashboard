@@ -99,7 +99,7 @@ any) => {
 
   return (
     <div>
-      <div className="row ms-2 mt-2 hover">
+      <div className="row ms-2 mt-2 hover align-items-center">
         {/* TODO: 선택한 요소만 체크된 박스로 바꾸기, todo 저장 시에 isCompleted: false를 기본으로 체크되면 localStorage isCompleted: true로 바뀌게 */}
         <FontAwesomeIcon
           icon={isCompleted ? faSquareCheck : faSquare}
@@ -108,13 +108,13 @@ any) => {
           onClick={saveIsCompleted}
         />
         <div
-          className="col-2 p-0 mx-1 my-0 text-center overflow-hidden border border-0 rounded"
+          className="col-2 px-0 py-1 mx-1 my-0 text-center overflow-hidden border border-0 rounded"
           style={{
-            fontSize: '12px',
+            fontSize: '0.5rem',
             backgroundColor: '#DFBBB1',
             whiteSpace: 'nowrap',
           }}>
-          {listItem.category}
+          {listItem.category.slice(0, 4)}
         </div>
         <div
           className="col-6 p-0 m-0 overflow-hidden"
