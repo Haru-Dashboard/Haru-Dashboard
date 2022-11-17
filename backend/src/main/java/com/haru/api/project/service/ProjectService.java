@@ -64,12 +64,12 @@ public class ProjectService {
     public ProjectResponse.GetProject getProject(Long projectId, User user) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
         if (!Objects.equals(user.getId(), project.getUser().getId())) throw new PermissionException();
-        return ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
+        return ProjectResponse.GetProject.toEntity(project);
     }
 
     public List<ProjectResponse.GetProject> getProjectList(Pageable pageable, User user) {
         List<Project> projects = projectRepository.findAllByUserOrderByCreatedAtDesc(pageable, user);
-        return projects.stream().map(project -> ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
+        return projects.stream().map(ProjectResponse.GetProject::toEntity).collect(Collectors.toList());
     }
 
     @Transactional
