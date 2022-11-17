@@ -67,7 +67,7 @@ export default function ScheduleAdd(props: any) {
         })
           .then((response) => response.json())
           .then((data) => {
-            setSchedule([...schedule, inputs]);
+            setSchedule([...schedule, { ...inputs, id: data.id }]);
             Swal.fire({
               icon: 'success',
               title: 'Saved',
