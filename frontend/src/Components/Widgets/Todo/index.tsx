@@ -35,7 +35,7 @@ const Todo = () => {
         <BigTitle title="Todo" />
         <BtnPlus onClick={handleShow} />
       </div>
-      <div className="h-90">
+      <div className="h-90 pb-2">
         <div className="h-45">
           <RoutineList isCreated={isCreated} />
         </div>

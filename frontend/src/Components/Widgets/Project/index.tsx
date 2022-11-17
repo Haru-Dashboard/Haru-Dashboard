@@ -6,31 +6,39 @@ import BigTitle from '../../Common/Title/BigTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { project } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import './index.css';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const Project = () => {
   const [projectList, setProjectList] = useState<project[]>([]);
+  const [pagedProjectList, setPagedProjectList] = useState<project[]>([]);
   const [pageNo, setPageNo] = useState(0);
+  const [totalPageNo, setTotalPageNo] = useState(5);
   const [isLogined, setIsLogined] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    fetchProjectList(pageNo);
+    fetchProjectList();
   }, []);
 
-  function fetchProjectList(pageNo: number) {
+  function fetchProjectList() {
     const backURL = process.env.REACT_APP_BACKURL;
-    const URLNext = `projects?page=${pageNo}&size=3`;
     if (tokenExists()) {
-      fetch(backURL + URLNext, {
+      fetch(backURL + 'projects', {
         method: 'GET',
         headers: { Authorization: getAccessToken() },
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.length) {
-            setProjectList(data);
+            setProjectList(data.reverse());
+            setPagedProjectList(data.slice(pageNo, pageNo + 3));
+            setTotalPageNo(Math.ceil(data.length / 3) - 1);
           }
         });
     }
@@ -40,15 +48,26 @@ const Project = () => {
   const [showCreate, setShowCreate] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => {
-    if (isLogined) {
-      setShowCreate(true);
-    } else {
+    console.log(projectList.length);
+
+    if (projectList.length >= 15) {
       Swal.fire({
-        text: '로그인 후에 이용 가능합니다',
+        text: 'In Progress는 15개까지 생성 가능합니다',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
       });
+    } else {
+      if (isLogined) {
+        setShowCreate(true);
+      } else {
+        Swal.fire({
+          text: '로그인 후에 이용 가능합니다',
+          icon: 'error',
+          showConfirmButton: true,
+          timer: 1000,
+        });
+      }
     }
   };
 
@@ -91,8 +110,57 @@ const Project = () => {
     setIsSaved(bool);
   }
 
+  const [showBefore, setShowBefore] = useState(false);
+  const [showAfter, setShowAfter] = useState(true);
+
+  function onClickBefore() {
+    if (pageNo === 0) {
+      setShowBefore(false);
+    } else {
+      setPageNo(pageNo - 1);
+      setPagedProjectList(
+        projectList.slice((pageNo - 1) * 3, (pageNo - 1) * 3 + 3),
+      );
+    }
+  }
+  function onClickAfter() {
+    if (pageNo === totalPageNo) {
+      setShowAfter(false);
+    } else {
+      setPageNo(pageNo + 1);
+      setPagedProjectList(
+        projectList.slice((pageNo + 1) * 3, (pageNo + 1) * 3 + 3),
+      );
+    }
+  }
+
+  function handlePageNo() {
+    setPageNo(0);
+  }
+
   useEffect(() => {
-    fetchProjectList(pageNo);
+    console.log('change page', pageNo);
+    console.log(projectList);
+
+    if (pageNo === 0) {
+      console.log('first page');
+
+      setShowBefore(false);
+    } else {
+      setShowBefore(true);
+    }
+
+    if (pageNo === totalPageNo) {
+      console.log('lastpage');
+
+      setShowAfter(false);
+    } else {
+      setShowAfter(true);
+    }
+  }, [pageNo]);
+
+  useEffect(() => {
+    fetchProjectList();
     setIsSaved(false);
   }, [isSaved]);
 
@@ -116,16 +184,34 @@ const Project = () => {
         {/* Body */}
         <div className="px-3 h-80">
           {isLogined && (
-            <div className="mx-auto d-flex justify-content-around h-100">
-              {projectList.map((item: project, idx: number) => {
-                return (
-                  <ProjectCard
-                    key={idx}
-                    item={item}
-                    handleShowMore={(e) => handleShowMore(item)}
-                  />
-                );
-              })}
+            <div className="h-100 mx-auto d-flex justify-content-around align-items-center h-100">
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className={showBefore ? 'hover' : ''}
+                color={showBefore ? 'black' : 'grey'}
+                onClick={onClickBefore}
+              />
+              <div className="container">
+                <div className="row">
+                  {pagedProjectList.map((item: project, idx: number) => {
+                    return (
+                      <div className="col-4">
+                        <ProjectCard
+                          key={idx}
+                          item={item}
+                          handleShowMore={(e) => handleShowMore(item)}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className={showAfter ? 'hover' : ''}
+                color={showAfter ? 'black' : 'grey'}
+                onClick={onClickAfter}
+              />
             </div>
           )}
           {!isLogined && (
@@ -149,6 +235,7 @@ const Project = () => {
       <div>
         <ProjectDetailModal
           handleClose={handleCloseMore}
+          handlePageNo={handlePageNo}
           show={showMore}
           item={selectedProject}
           handleSaved={handleSaved}

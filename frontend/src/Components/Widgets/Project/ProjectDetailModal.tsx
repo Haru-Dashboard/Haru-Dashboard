@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 type projectDetail = {
   handleClose: () => void;
   handleSaved: (bool: boolean) => void;
+  handlePageNo: () => void;
   show: boolean;
   item: project;
 };
@@ -23,6 +24,7 @@ const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
 const ProjectDetailModal = ({
   handleClose,
+  handlePageNo,
   show,
   item,
   handleSaved,
@@ -219,6 +221,7 @@ const ProjectDetailModal = ({
           body: formData,
         }).then((res) => {
           handleSaved(true);
+          handlePageNo();
           handleClose();
         });
       }
@@ -245,7 +248,10 @@ const ProjectDetailModal = ({
             icon: 'success',
             showConfirmButton: true,
             timer: 1000,
-          }).then(() => handleClose());
+          }).then(() => {
+            handlePageNo();
+            handleClose();
+          });
         });
     } else {
       //

@@ -12,7 +12,7 @@ const ProjectCard = (props: projectCardProps) => {
   const { item, handleShowMore } = props;
   return (
     <div
-      className="w-30 h-100 p-2"
+      className="h-100 p-2"
       onClick={() => handleShowMore(item.id)}
       key={item.id}>
       <div className="p-2 h-100 pjt-card">

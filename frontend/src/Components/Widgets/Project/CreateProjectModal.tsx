@@ -232,7 +232,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
             </div>
             <Form.Control
               type="text"
-              maxLength={5}
+              maxLength={7}
               placeholder="태그 추가하기"
               className="my-2 border"
               name="labels"
