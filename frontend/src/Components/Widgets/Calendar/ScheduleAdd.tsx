@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
+import { connectionfailed } from './ScheduleDataType';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
@@ -16,7 +16,9 @@ export default function ScheduleAdd(props: any) {
       'T' +
       +new Date().getHours() +
       ':00',
-  );
+  )
+    .toISOString()
+    .replace(/\..*/, '');
   const sampleEndTime = new Date(
     new Date().getFullYear() +
       '-' +
@@ -24,13 +26,32 @@ export default function ScheduleAdd(props: any) {
       '-' +
       new Date().getDate() +
       'T' +
-      +(new Date().getHours() + 2) +
+      (new Date().getHours() + 2) +
       ':00',
-  );
+  )
+    .toISOString()
+    .replace(/\..*/, '');
+
   const [inputs, setInputs] = useState({
     title: '',
-    startDate: sampleStartTime,
-    endDate: sampleEndTime,
+    startDate:
+      new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +new Date().getHours() +
+      ':00',
+    endDate:
+      new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      (+new Date().getHours() + 2) +
+      ':00',
     content: '',
     color: -1,
   });
@@ -67,7 +88,7 @@ export default function ScheduleAdd(props: any) {
         })
           .then((response) => response.json())
           .then((data) => {
-            setSchedule([...schedule, inputs]);
+            setSchedule([...schedule, { ...inputs, id: data.id }]);
             Swal.fire({
               icon: 'success',
               title: 'Saved',

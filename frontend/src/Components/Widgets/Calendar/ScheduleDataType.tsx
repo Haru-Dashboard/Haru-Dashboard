@@ -35,14 +35,6 @@ export function timeStringConverToBootstrapTime(oldDate: string): string {
   const newDate = new Date(+oldDate + 3240).toISOString().replace(/\..*/, '');
   return newDate;
 }
-export function timeDateConverToBootstrapTime(oldDate: Date): string {
-  const newDate = new Date(oldDate).toISOString().replace(/\..*/, '');
-  return newDate;
-}
-export function datetimeTimeSettingTo0(date: Date): Date {
-  const newDate = new Intl.DateTimeFormat(getCountry()).format(date);
-  return new Date(newDate);
-}
 
 export function getCountry(): string {
   return 'kr';
