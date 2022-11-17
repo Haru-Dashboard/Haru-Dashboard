@@ -117,7 +117,7 @@ export default function ScheduleManage(props: any) {
 
   return (
     <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       {showModal ? (
@@ -177,13 +177,15 @@ export default function ScheduleManage(props: any) {
             <Button
               type="button"
               onClick={removeSchedule}
-              variant="outline-primary">
+              variant="outline-primary"
+              size="sm">
               Delete
             </Button>
             <Button
               onClick={handleSubmit}
               type="submit"
-              variant="outline-primary">
+              variant="outline-primary"
+              size="sm">
               Edit
             </Button>
           </Modal.Footer>

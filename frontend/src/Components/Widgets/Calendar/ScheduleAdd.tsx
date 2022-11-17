@@ -83,7 +83,7 @@ export default function ScheduleAdd(props: any) {
   };
   return (
     <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
@@ -147,7 +147,7 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" variant="outline-primary">
+          <Button type="submit" variant="outline-primary" size="sm">
             Save
           </Button>
         </Modal.Footer>

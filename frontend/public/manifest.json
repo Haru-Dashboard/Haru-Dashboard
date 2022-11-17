@@ -25,5 +25,6 @@
   "web_accessible_resources": [{
     "resources": ["*"],
     "matches": ["<all_urls>"]
-  }]
+  }],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjK0IWDkx4QU1FfmziMucvo0L222K4ManBprYOo+rPzzFKDsVOpoHeEIW+lzMqtKVjrzzQoUSETEu/1WnNjd5MlPTOc8aJRsECVWt3++Ixwu6HooJaHvD1j/zJHP3uuonrfPNPPCMyGQwjoZ1lW5SUqFkT780aNEfN3hIKOQitirLjiykoud7figfjK6eFcQtiRVsSliEyVPdkMphG5OyyUa+nnDqmH5jEMDwi6HjxA41mqJ0Q4YxIrHGeNjZnmlT7dgbSw4YZ87Xcwuvu/V1MFKhSXQCmEFUOpABAbuGLG5ih5AU4NsuzrH60aZCTjMXCBIcBqaCyx4XNMXoQPuqFwIDAQAB"
 }

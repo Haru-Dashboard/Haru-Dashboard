@@ -48,8 +48,6 @@ const Project = () => {
   const [showCreate, setShowCreate] = useState(false);
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => {
-    console.log(projectList.length);
-
     if (projectList.length >= 15) {
       Swal.fire({
         text: 'In Progress는 15개까지 생성 가능합니다',
@@ -110,22 +108,12 @@ const Project = () => {
     setIsSaved(bool);
   }
 
-  const [showBefore, setShowBefore] = useState(false);
-  const [showAfter, setShowAfter] = useState(true);
-
   function onClickBefore() {
     const beforePage = (pageNo + totalPageNo - 1) % totalPageNo;
     setPageNo(beforePage);
     setPagedProjectList(projectList.slice(beforePage * 3, beforePage * 3 + 3));
-
-    // if (pageNo === 0) {
-    //   setShowBefore(false);
-    // } else {
-    //   setPageNo(pageNo - 1);
-    // }
   }
   function onClickAfter() {
-    // console.log((pageNo + totalPageNo + 1) % totalPageNo);
     const nextPage = (pageNo + totalPageNo + 1) % totalPageNo;
     setPageNo(nextPage);
     setPagedProjectList(projectList.slice(nextPage * 3, nextPage * 3 + 3));
@@ -134,27 +122,6 @@ const Project = () => {
   function handlePageNo() {
     setPageNo(0);
   }
-
-  useEffect(() => {
-    console.log('change page', pageNo);
-    console.log(projectList);
-
-    if (pageNo === 0) {
-      console.log('first page');
-
-      setShowBefore(false);
-    } else {
-      setShowBefore(true);
-    }
-
-    if (pageNo === totalPageNo) {
-      console.log('lastpage');
-
-      setShowAfter(false);
-    } else {
-      setShowAfter(true);
-    }
-  }, [pageNo]);
 
   useEffect(() => {
     fetchProjectList();
@@ -170,16 +137,16 @@ const Project = () => {
   }, []);
 
   return (
-    <div className="w-100 h-100 px-3 pjt-board">
+    <div className="w-100 h-100 pjt-board">
       <div className="h-100">
-        <div className="px-3 pt-2">
-          <div className="d-flex justify-content-between align-items-center pt-2 pe-4">
+        <div>
+          <div className="d-flex justify-content-between align-items-center">
             <BigTitle title="In Progress" />
             <BtnPlus onClick={handleShowCreate} />
           </div>
         </div>
         {/* Body */}
-        <div className="px-3 h-80">
+        <div className="h-80">
           {isLogined && (
             <div className="h-100 mx-auto d-flex justify-content-around align-items-center">
               <FontAwesomeIcon
@@ -190,17 +157,14 @@ const Project = () => {
               />
               <div className="container h-100">
                 <div className="row h-100">
-                  {pagedProjectList.map((item: project, idx: number) => {
-                    return (
-                      <div className="col-4">
-                        <ProjectCard
-                          key={idx}
-                          item={item}
-                          handleShowMore={(e) => handleShowMore(item)}
-                        />
-                      </div>
-                    );
-                  })}
+                  {pagedProjectList.map((item: project, idx: number) => (
+                    <div className="col-4" key={idx}>
+                      <ProjectCard
+                        item={item}
+                        handleShowMore={(e) => handleShowMore(item)}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
               <FontAwesomeIcon

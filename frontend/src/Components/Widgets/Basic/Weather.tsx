@@ -42,7 +42,7 @@ const Weather = () => {
   return (
     <>
       {icon !== undefined && temperature !== undefined ? (
-        <div className="weather d-flex align-items-center text-white">
+        <div className="weather select-none d-flex align-items-center text-white">
           <img
             className="weather-img"
             src={`http://openweathermap.org/img/w/${icon}.png`}
