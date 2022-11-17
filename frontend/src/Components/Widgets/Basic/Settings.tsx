@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faUser, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { defaultURL } from '../../../API/';
 import { clearToken, tokenExists } from '../../../API/Authentication';
 
@@ -9,20 +9,27 @@ const Settings = () => {
     clearToken();
     location.reload();
   };
+  const login: React.MouseEventHandler = (event) => {
+    location.href = `${defaultURL}oauth2/authorize/google?redirect_uri=${location.href}`
+  }
 
   return (
-    <div>
+    <div className='d-flex justify-content-between'>
       {tokenExists() ? (
-        <button className="btn btn-outline-primary" onClick={onClick}>
-          Logout
-        </button>
+        <div className='login-comment'>
+           Hello, { localStorage.getItem("userName")} &nbsp;
+          <button style={{ background: 'transparent' }} onClick={onClick}>
+            <FontAwesomeIcon icon={faArrowRightFromBracket} color="white" />
+          </button>
+        </div>
+        
       ) : (
-        <a
-          className="btn btn-outline-primary"
-          href={`${defaultURL}oauth2/authorize/google?redirect_uri=${location.href}`}
-          role="button">
-          Login
-        </a>
+          <button style={{ background: 'transparent' }}
+            onClick={login} className='login-comment'
+            >
+            Login &nbsp;&nbsp;
+            <FontAwesomeIcon icon={faUser} color="white"/>
+        </button>
       )}
       <button style={{ background: 'transparent' }}>
         <FontAwesomeIcon icon={faGear} color="white" />
