@@ -33,9 +33,9 @@ public class ProjectResponse {
         private Long id;
         private String title;
         private String content;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
         private LocalDate startDate;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
         private LocalDate endDate;
         private List<ProjectLinkResponse.GetProjectLink> projectLinks;
         private List<ProjectLabelResponse.GetProjectLabel> projectLabels;
