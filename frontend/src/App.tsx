@@ -21,7 +21,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        backgroundImage: 'url(../img/blur-forest.jpeg)',
+      }}>
       <div
         className="wrap mx-auto px-3"
         style={{

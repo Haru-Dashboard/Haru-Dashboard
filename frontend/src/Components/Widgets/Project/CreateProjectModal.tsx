@@ -277,7 +277,6 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
                   type="url"
                   pattern="https://.*"
                   placeholder="https://google.com"
-                  defaultValue={'https://www.'}
                   className="my-2 border"
                   name={`link-url-${idx}`}
                   onChange={addLink}
