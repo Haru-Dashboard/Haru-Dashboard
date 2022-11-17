@@ -44,8 +44,6 @@ export async function isValid(accessToken: string): Promise<boolean> {
     },
   });
   if (response.ok) {
-    const data: { email: string, name: string } = await response.json();
-    localStorage.setItem('userName', data.name);
     return true;
   }
   return false;
