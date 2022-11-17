@@ -16,7 +16,7 @@ const BookmarkModal = ({
 }: bookmarkModalProps) => {
   return (
     <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header>
+      <Modal.Header closeButton>
         {/* TODO: title styling */}
         <Modal.Title>Bookmark</Modal.Title>
       </Modal.Header>
@@ -43,10 +43,7 @@ const BookmarkModal = ({
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="outline-primary" size="sm">
             Save
           </Button>
         </Modal.Footer>
