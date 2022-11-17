@@ -219,7 +219,7 @@ public class ProjectControllerTest extends MvcTest {
     @Test
     @DisplayName("Project 목록 조회")
     public void getList() throws Exception{
-        List<ProjectResponse.GetProject> response = projectList.stream().map(project -> ProjectResponse.GetProject.toEntity(project, S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()))).collect(Collectors.toList());
+        List<ProjectResponse.GetProject> response = projectList.stream().map(ProjectResponse.GetProject::toEntity).collect(Collectors.toList());
         given(projectService.getProjectList(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(get("/api/projects")
@@ -259,7 +259,7 @@ public class ProjectControllerTest extends MvcTest {
     @Test
     @DisplayName("Project 상세 조회")
     public void getProject() throws Exception {
-        ProjectResponse.GetProject response = ProjectResponse.GetProject.toEntity(project1, S3FileResponse.GetImage.build(project1.getFile(), project1.getFile().getUrl()));
+        ProjectResponse.GetProject response = ProjectResponse.GetProject.toEntity(project1);
         given(projectService.getProject(any(), any())).willReturn(response);
 
         ResultActions results = mvc.perform(get("/api/projects/{projectId}", 1L));
