@@ -26,6 +26,10 @@ body {
   min-height: 100vh;
 }
 
+.select-none {
+  user-select: none;
+}
+
 /* width, height */
 .h-90 {
   height: 90%;

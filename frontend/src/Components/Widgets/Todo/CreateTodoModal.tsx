@@ -82,8 +82,6 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   // 없으면 새로 생성하고 있으면 받아와서 넣기
   const addLocalRoutine = (id: number) => {
     if (localRoutine) {
-      console.log('is local routine');
-
       const arr = JSON.parse(localRoutine);
       arr.push({
         id: id,

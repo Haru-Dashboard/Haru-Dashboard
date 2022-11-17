@@ -80,7 +80,7 @@ const ProjectDetailModal = ({
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
-    console.log('handle file, ', userFile);
+    // console.log('handle file, ', userFile);
 
     if (userFile === undefined) return;
 
@@ -250,13 +250,12 @@ const ProjectDetailModal = ({
   };
 
   useEffect(() => {
-    setFile(undefined);
+    // setFile(undefined);
     // console.log('project detail modal');
     // const currentFile = new File(['image'], item.imageInfo.originName, {
     //   type: 'image/png',
     // });
     // console.log(currentFile);
-
     // setFile(currentFile);
   }, [isUpdate]);
 

@@ -7,7 +7,7 @@ type bigTitleProps = {
 
 const BigTitle = ({ title }: bigTitleProps) => {
   return (
-    <div className="big-title text-center d-flex align-items-center">
+    <div className="big-title text-center d-flex align-items-center select-none">
       <img
         src={`icon/haru-icon-${title}-title.png`}
         className="me-2 big-title-img"
