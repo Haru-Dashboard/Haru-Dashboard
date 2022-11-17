@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
@@ -30,11 +30,6 @@ const ProjectDetailModal = ({
   handleSaved,
 }: projectDetail) => {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [imgHeight, setImgHeight] = useState(0);
-  const [imgWidth, setImgWidth] = useState(0);
-  const [rootHeight, setRootHeight] = useState(0);
-  const [rootWidth, setRootWidth] = useState(0);
-  const accessToken = localStorage.getItem('accessToken');
   const URLNext = 'projects/' + item.id;
   const [file, setFile] = useState<File>(new File([], ''));
   const [inputs, setInputs] = useState<inputs>({
@@ -71,7 +66,7 @@ const ProjectDetailModal = ({
       endDate: item.endDate.split('.').join('-'),
     });
   }, [isUpdate]);
-  // startDate: new Date(item.startDate).toISOString().slice(0, 10),
+
   useEffect(() => {
     setIsUpdate(false);
   }, [show]);
