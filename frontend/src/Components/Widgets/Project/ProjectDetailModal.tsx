@@ -80,7 +80,6 @@ const ProjectDetailModal = ({
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
-    // console.log('handle file, ', userFile);
 
     if (userFile === undefined) return;
 

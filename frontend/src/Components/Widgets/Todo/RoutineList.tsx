@@ -65,7 +65,6 @@ const routineList = ({ isCreated }: any) => {
             // isCompleted in localStorage
             // localRoutine이 빈 배열이거나 아예 없을 때만 해당 코드 실행
             const arr: Array<object> = [];
-            // console.log('data===', data);
             if (localRoutine === '[]' || !localRoutine) {
               data.map((datum: routineData) => {
                 arr.push({
@@ -129,10 +128,6 @@ const routineList = ({ isCreated }: any) => {
   const handleUpdate = (bool: boolean) => {
     setIsSaved(bool);
   };
-
-  // const handleIsCompleted = (localRoutineList: Array<object>) => {
-  //   console.log(localRoutineList);
-  // };
 
   // 새로운 todo가 추가되면 리스트 변경
   const localToday = localStorage.getItem('today');

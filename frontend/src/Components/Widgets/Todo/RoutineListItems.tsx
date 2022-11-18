@@ -65,16 +65,12 @@ any) => {
     if (localRoutine) {
       const localRoutineList: Array<localRoutine> = JSON.parse(localRoutine);
 
-      // console.log(localRoutineList);
       localRoutineList.map((routine: localRoutine, idx: number) => {
         if (routine.id === listItem.todoId) {
-          // console.log(routine.id, !routine.isCompleted);
-
           localRoutineList.splice(idx, 1, {
             id: routine.id,
             isCompleted: !routine.isCompleted,
           });
-          // console.log(localRoutineList);
         }
       });
       localStorage.setItem('routine', JSON.stringify(localRoutineList));
