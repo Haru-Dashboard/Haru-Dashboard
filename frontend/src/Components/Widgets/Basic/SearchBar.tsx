@@ -33,7 +33,10 @@ const SearchBar = () => {
           name="q"
           value={query}
           placeholder="search google"
-          style={{ backgroundColor: 'rgb(256, 256, 256, 0.3)', fontWeight: 'bolder' }}
+          style={{
+            backgroundColor: 'rgb(256, 256, 256, 0.3)',
+            fontWeight: 'bolder',
+          }}
         />
       </form>
     </div>

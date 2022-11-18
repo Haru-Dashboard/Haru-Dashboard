@@ -5,10 +5,12 @@
   border-radius: 3rem;
   padding: 1rem;
 }
-.cursor-default{
-  cursor:default;
+.cursor-default {
+  cursor: default;
 }
-.cursor-pointer{cursor:pointer;}
+.cursor-pointer {
+  cursor: pointer;
+}
 .full100 {
   width: 100%;
   height: 100%;
@@ -70,13 +72,13 @@
   margin-left: 1%;
 }
 .sunday {
-  color: #E60000   !important;
+  color: #e60000 !important;
 }
 .saturday {
-  color: #6464C8 !important;
+  color: #6464c8 !important;
 }
 .holiday {
-  color: #E60000 !important;
+  color: #e60000 !important;
 }
 .pastmonth {
   color: #646464 !important;
@@ -104,23 +106,21 @@
   text-align: center;
   position: relative;
 }
-.date-column-count
-{
+.date-column-count {
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 100%;
   position: absolute;
   right: 0%;
-  top:-50%
+  top: -50%;
 }
-.calendar-detail-date{
+.calendar-detail-date {
   height: 10%;
   font-weight: bold;
 }
-.calendar-detail-details{
+.calendar-detail-details {
   height: 90%;
   overflow: auto;
-
 }
 .calendar-detail-board {
   width: 100%;
@@ -156,7 +156,7 @@
   font-weight: bold;
 }
 
-.month-change{
+.month-change {
   position: absolute;
   text-align: left;
   width: 30%;
@@ -167,15 +167,15 @@
   font-weight: bold;
   display: flex;
 }
-.month-change-pn{
-width: 7%;
-cursor: pointer;
+.month-change-pn {
+  width: 7%;
+  cursor: pointer;
 }
-.month-change-ym{
+.month-change-ym {
   width: 68%;
   text-align: center;
-  margin-left:5%;
+  margin-left: 5%;
 }
-.date-column-today{
-  outline:2px solid #6464C8;
+.date-column-today {
+  outline: 2px solid #6464c8;
 }
