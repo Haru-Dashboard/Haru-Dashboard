@@ -93,9 +93,6 @@ export default function ScheduleManage(props: any) {
         .replace('.', '-')
         .replace('.', '-')
         .replace(' ', 'T');
-      console.log(
-        inputs.startDate.replace('.', '-').replace('.', '-').replace(' ', 'T'),
-      );
     }
     if (inputs.endDate == null || inputs.endDate == sampledatetime) {
       inputs.endDate = schedule[scheduleNo].endDate
@@ -117,7 +114,6 @@ export default function ScheduleManage(props: any) {
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
 
-    console.log(inputs);
     if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'PATCH',

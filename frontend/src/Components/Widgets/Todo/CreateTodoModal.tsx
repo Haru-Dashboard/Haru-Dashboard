@@ -103,8 +103,6 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
 
   // routine 생성하기 fetch 함수
   const saveRoutine = () => {
-    // console.log(selectedDayList);
-
     if (writtenContent.trim() !== '' && selectedDayList) {
       const url = 'todos';
       const data = {
