@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 
-const BackgroundSettingModal = ({ show, handleClose }: any) => {
+const BackgroundSettingModal = ({ show, handleClose, handleImg }: any) => {
   const imgs = [
     'Sunset.png',
     'Whale.jpeg',
@@ -12,6 +12,12 @@ const BackgroundSettingModal = ({ show, handleClose }: any) => {
   ];
 
   const [clickedImg, setClickedImg] = useState('Sunset.png');
+
+  const onClickImg = (name: string) => {
+    setClickedImg(name);
+    localStorage.setItem('img', name);
+    handleImg(name);
+  };
 
   return (
     <div>
@@ -33,7 +39,7 @@ const BackgroundSettingModal = ({ show, handleClose }: any) => {
                     style={{
                       opacity: `${clickedImg === img ? '0.5' : '1'}`,
                     }}
-                    onClick={(e) => setClickedImg(img)}
+                    onClick={(e) => onClickImg(img)}
                   />
                   <p className="text-center">{img.split('.')[0]}</p>
                 </div>
@@ -41,11 +47,6 @@ const BackgroundSettingModal = ({ show, handleClose }: any) => {
             })}
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="outline-primary" size="sm">
-            SAVE
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );

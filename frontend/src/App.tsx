@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   isValid,
   reissueToken,
@@ -8,6 +8,21 @@ import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
 
 function App() {
+  const [clickedImg, setClickedImg] = useState('');
+  const localImg = localStorage.getItem('img');
+
+  const changeBg = () => {
+    if (localImg) {
+      setClickedImg(localImg);
+    } else {
+      setClickedImg('Sunset.png');
+    }
+  };
+
+  const handleClickedImg = (name: string) => {
+    setClickedImg(name);
+  };
+
   useEffect(() => {
     (async () => {
       saveTokenFromParams();
@@ -18,13 +33,14 @@ function App() {
         }
       }
     })();
+    changeBg();
   }, []);
 
   return (
     <div
       className="App"
       style={{
-        backgroundImage: 'url(../img/blur-forest.jpeg)',
+        backgroundImage: `url(../img/${clickedImg})`,
       }}>
       <div
         className="wrap mx-auto px-3"
@@ -36,7 +52,7 @@ function App() {
             (2000 / 1175)
           }px`,
         }}>
-        <Basic />
+        <Basic handleClickedImg={handleClickedImg} />
         <Dashboard />
       </div>
     </div>
