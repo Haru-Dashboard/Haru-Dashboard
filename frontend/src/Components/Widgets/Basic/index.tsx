@@ -6,10 +6,14 @@ import Settings from './Settings';
 import BackgroundSettingModal from './BackgroundSettingModal';
 import './index.css';
 
-const Basic = () => {
+const Basic = ({ handleClickedImg }: any) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  const handleImg = (name: string) => {
+    handleClickedImg(name);
+  };
 
   return (
     <header>
@@ -22,7 +26,11 @@ const Basic = () => {
         <SearchBar />
       </section>
       <div>
-        <BackgroundSettingModal show={show} handleClose={handleClose} />
+        <BackgroundSettingModal
+          show={show}
+          handleClose={handleClose}
+          handleImg={handleImg}
+        />
       </div>
     </header>
   );
