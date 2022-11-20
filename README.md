@@ -226,7 +226,7 @@ $ npm run watch
 
 ---
 
-See [CHANGELOG](CHANGELOG)
+See [CHANGELOG](CHANGELOG.md)
 
 ## **기여**
 
