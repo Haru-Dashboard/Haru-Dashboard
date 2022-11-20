@@ -170,6 +170,10 @@ export default function ScheduleManage(props: any) {
                 name="startDate"
                 className="cursor-pointer"
                 onChange={handleChange}
+                defaultValue={schedule[scheduleNo].startDate
+                  .replace('.', '-')
+                  .replace('.', '-')
+                  .replace(' ', 'T')}
                 required
               />
             </Form.Group>
@@ -180,6 +184,10 @@ export default function ScheduleManage(props: any) {
                 name="endDate"
                 className="cursor-pointer"
                 onChange={handleChange}
+                defaultValue={schedule[scheduleNo].endDate
+                  .replace('.', '-')
+                  .replace('.', '-')
+                  .replace(' ', 'T')}
                 required
               />
             </Form.Group>
