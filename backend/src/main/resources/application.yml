@@ -1,0 +1,72 @@
+spring:
+  profiles:
+    group:
+      local:
+        - local
+        - secret
+        - aws
+      prod :
+        - secret
+        - aws
+        - db
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL57Dialect
+      format_sql: true
+      default_batch_fetch_size: 100
+    generate-ddl: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  devtools:
+    livereload:
+      enabled: 'true'
+
+# server
+server:
+  servlet:
+    encoding:
+      force: 'true'
+      charset: UTF-8
+      enabled: 'true'
+    contextPath: /
+  port: '8081'
+build:
+  date: '@build.date@'
+
+# log
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+      apache:
+        tiles: INFO
+      hibernate:
+        SQL: DEBUG
+    root: INFO
+    com:
+      samsung:
+        security: DEBUG
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
+  file:
+    name: ./ssafy-web.log
+---
+# local only
+spring.config.activate.on-profile: local
+# database
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      password: haru
+      username: haru
+    url: jdbc:mysql://localhost:3306/haru?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
