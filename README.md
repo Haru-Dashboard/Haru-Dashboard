@@ -226,7 +226,7 @@ $ npm run watch
 
 ---
 
-See [Changelog](https://www.notion.so/Changelog-md-5b21a76191734dc2b25dbfb94e7244a1)
+See [CHANGELOG](CHANGELOG)
 
 ## **기여**
 
