@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+body {
+  height: 100%;
+}
+
+* {
+  font-family: 'Montserrat', 'Noto Sans KR';
+}
+
+.App {
+  background-image: url('../public/img/haru-default-bg-1440.png');
+  width: 100vw;
+  min-width: fit-content;
+  max-width: 100%;
+  max-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wrap {
+  width: 75%;
+  min-width: 992px;
+  height: fit-content;
+  min-height: 100vh;
+}
+
+/* width, height */
+.h-90 {
+  height: 90%;
+}
+.h-85 {
+  height: 85%;
+}
+.h-80 {
+  height: 80%;
+}
+.h-70 {
+  height: 70%;
+}
+.h-60 {
+  height: 60%;
+}
+.h-50 {
+  height: 50%;
+}
+.h-45 {
+  height: 45%;
+}
+.h-40 {
+  height: 40%;
+}
+.w-80 {
+  width: 80%;
+}
+.w-70 {
+  width: 70%;
+}
+.w-30 {
+  width: 30%;
+}

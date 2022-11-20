@@ -1,0 +1,8 @@
+/* TODO: 상대 크기로 변경 */
+.button-plus {
+  background-color: white;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: none;
+  border-radius: 50%;
+}

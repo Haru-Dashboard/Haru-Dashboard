@@ -1,0 +1,148 @@
+.calendar-board {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255, 0.1);
+  border-radius: 3rem;
+  padding: 1rem;
+}
+.cursor-default{
+  cursor:default;
+}
+.cursor-pointer{cursor:pointer;}
+.full100 {
+  width: 100%;
+  height: 100%;
+}
+.calendar {
+  width: 100%;
+  height: 100%;
+  border-radius: 3rem;
+  display: flex;
+  color: white;
+}
+.calendar-main {
+  height: 85%;
+  width: 60%;
+}
+.calendar-detail {
+  height: 80%;
+  width: 40%;
+}
+.calendar-maincontainer {
+  width: 100%;
+  height: 90%;
+}
+.calendar-weekends {
+  display: flex;
+  height: 7%;
+  font-size: 0.6rem;
+}
+.calendar-dates {
+  height: 90%;
+  width: 100%;
+}
+.calendar-dates-week6 {
+  height: 16%;
+  margin-bottom: 1%;
+}
+.calendar-dates-week5 {
+  height: 20%;
+  margin-bottom: 1%;
+}
+.calendar-dates-row {
+  display: flex;
+  height: 100%;
+}
+.calendar-Weekends-content {
+  text-align: left;
+  width: 13%;
+  height: 10%;
+  position: relative;
+  left: 1%;
+  margin-left: 1%;
+}
+.sunday {
+  color: #E60000   !important;
+}
+.saturday {
+  color: #6464C8 !important;
+}
+.holiday {
+  color: #E60000 !important;
+}
+.pastmonth {
+  color: #646464 !important;
+}
+.nextmonth {
+  color: #646464 !important;
+}
+.date-column {
+  width: 13%;
+  background-color: rgb(255, 255, 255, 0.1);
+  margin-left: 1%;
+  border-radius: 0.5rem;
+}
+.date-column-dates {
+  position: relative;
+  font-size: 0.8rem;
+  left: 5%;
+  text-align: left;
+}
+.date-column-content {
+  width: 100%;
+  height: 50%;
+  font-size: 0.5rem;
+  text-align: center;
+  position: relative;
+}
+.date-column-count
+{
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 100%;
+  position: absolute;
+  right: 0%;
+  top:-50%
+}
+.calendar-detail-date{
+  height: 10%;
+}
+.calendar-detail-details{
+  height: 90%;
+  overflow: auto;
+
+}
+.calendar-detail-board {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  text-align: center;
+}
+.calendar-schedule-detail {
+  color: black;
+  width: 80%;
+  height: 18%;
+  margin-left: 10%;
+  margin-top: 8%;
+  border: 0px;
+}
+.calendar-schedule-detail-button {
+  color: black;
+  background-color: rgb(255, 255, 255, 0.3);
+  text-align: left;
+  border-radius: 0.5rem;
+  border: 0px;
+}
+.calendar-schedule-detail-startdate {
+  font-size: 0.5rem;
+  line-height: 100%;
+}
+.calendar-schedule-detail-title {
+  font-size: 0.7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
