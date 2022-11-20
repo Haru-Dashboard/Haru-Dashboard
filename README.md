@@ -8,7 +8,7 @@
 
 ### **목차**
 
-1. [Chrome Web Store](#crhome-web-store)
+1. [Chrome Web Store](#chrome-web-store)
 
 2. [Gitbook](#Gitbook)
 
@@ -30,13 +30,11 @@
 
 11. [라이선스](#라이선스)
 
-## **[Crhome Web Store](https://chrome.google.com/webstore/detail/haru-dashboard/hmpmbfiblaajjhlegnabeacbjodpkbkd?hl=ko)**
+## **[Chrome Web Store](https://chrome.google.com/webstore/detail/haru-dashboard/hmpmbfiblaajjhlegnabeacbjodpkbkd?hl=ko)**
 
 ## **[Gitbook](https://haru-dashboard.gitbook.io/haru/)**
 
 ## :star:**주요기능**
-
----
 
 ## 👀한눈에 볼 수 있는 대시보드
 
@@ -56,8 +54,6 @@
 
 ## :sparkles:**세부기능**
 
----
-
 | 구분 | 기능         | 설명                                                        |
 | ---- | ------------ | ----------------------------------------------------------- |
 | 1    | 대시보드     | 크롬 새 탭을 열어서 위젯을 확인할 수 있습니다.              |
@@ -70,8 +66,6 @@
 | 8    | 뉴스         | 최신 뉴스를 확인할 수 있습니다.                             |
 
 ## **아키텍처**
-
----
 
 ### 기술스택
 
@@ -94,37 +88,33 @@
 
 ## **설치 방법**
 
----
+- 일반사용자  
+  [Chrome Web Store](https://chrome.google.com/webstore/detail/haru-dashboard/hmpmbfiblaajjhlegnabeacbjodpkbkd)에서 설치  
 
-- 일반사용자
-  [Chrome Web Store](<[https://chrome.google.com/webstore/detail/haru-dashboard/hmpmbfiblaajjhlegnabeacbjodpkbkd](https://chrome.google.com/webstore/detail/haru-dashboard/hmpmbfiblaajjhlegnabeacbjodpkbkd)>)에서 설치
-- 개발자용
+- 개발자용  
   ```bash
   $ git clone https://github.com/Haru-Dashboard/Haru-Dashboard.git
   ```
-  이후 개발 설정 참고
+  이후 [개발 설정](#개발-설정) 참고
 
 ## **사용 예시**
 
----
+### 대시보드
+  ![alt](assets/image1.jpg)
 
-1. 대시보드
-   ![alt](assets/image1.jpg)
+### In Progress
+  ![alt](assets/image2.jpg)
 
-2. In Progress
-   ![alt](assets/image2.jpg)
+### 북마크
+  ![alt](assets/image3.jpg)
 
-3. 북마크
-   ![alt](assets/image3.jpg)
+### 일정관리
+  ![alt](assets/image4.jpg)
 
-4. 일정관리
-   ![alt](assets/image4.jpg)
-5. Todo-Routine
-   ![alt](assets/image5.jpg)
+### Todo-Routine
+  ![alt](assets/image5.jpg)
 
 ## **개발 설정**
-
----
 
 ### 프론트엔드
 
@@ -139,14 +129,12 @@ $ npm run build
 # 새 탭을 열었을 때 대시보드가 보이면 성공
 ```
 
-### 확장프로그램 폴더 업로드하기
+### [확장프로그램 폴더 업로드하기](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
 
-(https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
-
-- open Chrome and go to `chrome://extensions/`,
-- enable "Developer mode",
-- click "Load unpacked extension",
-- select the `dist` folder in this repo.
+- open Chrome and go to `chrome://extensions/`
+- enable "Developer mode"
+- click "Load unpacked extension"
+- select the `dist` folder in this repo
 
 ```bash
 # watch 모드로 개발
@@ -168,7 +156,7 @@ $ npm run watch
 
 1. 환경설정
 
-   마켓플레이스에서 [`eslint`](<[https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)>), [`prettier`](<[https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)>) 설치
+   마켓플레이스에서 [`eslint`](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [`prettier`](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) 설치
 
 ### 백엔드
 
@@ -220,22 +208,16 @@ $ npm run watch
 
 ## Deployment
 
-- [Gitbook](https://haru-dashboard.gitbook.io/haru/guides/deployment)
+See [Gitbook](https://haru-dashboard.gitbook.io/haru/guides/deployment)
 
 ## **릴리즈 히스토리**
-
----
 
 See [CHANGELOG](CHANGELOG.md)
 
 ## **기여**
 
----
-
-See [Contributing](https://www.notion.so/Contributing-bd82a8b705464db981a8776837deb362)
+See [Contributing](CONTRIBUTING.md)
 
 ## **라이선스**
 
----
-
-Distributed under the SGPL license. See [License](https://github.com/Haru-Dashboard/Haru-Dashboard/blob/develop/LICENSE) for more information.
+Distributed under the SGPL license. See [License](LICENSE) for more information.
