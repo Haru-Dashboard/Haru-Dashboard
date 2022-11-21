@@ -8,8 +8,6 @@ body {
 }
 
 .App {
-  background-image: url('../public/img/haru-default-bg-1440.png');
-  /* background-image: url('../public/img/blur-night.jpeg'); */
   width: 100vw;
   min-width: fit-content;
   max-width: 100%;

@@ -58,7 +58,7 @@ const Settings = () => {
           <FontAwesomeIcon icon={faUser} color="white" />
         </button>
       )}
-      <button style={{ background: 'transparent' }}>
+      <button className="bg-transparent border border-0" onClick={handleShow}>
         <FontAwesomeIcon icon={faGear} color="white" />
       </button>
     </div>
