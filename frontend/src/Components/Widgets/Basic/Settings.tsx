@@ -54,11 +54,7 @@ const Settings = ({ handleShow }: any) => {
           onClick={login}
           className="login-comment bg-transparent border border-0">
           Login &nbsp;&nbsp;
-          <FontAwesomeIcon
-            className="bg-transparent border border-0"
-            icon={faUser}
-            color="white"
-          />
+          <FontAwesomeIcon icon={faUser} color="white" />
         </button>
       )}
       <button className="bg-transparent border border-0" onClick={handleShow}>
