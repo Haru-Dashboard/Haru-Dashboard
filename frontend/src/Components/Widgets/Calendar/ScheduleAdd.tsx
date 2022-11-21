@@ -7,24 +7,32 @@ import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
   const { showModal, handleClose, setSchedule, schedule } = props;
-  const sampleStartTime =
+  const sampleStartTime = new Date(
     new Date().getFullYear() +
-    '-' +
-    (new Date().getMonth() + 1) +
-    '-' +
-    new Date().getDate() +
-    'T' +
-    +new Date().getHours() +
-    ':00';
-  const sampleEndTime =
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +(new Date().getHours() / 10 < 1 ? '0' : '') +
+      +new Date().getHours() +
+      ':00',
+  )
+    .toISOString()
+    .replace(/\..*/, '');
+  const sampleEndTime = new Date(
     new Date().getFullYear() +
-    '-' +
-    (new Date().getMonth() + 1) +
-    '-' +
-    new Date().getDate() +
-    'T' +
-    (new Date().getHours() + 2) +
-    ':00';
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +(new Date().getHours() / 10 < 1 ? '0' : '') +
+      (new Date().getHours() + 2) +
+      ':00',
+  )
+    .toISOString()
+    .replace(/\..*/, '');
 
   const [inputs, setInputs] = useState({
     title: '',
