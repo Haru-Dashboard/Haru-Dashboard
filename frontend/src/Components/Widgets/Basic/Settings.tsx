@@ -12,7 +12,7 @@ import {
   tokenExists,
 } from '../../../API/Authentication';
 
-const Settings = () => {
+const Settings = ({ handleShow }: any) => {
   const [userName, setUserName] = useState<string>();
 
   useEffect(() => {
@@ -45,20 +45,19 @@ const Settings = () => {
       {tokenExists() && userName ? (
         <div className="login-comment">
           Hello, {userName} &nbsp;
-          <button style={{ background: 'transparent' }} onClick={logout}>
+          <button className="bg-transparent border border-0" onClick={logout}>
             <FontAwesomeIcon icon={faArrowRightFromBracket} color="white" />
           </button>
         </div>
       ) : (
         <button
-          style={{ background: 'transparent' }}
           onClick={login}
-          className="login-comment">
+          className="login-comment bg-transparent border border-0">
           Login &nbsp;&nbsp;
           <FontAwesomeIcon icon={faUser} color="white" />
         </button>
       )}
-      <button style={{ background: 'transparent' }}>
+      <button className="bg-transparent border border-0" onClick={handleShow}>
         <FontAwesomeIcon icon={faGear} color="white" />
       </button>
     </div>
