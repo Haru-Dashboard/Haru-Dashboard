@@ -1,5 +1,5 @@
 ### 구글 로그인
-http://k7a204.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=chrome-extension://epiifnjgnimepgnkbeeljnkajpehbeln/index.html
+### http://{{IP address}}/api/oauth2/authorize/google?redirect_uri=chrome-extension://epiifnjgnimepgnkbeeljnkajpehbeln/index.html
 
 
 ### User 정보 조회
