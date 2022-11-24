@@ -1,0 +1,19 @@
+= 유저 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+== *유저 정보 조회*
+
+`GET /api/users`
+
+요청 HTTP Request
+include::{snippets}/users_info/http-request.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/users_info/http-response.adoc[]
+include::{snippets}/users_info/response-fields.adoc[]

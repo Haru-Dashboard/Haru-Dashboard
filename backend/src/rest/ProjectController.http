@@ -22,3 +22,40 @@ Content-Disposition: form-data; name="file"; filename="image.png"
 Content-Type: image/png
 
 < ./../main/resources/dummy/image.png
+
+### 프로젝트 상세 조회
+GET {{apiUrl}}/projects/2
+Authorization: {{authorizationToken}}
+
+### 프로젝트 전체 조회
+GET {{apiUrl}}/projects?page=0&size=2
+Authorization: {{authorizationToken}}
+
+### 프로젝트 수정
+PATCH {{apiUrl}}/projects/2
+Authorization: {{authorizationToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: application/json, image/*
+
+--WebAppBoundary
+Content-Disposition: form-data; name="form"
+Content-Type: application/json
+
+ {
+      "title": "수정된 프로젝트입니다.",
+      "content": "수정 테스트중입니다.",
+      "labels" : ["프로젝트", "BE"],
+      "links" : [{"name" : "domain", "url": "link"}, {"name" : "mattermost", "url": "link"}],
+      "startDate" : "2022-10-30",
+      "endDate" : "2022-10-31"
+ }
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Type: image/png
+
+< ./../main/resources/dummy/image.png
+
+### 프로젝트 삭제
+DELETE {{apiUrl}}/projects/1
+Authorization: {{authorizationToken}}

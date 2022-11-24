@@ -1,3 +1,11 @@
+### 구글 로그인
+http://k7a204.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=chrome-extension://epiifnjgnimepgnkbeeljnkajpehbeln/index.html
+
+
+### User 정보 조회
+GET {{apiUrl}}/users
+Authorization: {{authorizationToken}}
+
 ### 유저 로그인
 POST {{apiUrl}}/users/login
 Content-Type: application/json;charset=UTF-8
@@ -10,3 +18,7 @@ Content-Type: application/json;charset=UTF-8
 client.global.set("authorizationToken", "Bearer " + response.body.accessToken);
 client.log("Auth Token : " + client.global.get("authorizationToken"));
 %}
+
+### 유저 로그아웃
+GET {{apiUrl}}/users/logout
+Authorization: {{authorizationToken}}

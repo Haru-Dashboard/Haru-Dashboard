@@ -17,7 +17,7 @@ public class ProjectResponse {
     public static class OnlyId {
         private Long id;
 
-        public static ProjectResponse.OnlyId build(Project project) {
+        public static ProjectResponse.OnlyId toEntity(Project project) {
             return ProjectResponse.OnlyId.builder()
                     .id(project.getId())
                     .build();
@@ -33,15 +33,15 @@ public class ProjectResponse {
         private Long id;
         private String title;
         private String content;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
         private LocalDate startDate;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
         private LocalDate endDate;
         private List<ProjectLinkResponse.GetProjectLink> projectLinks;
         private List<ProjectLabelResponse.GetProjectLabel> projectLabels;
         private S3FileResponse.GetImage imageInfo;
-        public static ProjectResponse.GetProject build(Project project, S3FileResponse.GetImage imageInfo) {
-            GetProjectBuilder builder = GetProject.builder()
+        public static ProjectResponse.GetProject toEntity(Project project) {
+            GetProjectBuilder response = GetProject.builder()
                     .id(project.getId())
                     .title(project.getTitle())
                     .content(project.getContent())
@@ -50,9 +50,9 @@ public class ProjectResponse {
                     .projectLinks(project.getProjectLinks().stream().map(ProjectLinkResponse.GetProjectLink::build).collect(Collectors.toList()))
                     .projectLabels(project.getProjectLabels().stream().map(ProjectLabelResponse.GetProjectLabel::build).collect(Collectors.toList()));
             if(project.getFile() != null) {
-                builder.imageInfo(imageInfo);
+                response.imageInfo(S3FileResponse.GetImage.build(project.getFile(), project.getFile().getUrl()));
             }
-            return builder().build();
+            return response.build();
         }
     }
 }
