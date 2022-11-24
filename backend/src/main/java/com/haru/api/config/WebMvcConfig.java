@@ -41,7 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     /****************************************************************************************
      * RestDocs API 문서 index.html 뷰 컨트롤러
-     * https://k7a204.p.ssafy.io/docs -> https://k7a204.p.ssafy.io/docs/index.html 으로 매핑하기 위함
+     * https://{IP Address}/docs -> https://{IP Address}/docs/index.html 으로 매핑하기 위함
      ****************************************************************************************/
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
