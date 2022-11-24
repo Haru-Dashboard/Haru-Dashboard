@@ -1,0 +1,71 @@
+= 일정 API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+== *일정 생성*
+
+`POST /api/schedules`
+
+요청 HTTP Request
+include::{snippets}/schedules_create/http-request.adoc[]
+include::{snippets}/schedules_create/request-fields.adoc[]
+
+응답 HTTP Response
+include::{snippets}/schedules_create/http-response.adoc[]
+include::{snippets}/schedules_create/response-fields.adoc[]
+
+== *일정 상세 조회*
+
+`GET /api/schedules/{scheduleId}`
+
+요청 HTTP Request
+include::{snippets}/schedules_detail/http-request.adoc[]
+include::{snippets}/schedules_detail/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/schedules_detail/http-response.adoc[]
+include::{snippets}/schedules_detail/response-fields.adoc[]
+
+== *일정 목록 조회*
+
+`GET /api/schedules`
+
+요청 HTTP Request
+include::{snippets}/schedules_list/http-request.adoc[]
+include::{snippets}/schedules_list/request-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/schedules_list/http-response.adoc[]
+include::{snippets}/schedules_list/response-fields.adoc[]
+
+== *일정 정보 수정*
+
+`PATCH /api/schedules/{scheduleId}`
+
+요청 HTTP Request
+
+include::{snippets}/schedules_update/http-request.adoc[]
+include::{snippets}/schedules_update/path-parameters.adoc[]
+include::{snippets}/schedules_update/request-fields.adoc[]
+
+성공 응답 HTTP Response
+
+include::{snippets}/schedules_update/http-response.adoc[]
+include::{snippets}/schedules_update/response-fields.adoc[]
+
+== *일정 삭제*
+
+`DELETE /api/schedules/{scheduleId}`
+
+요청 HTTP Request
+include::{snippets}/schedules_delete/http-request.adoc[]
+include::{snippets}/schedules_delete/path-parameters.adoc[]
+
+성공 응답 HTTP Response
+include::{snippets}/schedules_delete/http-response.adoc[]
+include::{snippets}/schedules_delete/response-fields.adoc[]

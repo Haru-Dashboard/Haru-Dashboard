@@ -1,4 +1,19 @@
 = 'Haru-Dashboard' API 문서
 
-== *USER*
+== *User*
 - link:/docs/user.html[유저 API]
+
+== *Auth*
+- link:/docs/auth.html[인증 API]
+
+== *Todo*
+- link:/docs/todo.html[할일 API]
+
+== *Schedule*
+- link:/docs/schedule.html[일정 API]
+
+== *Project*
+- link:/docs/project.html[프로젝트 API]
+
+== *Category*
+- link:/docs/category.html[카테고리 API]

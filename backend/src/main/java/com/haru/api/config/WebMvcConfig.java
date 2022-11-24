@@ -1,6 +1,5 @@
 package com.haru.api.config;
 
-import com.haru.api.user.security.token.JwtRefreshTokenInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final JwtRefreshTokenInterceptor tokenInterceptor;
 
     /****************************************************************************************
      * CORS 설정
@@ -42,16 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     /****************************************************************************************
-     * 리프레시 토큰 인터셉터
-     * 발급 시도 시 사용되도록
-     ****************************************************************************************/
-    public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-        interceptorRegistry.addInterceptor(tokenInterceptor).addPathPatterns("/api/users/refresh");
-    }
-
-    /****************************************************************************************
      * RestDocs API 문서 index.html 뷰 컨트롤러
-     * https://k7a204.p.ssafy.io/docs -> https://k7a204.p.ssafy.io/docs/index.html 으로 매핑하기 위함
+     * https://{IP Address}/docs -> https://{IP Address}/docs/index.html 으로 매핑하기 위함
      ****************************************************************************************/
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

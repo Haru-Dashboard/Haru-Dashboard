@@ -1,0 +1,13 @@
+### token 재발급
+POST {{apiUrl}}/auth/refresh
+Content-Type: application/json;charset=UTF-8
+
+{
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJkZWJyYWlucyIsImlhdCI6MTY2ODU2MjQ3NiwiZXhwIjoxNjY4NTY2MDc2fQ.fSOaiRg74DrurW8fbH0LDFflTEuMQP_-lNVHwpMk5i4_CT81z717XzAITbxbEoqNjFgmL_dMy0PuHNuKxfgNWA",
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaXNzIjoiZGVicmFpbnMiLCJpYXQiOjE2Njg1NjI0NzYsImV4cCI6MTY2OTE2NzI3Nn0.k1N1jrqj6IqFz3pH3uy4ONxkikriBQm0tIzWZsNaM96wSopiTFWXVALF2vN4ZqiPjPt1c2uxaeCd1vlFjKhq1g"
+}
+
+> {%
+client.global.set("authorizationToken", "Bearer " + response.body.accessToken);
+client.log("Auth Token : " + client.global.get("authorizationToken"));
+%}

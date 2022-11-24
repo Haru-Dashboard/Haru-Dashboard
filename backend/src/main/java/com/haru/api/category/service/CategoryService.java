@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +28,12 @@ public class CategoryService {
         Category category = Category.create(name);
         Category savedCategory = categoryRepository.save(category);
         return savedCategory;
+    }
+
+    public List<String> search(String keyword) {
+        List<Category> categories = categoryRepository.findTop20ByNameContaining(keyword);
+        List<String> response = new ArrayList<>();
+        categories.stream().map(category -> response.add(category.getName())).collect(Collectors.toList());
+        return response;
     }
 }
