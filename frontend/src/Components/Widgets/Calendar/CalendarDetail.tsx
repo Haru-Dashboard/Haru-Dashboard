@@ -11,12 +11,14 @@ type calendarDetailPorps = {
     endDate: Date;
   }[];
   handleManageShow: any;
+  handleAddShow2: any;
 };
 //detail에서 보여줄 스케쥴들(5개)
 export default function CalendarDetail({
   schedule,
   calendarSelectedDate,
   handleManageShow,
+  handleAddShow2,
 }: calendarDetailPorps) {
   const calendarDetails =
     schedule != null && schedule.length > 0
@@ -56,6 +58,7 @@ export default function CalendarDetail({
     <div className="calendar-detail-board">
       <div className="calendar-detail-date">
         {calendarSelectedDate.getMonth() + 1}.{calendarSelectedDate.getDate()}
+        <button onClick={handleAddShow2} />
       </div>
       <div className="calendar-detail-details">{calendarDetails}</div>
     </div>
