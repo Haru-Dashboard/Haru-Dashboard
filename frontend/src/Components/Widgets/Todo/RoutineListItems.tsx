@@ -13,6 +13,7 @@ import { localRoutine } from '../../../Utils/Todo';
 
 const RoutineListItems = ({
   listItem,
+  isReload,
   handleDelete,
   handleUpdate,
 }: // handleIsCompleted,
@@ -79,12 +80,21 @@ any) => {
   };
 
   const handleIsCompleted = (localRoutineList: Array<localRoutine>) => {
+    // console.log('handleiscompleted');
+
     localRoutineList.map((routine: localRoutine) => {
       if (routine.id === listItem.todoId) {
         setIsCompleted(routine.isCompleted);
       }
     });
   };
+
+  useEffect(() => {
+    const localRoutine = localStorage.getItem('routine');
+    if (localRoutine) {
+      handleIsCompleted(JSON.parse(localRoutine));
+    }
+  }, [isReload]);
 
   useEffect(() => {
     const localRoutine = localStorage.getItem('routine');

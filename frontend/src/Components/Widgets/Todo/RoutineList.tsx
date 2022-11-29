@@ -21,18 +21,16 @@ const routineList = ({ isCreated }: any) => {
   const [todayDate] = useState(new Date().getDay());
   const [isLogined, setIsLogined] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isReload, setIsReload] = useState(false);
   const category = localStorage.getItem('category');
   const localRoutine = localStorage.getItem('routine');
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   // filter bar component에서 클릭된 카테고리 가져오는 함수
   const handleCategory = (clicked: string) => {
     setClickedCategory(clicked);
   };
 
-  const getRoutine = () => {
+  const getRoutine = (name: string) => {
     if (tokenExists()) {
       const url = `todos?day=${days[todayDate]}`;
       fetch(defaultURL + url, {
@@ -65,7 +63,11 @@ const routineList = ({ isCreated }: any) => {
             // isCompleted in localStorage
             // localRoutine이 빈 배열이거나 아예 없을 때만 해당 코드 실행
             const arr: Array<object> = [];
-            if (localRoutine === '[]' || !localRoutine) {
+            if (
+              localRoutine === '[]' ||
+              !localRoutine ||
+              name === 'onClickReload'
+            ) {
               data.map((datum: routineData) => {
                 arr.push({
                   id: datum.todoId,
@@ -83,8 +85,8 @@ const routineList = ({ isCreated }: any) => {
   useEffect(() => {
     if (tokenExists()) {
       setIsLogined(true);
-      getRoutine();
-      // setIsCompletedList();
+      getRoutine('created');
+      // console.log('routine list useeffect, ', localRoutine);
     } else {
       setIsLogined(false);
     }
@@ -117,8 +119,9 @@ const routineList = ({ isCreated }: any) => {
     }
   };
   const onClickReload = () => {
-    getRoutine();
+    getRoutine('onClickReload');
     setClickedCategory('ALL');
+    setIsReload(!isReload);
   };
 
   const handleDelete = (bool: boolean) => {
@@ -161,7 +164,7 @@ const routineList = ({ isCreated }: any) => {
         <div className="d-flex justify-content-end align-items-center">
           <FontAwesomeIcon
             icon={faRotateRight}
-            className="me-2 hover"
+            className="me-2 hover rotate"
             onClick={onClickReload}
           />
           <CommonFilterBar handleCategory={handleCategory} />
@@ -182,6 +185,7 @@ const routineList = ({ isCreated }: any) => {
                         return (
                           <RoutineListItems
                             listItem={item}
+                            isReload={isReload}
                             key={idx}
                             handleDelete={handleDelete}
                             handleUpdate={handleUpdate}
