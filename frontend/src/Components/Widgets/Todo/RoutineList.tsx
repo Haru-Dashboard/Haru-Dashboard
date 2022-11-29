@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import CommonFilterBar from './FilterBar/CommonFilterBar';
-import { localRoutine, routineData } from '../../../Utils/Todo';
+import { routineData } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -86,7 +86,6 @@ const routineList = ({ isCreated }: any) => {
     if (tokenExists()) {
       setIsLogined(true);
       getRoutine('created');
-      // console.log('routine list useeffect, ', localRoutine);
     } else {
       setIsLogined(false);
     }
@@ -104,7 +103,7 @@ const routineList = ({ isCreated }: any) => {
     }
   };
   // 클릭한 필터에 맞게 필터링하는 함수
-  const filterTodayList = () => {
+  const filterRoutineList = () => {
     if (clickedCategory === 'ALL') {
       // 전체 리스트 다 띄우기
       checkListLength(todayRoutineList);
@@ -132,18 +131,9 @@ const routineList = ({ isCreated }: any) => {
     setIsSaved(bool);
   };
 
-  // 새로운 todo가 추가되면 리스트 변경
-  const localToday = localStorage.getItem('today');
-  useEffect(() => {
-    if (localToday) {
-      setTodayRoutineList(JSON.parse(localToday));
-      filterTodayList();
-    }
-  }, [localToday]);
-
   // 선택된 category가 바뀌면 필터링 진행
   useEffect(() => {
-    filterTodayList();
+    filterRoutineList();
   }, [clickedCategory]);
 
   // create 여부 저장

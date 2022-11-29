@@ -179,10 +179,6 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
             className="ms-2 border border-0 bg-transparent">
             <SmallTitle title="Routine" color={isToday ? 'gray' : '#5BB7F0'} />
           </button>
-          {/* <button className='border border-0 bg-light'
-            onClick={e => setIsToday(true)}>Today</button>
-          <button className='border border-0 bg-light'
-            onClick={e => setIsToday(false)}>Routine</button> */}
         </Modal.Header>
         {isToday && (
           <div>
