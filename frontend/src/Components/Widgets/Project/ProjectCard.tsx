@@ -11,17 +11,20 @@ type projectCardProps = {
 const ProjectCard = (props: projectCardProps) => {
   const { item, handleShowMore } = props;
   return (
-    <div
-      className="h-100 px-2 py-1"
-      onClick={() => handleShowMore(item.id)}
-      key={item.id}>
-      <div className="p-2 h-100 pjt-card">
-        <div className="col d-flex justify-content-center h-50">
+    <div className="h-100 px-2 py-1" key={item.id}>
+      <div className="p-2 h-90 pjt-card">
+        <div
+          className="col d-flex justify-content-center h-50"
+          onClick={() => handleShowMore(item.id)}>
           <img src={item.imageInfo.imageUrl} className="w-80" />
         </div>
         <div className="d-flex flex-column justify-content-around">
-          <p className="col my-0 fw-bold mt-2 fs-sm nowrap">{item.title}</p>
-          <div className="col nowrap">
+          <p
+            className="col my-0 fw-bold mt-2 fs-sm nowrap"
+            onClick={() => handleShowMore(item.id)}>
+            {item.title}
+          </p>
+          <div className="col nowrap" onClick={() => handleShowMore(item.id)}>
             {item.projectLabels.length > 2 && (
               <div>
                 {item.projectLabels.slice(0, 2).map((projectLabel, idx) => (
@@ -52,14 +55,9 @@ const ProjectCard = (props: projectCardProps) => {
               </div>
             )}
           </div>
-          <div
-            className="col d-flex justify-content-end"
-            style={{ height: '5%', right: '1rem', bottom: '1rem' }}>
+          <div className="col d-flex justify-content-end mb-2">
             {item.projectLinks.map((projectLink, idx) => (
-              <a
-                href={projectLink.url}
-                key={idx}
-                style={{ marginRight: '0.3rem' }}>
+              <a href={projectLink.url} key={idx} className="me-2">
                 <img
                   width="18"
                   height="18"
