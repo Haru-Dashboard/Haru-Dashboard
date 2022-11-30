@@ -1,4 +1,4 @@
-import { newsData } from '../../Utils/News';
+import { NewsData } from '../../Utils/News';
 
 const eMSEdgeKey = process.env.REACT_APP_MSEdgeKey;
 
@@ -23,7 +23,7 @@ export function fetchNews(): Promise<any> {
         });
       })
       .then((data) => {
-        const newsData: newsData = {
+        const newsData: NewsData = {
           newsItemList: data.value,
           time: new Date().toString(),
         };

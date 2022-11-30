@@ -2,23 +2,48 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { connectionfailed, datetimeTimeSettingTo0 } from './ScheduleDataType';
-import {
-  tokenExists,
-  getAccessToken,
-} from '../../../API/Authentication';
+import { connectionfailed } from './ScheduleDataType';
+import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
-  const { showModal, handleClose, setSchedule, schedule } = props;
-  const sampledatetime = datetimeTimeSettingTo0(new Date());
+  const {
+    showModal,
+    handleClose,
+    setSchedule,
+    schedule,
+    calendarSelectedDate,
+  } = props;
+  const sampleStartTime =
+    calendarSelectedDate.getFullYear() +
+    '-' +
+    (calendarSelectedDate.getMonth() + 1 < 10 ? 0 : '') +
+    (calendarSelectedDate.getMonth() + 1) +
+    '-' +
+    (calendarSelectedDate.getDate() < 10 ? 0 : '') +
+    calendarSelectedDate.getDate() +
+    'T' +
+    (calendarSelectedDate.getHours() < 10 ? 0 : '') +
+    +calendarSelectedDate.getHours() +
+    ':00';
+  const sampleEndTime =
+    calendarSelectedDate.getFullYear() +
+    '-' +
+    (calendarSelectedDate.getMonth() + 1 < 10 ? 0 : '') +
+    (calendarSelectedDate.getMonth() + 1) +
+    '-' +
+    (calendarSelectedDate.getDate() < 10 ? 0 : '') +
+    calendarSelectedDate.getDate() +
+    'T' +
+    (calendarSelectedDate.getHours() + 2 < 10 ? 0 : '') +
+    +(calendarSelectedDate.getHours() + 2) +
+    ':00';
   const [inputs, setInputs] = useState({
     title: '',
-    startDate: sampledatetime,
-    endDate: sampledatetime,
+    startDate: '',
+    endDate: '',
     content: '',
     color: -1,
   });
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -31,16 +56,14 @@ export default function ScheduleAdd(props: any) {
 
     const backURL = process.env.REACT_APP_BACKURL;
     if (tokenExists()) {
-      if (inputs.title == null || inputs.title == '') {
-      } else if (inputs.content == null || inputs.content == '') {
-      } else {
-        if (inputs.startDate == null) {
-          setInputs((values) => ({ ...values, startDate: sampledatetime }));
-          inputs.startDate = sampledatetime;
+      if (inputs.title && inputs.content) {
+        if (inputs.startDate == null || inputs.startDate == '') {
+          setInputs((values) => ({ ...values, startDate: sampleStartTime }));
+          inputs.startDate = sampleStartTime;
         }
-        if (inputs.endDate == null) {
-          setInputs((values) => ({ ...values, endDate: sampledatetime }));
-          inputs.endDate = sampledatetime;
+        if (inputs.endDate == null || inputs.endDate == '') {
+          setInputs((values) => ({ ...values, endDate: sampleEndTime }));
+          inputs.endDate = sampleEndTime;
         }
         fetch(backURL + URLNext, {
           method: 'POST',
@@ -52,7 +75,7 @@ export default function ScheduleAdd(props: any) {
         })
           .then((response) => response.json())
           .then((data) => {
-            setSchedule([...schedule, inputs]);
+            setSchedule([...schedule, { ...inputs, id: data.id }]);
             Swal.fire({
               icon: 'success',
               title: 'Saved',
@@ -68,8 +91,8 @@ export default function ScheduleAdd(props: any) {
   };
   return (
     <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header>
-        <Modal.Title>New Schedule</Modal.Title>
+      <Modal.Header closeButton>
+        <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
@@ -90,7 +113,7 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="startDate"
               onChange={handleChange}
-              required
+              defaultValue={sampleStartTime}
             />
           </Form.Group>
           <Form.Group>
@@ -99,7 +122,7 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="endDate"
               onChange={handleChange}
-              required
+              defaultValue={sampleEndTime}
             />
           </Form.Group>
           <Form.Group>
@@ -114,7 +137,7 @@ export default function ScheduleAdd(props: any) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" variant="outline-primary">
+          <Button type="submit" variant="outline-primary" size="sm">
             Save
           </Button>
         </Modal.Footer>

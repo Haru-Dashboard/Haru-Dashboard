@@ -4,18 +4,20 @@ import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import SelectDayBar from './SelectDayBar';
-import { week } from '../../../Utils/Todo';
+import { Week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
+import Swal from 'sweetalert2';
 
 const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   const [isToday, setIsToday] = useState(true);
   // const [ todayList, setTodayList ] = useState([{}])
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
-  const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
-  const [isSaved, setIsSaved] = useState(false);
-  const [data, setData] = useState({});
+  const [selectedDayList, setSelectedDayList] = useState<Array<Week>>([]);
+  const [isEmptyInput, setIsEmptyInput] = useState(false);
+  const [isEmptyDay, setIsEmptyDay] = useState(false);
+  const localRoutine = localStorage.getItem('routine');
 
   // 사용자가 생성한 todo를 localStorage에 저장하기
   // TODO: arr.length를 기준으로 인덱스 생성 시 todo들이 무작위로 삭제되고 새로 생성될 때 인덱스가 겹치는 문제 발생 가능
@@ -26,13 +28,14 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
     // 이미 작성된 것이 있으면 배열 형태로 파싱해서 state에 저장하기
     if (localToday) {
       const arr = JSON.parse(localToday);
-      const tid = Number(arr[arr.length - 1].id);
+      // TODO: localToday가 '[]' 이면 아래 코드에서 에러가 발생
 
       // localStorage에 저장하기
       arr.push({
-        id: tid + 1,
+        id: arr.length ? Number(arr[arr.length - 1].id) + 1 : 0,
         category: `${clickedCategory}`,
         content: `${writtenContent}`,
+        isCompleted: false,
       });
       localStorage.setItem('today', JSON.stringify(arr));
     } else {
@@ -44,6 +47,7 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
             id: 0,
             category: clickedCategory,
             content: writtenContent,
+            isCompleted: false,
           },
         ]),
       );
@@ -64,47 +68,102 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
     3. 모달 닫기 
   */
   const saveToday = () => {
-    // 1. localStorage에 저장 + 2. TodayList에 emit해서 추가
-    saveAtLocal();
-    // 3. 모달 닫기
-    handleClose();
+    if (writtenContent.trim() !== '') {
+      // 1. localStorage에 저장 + 2. TodayList에 emit해서 추가
+      saveAtLocal();
+      // 3. 모달 닫기
+      handleClose();
+    } else {
+      setIsEmptyInput(true);
+    }
+  };
+
+  // routine이 저장되면 리턴되는 id값을 받아서 localStorage에 붙이기
+  // 없으면 새로 생성하고 있으면 받아와서 넣기
+  const addLocalRoutine = (id: number) => {
+    if (localRoutine) {
+      const arr = JSON.parse(localRoutine);
+      arr.push({
+        id: id,
+        isCompleted: false,
+      });
+      localStorage.setItem('routine', JSON.stringify(arr));
+    } else {
+      localStorage.setItem(
+        'routine',
+        JSON.stringify([
+          {
+            id: id,
+            isCompleted: false,
+          },
+        ]),
+      );
+    }
   };
 
   // routine 생성하기 fetch 함수
   const saveRoutine = () => {
-    const url = 'todos';
-    const data = {
-      category: clickedCategory,
-      title: writtenContent,
-      sun: selectedDayList[0].isClicked,
-      mon: selectedDayList[1].isClicked,
-      tue: selectedDayList[2].isClicked,
-      wed: selectedDayList[3].isClicked,
-      thu: selectedDayList[4].isClicked,
-      fri: selectedDayList[5].isClicked,
-      sat: selectedDayList[6].isClicked,
-    };
-    if (tokenExists()) {
-      fetch(defaultURL + url, {
-        method: 'POST',
-        headers: {
-          Authorization: getAccessToken(),
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          handleSaved(true);
-          handleClose();
-        });
+    if (writtenContent.trim() !== '' && selectedDayList) {
+      const url = 'todos';
+      const data = {
+        category: clickedCategory,
+        title: writtenContent,
+        sun: selectedDayList[0].isClicked,
+        mon: selectedDayList[1].isClicked,
+        tue: selectedDayList[2].isClicked,
+        wed: selectedDayList[3].isClicked,
+        thu: selectedDayList[4].isClicked,
+        fri: selectedDayList[5].isClicked,
+        sat: selectedDayList[6].isClicked,
+      };
+      if (tokenExists()) {
+        fetch(defaultURL + url, {
+          method: 'POST',
+          headers: {
+            Authorization: getAccessToken(),
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            addLocalRoutine(data.todoId);
+            handleSaved(true);
+            handleClose();
+          });
+      }
+    } else {
+      if (!writtenContent.trim()) {
+        setIsEmptyInput(true);
+      }
+      if (!selectedDayList.length) {
+        setIsEmptyDay(true);
+      }
     }
   };
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
-  const handleSelectedDayList = (selectedList: Array<week>) => {
+  const handleSelectedDayList = (selectedList: Array<Week>) => {
     setSelectedDayList(selectedList);
   };
+
+  useEffect(() => {
+    if (!isToday && !tokenExists()) {
+      setIsToday(true);
+      Swal.fire({
+        text: '로그인 후에 이용 가능합니다',
+        icon: 'error',
+        showConfirmButton: true,
+        timer: 1000,
+      });
+    }
+  }, [isToday]);
+
+  useEffect(() => {
+    setIsEmptyInput(false);
+    setIsEmptyDay(false);
+    setIsToday(true);
+  }, [show]);
 
   return (
     <div>
@@ -120,10 +179,6 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
             className="ms-2 border border-0 bg-transparent">
             <SmallTitle title="Routine" color={isToday ? 'gray' : '#5BB7F0'} />
           </button>
-          {/* <button className='border border-0 bg-light'
-            onClick={e => setIsToday(true)}>Today</button>
-          <button className='border border-0 bg-light'
-            onClick={e => setIsToday(false)}>Routine</button> */}
         </Modal.Header>
         {isToday && (
           <div>
@@ -140,6 +195,13 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
                     onChange={(e) => setWrittenContent(e.target.value)}
                     className="ms-5 w-100 border border-0"
                   />
+                </div>
+                <div>
+                  {isEmptyInput && (
+                    <p className="text-danger fs-sm text-end mt-1">
+                      할 일을 입력해주세요
+                    </p>
+                  )}
                 </div>
                 {/* category input */}
               </div>
@@ -164,6 +226,11 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
               <div>
                 {/* 날짜 선택 부분 */}
                 <SelectDayBar handleSelectedDayList={handleSelectedDayList} />
+                {isEmptyDay && (
+                  <p className="text-danger fs-sm text-end my-2">
+                    날짜를 선택해주세요
+                  </p>
+                )}
                 <hr />
                 <div className="d-flex justify-content-between">
                   <RoutineFilterBar handleCategory={handleCategory} />
@@ -174,6 +241,13 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
                     onChange={(e) => setWrittenContent(e.target.value)}
                     className="ms-5 w-100 border border-0"
                   />
+                </div>
+                <div>
+                  {isEmptyInput && (
+                    <p className="text-danger fs-sm text-end mt-1">
+                      할 일을 입력해주세요
+                    </p>
+                  )}
                 </div>
               </div>
             </Modal.Body>

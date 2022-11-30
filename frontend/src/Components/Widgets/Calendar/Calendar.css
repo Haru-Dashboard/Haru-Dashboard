@@ -5,10 +5,12 @@
   border-radius: 3rem;
   padding: 1rem;
 }
-.cursor-default{
-  cursor:default;
+.cursor-default {
+  cursor: default;
 }
-.cursor-pointer{cursor:pointer;}
+.cursor-pointer {
+  cursor: pointer;
+}
 .full100 {
   width: 100%;
   height: 100%;
@@ -25,10 +27,13 @@
   width: 60%;
 }
 .calendar-detail {
-  height: 80%;
-  width: 40%;
+  margin-top: 2%;
+  height: 76%;
+  width: 38%;
+  margin-left: 2%;
 }
 .calendar-maincontainer {
+  position: relative;
   width: 100%;
   height: 90%;
 }
@@ -49,7 +54,12 @@
   height: 20%;
   margin-bottom: 1%;
 }
+.calendar-dates-week4 {
+  height: 25%;
+  margin-bottom: 1%;
+}
 .calendar-dates-row {
+  font-weight: bold;
   display: flex;
   height: 100%;
 }
@@ -62,13 +72,13 @@
   margin-left: 1%;
 }
 .sunday {
-  color: #E60000   !important;
+  color: #e60000 !important;
 }
 .saturday {
-  color: #6464C8 !important;
+  color: #6464c8 !important;
 }
 .holiday {
-  color: #E60000 !important;
+  color: #e60000 !important;
 }
 .pastmonth {
   color: #646464 !important;
@@ -84,33 +94,49 @@
 }
 .date-column-dates {
   position: relative;
+  height: 75%;
   font-size: 0.8rem;
   left: 5%;
   text-align: left;
 }
 .date-column-content {
   width: 100%;
-  height: 50%;
+  height: 30%;
   font-size: 0.5rem;
   text-align: center;
   position: relative;
 }
-.date-column-count
-{
+.date-column-count {
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 100%;
   position: absolute;
   right: 0%;
-  top:-50%
+  top: -50%;
 }
-.calendar-detail-date{
+.calendar-detail-date {
   height: 10%;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
 }
-.calendar-detail-details{
+
+.calendar-detail-left {
+  width: 30%;
+  height: 100%;
+}
+.calendar-detail-title {
+  width: 40%;
+  text-align: center;
+  height: 100%;
+}
+.calendar-detail-button {
+  width: 30%;
+}
+
+.calendar-detail-details {
   height: 90%;
   overflow: auto;
-
 }
 .calendar-detail-board {
   width: 100%;
@@ -146,3 +172,26 @@
   font-weight: bold;
 }
 
+.month-change {
+  position: absolute;
+  text-align: left;
+  width: 30%;
+  right: 0%;
+  height: 10%;
+  font-size: 0.8rem;
+  top: -14.5%;
+  font-weight: bold;
+  display: flex;
+}
+.month-change-pn {
+  width: 7%;
+  cursor: pointer;
+}
+.month-change-ym {
+  width: 68%;
+  text-align: center;
+  margin-left: 5%;
+}
+.date-column-today {
+  outline: 2px solid #6464c8;
+}

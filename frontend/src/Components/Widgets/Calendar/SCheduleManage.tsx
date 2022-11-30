@@ -2,17 +2,24 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import {
-  connectionfailed,
-  datetimeTimeSettingTo0,
-  timeDateConverToBootstrapTime,
-} from './ScheduleDataType';
+import { connectionfailed } from './ScheduleDataType';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 
 export default function ScheduleManage(props: any) {
   const { showModal, handleClose, setSchedule, schedule, scheduleNo } = props;
-  const sampledatetime = datetimeTimeSettingTo0(new Date());
+  const sampledatetime = new Date(
+    new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate() +
+      'T' +
+      +(new Date().getHours() + 2) +
+      ':00',
+  )
+    .toISOString()
+    .replace(/\..*/, '');
   const [inputs, setInputs] = useState({
     title: '',
     startDate: sampledatetime,
@@ -70,23 +77,42 @@ export default function ScheduleManage(props: any) {
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputs.title == '' || inputs.title == null) {
-      setInputs((values) => ({ ...values, title: inputs.title }));
+      setInputs((values) => ({ ...values, title: schedule[scheduleNo].title }));
       inputs.title = schedule[scheduleNo].title;
     }
     if (inputs.startDate == null || inputs.startDate == sampledatetime) {
-      setInputs((values) => ({ ...values, startDate: inputs.startDate }));
-      inputs.startDate = schedule[scheduleNo].startDate;
+      setInputs((values) => ({
+        ...values,
+        startDate: schedule[scheduleNo].startDate
+          .replace('.', '-')
+          .replace('.', '-')
+          .replace(' ', 'T'),
+      }));
+      inputs.startDate = schedule[scheduleNo].startDate
+        .replace('.', '-')
+        .replace('.', '-')
+        .replace(' ', 'T');
     }
     if (inputs.endDate == null || inputs.endDate == sampledatetime) {
-      setInputs((values) => ({ ...values, endDate: inputs.endDate }));
-      inputs.endDate = schedule[scheduleNo].endDate;
+      inputs.endDate = schedule[scheduleNo].endDate
+        .replace('.', '-')
+        .replace('.', '-')
+        .replace(' ', 'T');
     }
     if (inputs.content == '' || inputs.content == null) {
-      setInputs((values) => ({ ...values, content: inputs.content }));
+      setInputs((values) => ({
+        ...values,
+        content: schedule[scheduleNo].content,
+      }));
       inputs.content = schedule[scheduleNo].content;
+    }
+    if (inputs.id == -1 || inputs.id == null) {
+      setInputs((values) => ({ ...values, id: inputs.id }));
+      inputs.id = schedule[scheduleNo].id;
     }
     const URLNext = 'schedules/' + schedule[scheduleNo].id;
     const backURL = process.env.REACT_APP_BACKURL;
+
     if (tokenExists()) {
       fetch(backURL + URLNext, {
         method: 'PATCH',
@@ -101,7 +127,7 @@ export default function ScheduleManage(props: any) {
           const tmp = datas.id;
           setSchedule(schedule.filter((sch: any) => sch.id !== tmp));
           setInputs((val) => ({ ...val, id: tmp }));
-          setSchedule((val: any) => [...val, inputs]);
+          setSchedule((val: any) => [...val, { ...inputs, id: tmp }]);
           Swal.fire({
             icon: 'success',
             title: 'Saved',
@@ -117,8 +143,8 @@ export default function ScheduleManage(props: any) {
 
   return (
     <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header>
-        <Modal.Title>Manage Schedules</Modal.Title>
+      <Modal.Header closeButton>
+        <Modal.Title>Calendar</Modal.Title>
       </Modal.Header>
       {showModal ? (
         <Form>
@@ -143,9 +169,10 @@ export default function ScheduleManage(props: any) {
                 name="startDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeDateConverToBootstrapTime(
-                  schedule[scheduleNo].startDate,
-                )}
+                defaultValue={schedule[scheduleNo].startDate
+                  .replace('.', '-')
+                  .replace('.', '-')
+                  .replace(' ', 'T')}
                 required
               />
             </Form.Group>
@@ -156,9 +183,10 @@ export default function ScheduleManage(props: any) {
                 name="endDate"
                 className="cursor-pointer"
                 onChange={handleChange}
-                defaultValue={timeDateConverToBootstrapTime(
-                  schedule[scheduleNo].endDate,
-                )}
+                defaultValue={schedule[scheduleNo].endDate
+                  .replace('.', '-')
+                  .replace('.', '-')
+                  .replace(' ', 'T')}
                 required
               />
             </Form.Group>
@@ -177,13 +205,15 @@ export default function ScheduleManage(props: any) {
             <Button
               type="button"
               onClick={removeSchedule}
-              variant="outline-primary">
+              variant="outline-primary"
+              size="sm">
               Delete
             </Button>
             <Button
               onClick={handleSubmit}
               type="submit"
-              variant="outline-primary">
+              variant="outline-primary"
+              size="sm">
               Edit
             </Button>
           </Modal.Footer>

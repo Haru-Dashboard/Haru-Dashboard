@@ -15,9 +15,22 @@ export default function CalendarMain({
 
   function ClickedCalendar(month: number, date: number) {
     const newDate1 = new Date();
+    newDate1.setFullYear(calendarSelectedDate.getFullYear());
     newDate1.setMonth(calendarSelectedDate.getMonth() + month);
     newDate1.setDate(date);
     setCalendarSelectedDate(newDate1);
+  }
+  function pastMonth() {
+    const newMonth = new Date(calendarSelectedDate);
+    newMonth.setDate(1);
+    newMonth.setMonth(newMonth.getMonth() - 1);
+    setCalendarSelectedDate(newMonth);
+  }
+  function nextMonth() {
+    const newMonth = new Date(calendarSelectedDate);
+    newMonth.setDate(1);
+    newMonth.setMonth(newMonth.getMonth() + 1);
+    setCalendarSelectedDate(newMonth);
   }
   const startDayOfThisMonth = new Date(thisYear, thisMonth, 1).getDay();
   const startDayOfNextMonth = new Date(thisYear, thisMonth + 1, 1).getDay();
@@ -44,7 +57,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +
@@ -92,7 +110,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +
@@ -125,7 +148,12 @@ export default function CalendarMain({
       <div
         onClick={() => ClickedCalendar(0, index)}
         key={index}
-        className="date-column">
+        className={
+          calendarSelectedDate.getMonth() == new Date().getMonth() &&
+          index == new Date().getDate()
+            ? 'date-column-today' + ' date-column'
+            : 'date-column'
+        }>
         <div
           className={
             'date-column-dates ' +
@@ -197,6 +225,20 @@ export default function CalendarMain({
 
   return (
     <div className="calendar-maincontainer">
+      <div className="month-change">
+        <span className="month-change-pn" onClick={pastMonth}>
+          {'<'}
+        </span>{' '}
+        <span className="month-change-ym">
+          {calendarSelectedDate.getFullYear() +
+            '.' +
+            (calendarSelectedDate.getMonth() + 1 < 10 ? 0 : '') +
+            (calendarSelectedDate.getMonth() + 1)}{' '}
+        </span>
+        <span className="month-change-pn" onClick={nextMonth}>
+          {'>'}
+        </span>
+      </div>
       <div className="calendar-weekends">
         <div className="calendar-Weekends-content sunday">Sun</div>
         <div className="calendar-Weekends-content">Mon</div>

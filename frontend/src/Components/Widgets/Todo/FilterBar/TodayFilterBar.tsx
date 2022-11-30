@@ -3,11 +3,11 @@ import { Dropdown, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
-export type todayFilterBar = {
+export type TodayFilterBar = {
   handleCategory: (clicked: string) => void;
 };
 
-const TodayFilterBar = ({ handleCategory }: todayFilterBar) => {
+const TodayFilterBar = ({ handleCategory }: TodayFilterBar) => {
   const [clickedFilter, setClickedFilter] = useState('ALL');
   const [filterList, setFilterList] = useState<Array<string>>([]);
   const [searchedWord, setSearchedword] = useState('');

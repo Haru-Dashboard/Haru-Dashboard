@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { bookmark } from '../../../Utils/Bookmark';
+import { Bookmark } from '../../../Utils/Bookmark';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import BigTitle from '../../Common/Title/BigTitle';
 import BookmarkItem from './BookmarkItem';
@@ -7,7 +7,7 @@ import BookmarkModal from './BookmarkModal';
 import './index.css';
 
 const Bookmark = () => {
-  const [bookmarks, setBookmarks] = useState<bookmark[]>([]);
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {

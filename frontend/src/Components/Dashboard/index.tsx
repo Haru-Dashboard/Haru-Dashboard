@@ -5,7 +5,7 @@ import './index.css';
 
 const DashBoard = () => {
   return (
-    <main className="main-board d-flex">
+    <main className="main-board d-flex mt-3">
       <Todo />
       <GridBoard />
     </main>

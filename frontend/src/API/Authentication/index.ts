@@ -1,8 +1,5 @@
 const backURL = process.env.REACT_APP_BACKURL;
 
-// TODO
-// move refreshToken from localStorage to somewhere else (cookie or chrome.storage)
-
 export function tokenExists(): boolean {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
@@ -21,10 +18,19 @@ export function saveTokenFromParams(): void {
   const accessToken = new URL(location.toString()).searchParams.get(
     'access_token',
   );
-  if (accessToken) {
+  const refreshToken = new URL(location.toString()).searchParams.get(
+    'refresh_token',
+  );
+  if (accessToken && refreshToken) {
     localStorage.setItem('accessToken', accessToken);
+
+    // TODO
+    // move refreshToken from localStorage to somewhere else (cookie? or chrome.storage?)
+    localStorage.setItem('refreshToken', refreshToken);
     // TODO: hide url
-    // refresh token도 저장
+    chrome.tabs.update({ url: 'index.html' });
+  }
+  if (accessToken || refreshToken) {
     chrome.tabs.update({ url: 'index.html' });
   }
 }
@@ -44,28 +50,35 @@ export async function isValid(accessToken: string): Promise<boolean> {
 }
 
 export async function reissueToken(accessToken: string): Promise<void> {
-  // TODO: use store(redux) instead of location.reload()
+  let flag = true;
   const refreshToken = localStorage.getItem('refreshToken');
-  const response = await fetch(backURL + 'auth/refresh', {
-    method: 'POST',
-    body: JSON.stringify({
-      refreshToken: refreshToken,
-      accessToken: accessToken,
-    }),
-  });
-  if (response.ok) {
-    const data: { refreshToken: string; accessToken: string } =
-      await response.json();
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    location.reload();
-    return;
+  if (refreshToken) {
+    const response = await fetch(backURL + 'auth/refresh', {
+      method: 'POST',
+      body: JSON.stringify({
+        refreshToken: refreshToken,
+        accessToken: accessToken,
+      }),
+    });
+    if (response.ok) {
+      flag = false;
+      const data: { accessToken: string } = await response.json();
+      localStorage.setItem('accessToken', data.accessToken);
+    }
   }
-  clearToken();
+  if (flag) {
+    clearToken();
+  }
+  // Note Now you have a valid accessToken or you don't have any tokens.
+  // TODO: use store(redux) instead of location.reload()
   location.reload();
 }
 
 export function clearToken(): void {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
+}
+
+export function logout() {
+  // TODO: send logout signal to backend
 }
