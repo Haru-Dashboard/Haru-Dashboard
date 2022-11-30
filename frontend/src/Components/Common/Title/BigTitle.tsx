@@ -1,13 +1,13 @@
 import React from 'react';
 import './BigTitle.css';
 
-type bigTitleProps = {
+type BigTitleProps = {
   title: string;
 };
 
-const BigTitle = ({ title }: bigTitleProps) => {
+const BigTitle = ({ title }: BigTitleProps) => {
   return (
-    <div className="big-title text-center d-flex align-items-center">
+    <div className="big-title text-center d-flex align-items-center select-none">
       <img
         src={`icon/haru-icon-${title}-title.png`}
         className="me-2 big-title-img"

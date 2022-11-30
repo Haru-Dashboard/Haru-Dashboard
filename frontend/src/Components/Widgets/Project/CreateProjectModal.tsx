@@ -5,22 +5,22 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
-import { projectLink } from '../../../Utils/Project';
+import { ProjectLink } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
-const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
+const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
-type inputs = {
+type Inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: projectLink[];
+  links: ProjectLink[];
   startDate: Date;
   endDate: Date;
 };
 
 const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   const [file, setFile] = useState<File>();
-  const [inputs, setInputs] = useState<inputs>({
+  const [inputs, setInputs] = useState<Inputs>({
     title: '',
     content: '',
     labels: [],
@@ -30,16 +30,17 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   });
   const todayDate = new Date().toISOString().slice(0, 10);
 
-  // TODO: project 생성 fetch 함수
+  // project 생성 fetch 함수
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
+
     if (userFile === undefined) return;
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
       Swal.fire({
-        text: '업로드 가능한 최대 용량은 5MB입니다',
+        text: '업로드 가능한 최대 용량은 1MB입니다',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
@@ -100,7 +101,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   };
 
   const addNewLink = (event: any) => {
-    const newLink: projectLink = {
+    const newLink: ProjectLink = {
       name: '',
       url: '',
     };
@@ -231,7 +232,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
             </div>
             <Form.Control
               type="text"
-              maxLength={5}
+              maxLength={7}
               placeholder="태그 추가하기"
               className="my-2 border"
               name="labels"
@@ -276,7 +277,6 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
                   type="url"
                   pattern="https://.*"
                   placeholder="https://google.com"
-                  defaultValue={'https://www.'}
                   className="my-2 border"
                   name={`link-url-${idx}`}
                   onChange={addLink}

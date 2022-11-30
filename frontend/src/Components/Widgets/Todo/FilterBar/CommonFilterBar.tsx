@@ -12,10 +12,9 @@ const CommonFilterBar = ({ handleCategory }: any) => {
 
   useEffect(() => {
     // localStorage에서 카테고리들 받아오기
+    // localCategoryList.concat(JSON.parse(localCategories)),
     if (localCategories) {
-      setLocalCategoryList(
-        localCategoryList.concat(JSON.parse(localCategories)),
-      );
+      setLocalCategoryList(JSON.parse(localCategories));
     }
   }, []);
 
@@ -31,9 +30,7 @@ const CommonFilterBar = ({ handleCategory }: any) => {
   useEffect(() => {
     if (localCategories) {
       // const arr = ['ALL'];
-      setLocalCategoryList(
-        localCategoryList.concat(JSON.parse(localCategories)),
-      );
+      setLocalCategoryList(JSON.parse(localCategories));
     }
   }, [localCategories]);
 

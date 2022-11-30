@@ -1,10 +1,10 @@
-export type newsItem = {
+export type NewsItem = {
   name: string;
   url: string;
   image: { thumbnail: { contentUrl: string } };
 };
 
-export type newsData = {
-  newsItemList: newsItem[];
+export type NewsData = {
+  newsItemList: NewsItem[];
   time: string;
 };

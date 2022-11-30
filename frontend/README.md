@@ -1,46 +1,30 @@
-# Chrome Extension TypeScript Starter
+# Haru Dashboard
 
-![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
-
-Chrome Extension, TypeScript and Visual Studio Code
+Haru dashboard for developers
 
 ## Prerequisites
 
-* [node + npm](https://nodejs.org/) (Current Version)
+- [node + npm](https://nodejs.org/) (Current Version)
 
 ## Option
 
-* [Visual Studio Code](https://code.visualstudio.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- Visual Studio Code Extensions
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [Eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
 ## Includes the following
 
-* TypeScript
-* Webpack
-* React
-* Jest
-* Example Code
-    * Chrome Storage
-    * Options Version 2
-    * content script
-    * count up badge number
-    * background
-
-## Project Structure
-
-* src/typescript: TypeScript source files
-* src/assets: static files
-* dist: Chrome Extension directory
-* dist/js: Generated JavaScript files
+- TypeScript
+- Webpack
+- React
+- Jest
 
 ## Setup
 
 ```
 npm install
 ```
-
-## Import as Visual Studio Code project
-
-...
 
 ## Build
 
@@ -50,57 +34,44 @@ npm run build
 
 ## Build in watch mode
 
-### terminal
-
 ```
 npm run watch
 ```
 
-### Visual Studio Code
-
-Run watch mode.
-
-type `Ctrl + Shift + B`
-
 ## Load extension to chrome
+> https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked
 
-Load `dist` directory
+Load `dist` directory  
+
 
 ## Test
 `npx jest` or `npm run test`
 
------------------------------
-# Included Files
-## public
-Images and manifest
 
+## Project Structure
+- dist  
+  Chrome Extension directory
 
---------------------
-## API
-Folder for common files
+- dist/js  
+  Generated JavaScript files
 
-#### Authentication
-##### Get accesstoken and manage token
+- public  
+  static files and manifest.json
 
---------------------
-## Components
-#### Common components used elsewhere
-##### Button
-##### CardComponent
-##### Title
-
---------------------
-## DashBoard
-#### Where each component will be placed
-##### GridBox
-##### index
----------------------------------------
-## Widgets
-#### Each feature actually divided
-
-## Basic
-## BookMark
-## Calendar
-## News
-## Project
-## Todo
+- src
+  - \_\_tests\_\_
+  - API  
+    functions that sends an external request
+  - Components  
+    - Common  
+    - Dashboard  
+      main frame of dashboard
+    - Widgets  
+      Each widget located in the dashboard
+  - Store
+  - Utils  
+    Types and utility functions used in the source code
+  - App.tsx
+  - background.ts
+  - index.css
+  - index.tsx

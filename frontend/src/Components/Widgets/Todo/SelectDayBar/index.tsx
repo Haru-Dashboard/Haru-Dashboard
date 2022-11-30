@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { week } from '../../../../Utils/Todo';
+import { Week } from '../../../../Utils/Todo';
 import SelectDayBarItems from './SelectDayBarItems';
 
-export type selectDayBarType = {
-  handleSelectedDayList: (selectedList: Array<week>) => void;
-  availableDays?: Array<week>;
-  availableDaysList?: Array<week>;
+export type SelectDayBarType = {
+  handleSelectedDayList: (selectedList: Array<Week>) => void;
+  availableDays?: Array<Week>;
+  availableDaysList?: Array<Week>;
 };
 
 const SelectDayBar = ({
   handleSelectedDayList,
   availableDays,
   availableDaysList,
-}: selectDayBarType) => {
-  const [weeks, setWeeks] = useState<Array<week>>([]);
+}: SelectDayBarType) => {
+  const [weeks, setWeeks] = useState<Array<Week>>([]);
   // const [selectedDayObject, setSelectedDayObject] = useState<Array<week>>([]);
-  const [selectedDay, setselectedDay] = useState<Array<week>>([]);
+  const [selectedDay, setselectedDay] = useState<Array<Week>>([]);
 
   useEffect(() => {
     if (availableDays) {
@@ -61,7 +61,7 @@ const SelectDayBar = ({
         )}
       </div>
       <div className="d-flex justify-content-between px-3 mb-2">
-        {weeks.map((item: week, idx: number) => {
+        {weeks.map((item: Week, idx: number) => {
           return (
             <span key={idx}>
               <SelectDayBarItems

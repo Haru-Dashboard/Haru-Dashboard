@@ -17,7 +17,21 @@ function Calendar() {
       id: -1,
     },
   ]);
-  const [calendarSelectedDate, setCalendarSelectedDate] = useState(new Date());
+  const [calendarSelectedDate, setCalendarSelectedDate] = useState(
+    new Date(
+      new Date().getFullYear() +
+        '-' +
+        (new Date().getMonth() + 1 < 10 ? 0 : '') +
+        (new Date().getMonth() + 1) +
+        '-' +
+        (new Date().getDate() < 10 ? 0 : '') +
+        new Date().getDate() +
+        'T' +
+        (new Date().getHours() < 10 ? 0 : '') +
+        +new Date().getHours() +
+        ':00',
+    ),
+  );
 
   const [selectedNo, setSelectedNo] = useState(0);
   useEffect(() => {
@@ -43,6 +57,10 @@ function Calendar() {
   const [showAddModal, setShowAddModal] = useState(false);
   const handleAddClose = () => setShowAddModal(false);
   const handleAddShow = () => setShowAddModal(true);
+  const [showAddModal2, setShowAddModal2] = useState(false);
+  const handleAddClose2 = () => setShowAddModal2(false);
+  const handleAddShow2 = () => setShowAddModal2(true);
+
   const [showManageModal, setShowManageModal] = useState(false);
   const handleManageClose = () => setShowManageModal(false);
   const handleManageShow = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,19 +69,6 @@ function Calendar() {
     setSelectedNo(parseInt(button.value));
   };
 
-  const monthNext = () => {
-    const newDate = calendarSelectedDate;
-    newDate.setDate(1);
-    newDate.setMonth(newDate.getMonth() + 1);
-    setCalendarSelectedDate(newDate);
-  };
-
-  const monthBeofre = () => {
-    const newDate = calendarSelectedDate;
-    newDate.setDate(1);
-    newDate.setMonth(newDate.getMonth() - 1);
-    setCalendarSelectedDate(newDate);
-  };
   return (
     <div className="calendar-board cursor-default">
       <ScheduleAdd
@@ -71,6 +76,28 @@ function Calendar() {
         handleClose={handleAddClose}
         schedule={schedule}
         setSchedule={setSchedule}
+        calendarSelectedDate={
+          new Date(
+            new Date().getFullYear() +
+              '-' +
+              (new Date().getMonth() + 1 < 10 ? 0 : '') +
+              (new Date().getMonth() + 1) +
+              '-' +
+              (new Date().getDate() < 10 ? 0 : '') +
+              new Date().getDate() +
+              'T' +
+              (new Date().getHours() < 10 ? 0 : '') +
+              +new Date().getHours() +
+              ':00',
+          )
+        }
+      />
+      <ScheduleAdd
+        showModal={showAddModal2}
+        handleClose={handleAddClose2}
+        schedule={schedule}
+        setSchedule={setSchedule}
+        calendarSelectedDate={calendarSelectedDate}
       />
       <ScheduleManage
         showModal={showManageModal}
@@ -98,6 +125,7 @@ function Calendar() {
             schedule={schedule}
             calendarSelectedDate={calendarSelectedDate}
             handleManageShow={handleManageShow}
+            handleAddShow2={handleAddShow2}
           />
         </div>
       </div>

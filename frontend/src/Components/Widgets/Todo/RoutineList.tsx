@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import CommonFilterBar from './FilterBar/CommonFilterBar';
-import { routine, routineData } from '../../../Utils/Todo';
+import { RoutineData } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,26 +11,24 @@ import { tokenExists, getAccessToken } from '../../../API/Authentication';
 const routineList = ({ isCreated }: any) => {
   const [clickedCategory, setClickedCategory] = useState('ALL');
   const [isEmpty, setIsEmpty] = useState(false);
-  const [filteredList, setFilteredList] = useState<Array<routineData>>([]);
-  const [todayRoutineList, setTodayRoutineList] = useState<Array<routineData>>(
+  const [filteredList, setFilteredList] = useState<Array<RoutineData>>([]);
+  const [todayRoutineList, setTodayRoutineList] = useState<Array<RoutineData>>(
     [],
   );
   const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  const [show, setShow] = useState(false);
   const [todayDate] = useState(new Date().getDay());
   const [isLogined, setIsLogined] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isReload, setIsReload] = useState(false);
   const category = localStorage.getItem('category');
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const localRoutine = localStorage.getItem('routine');
 
   // filter bar component에서 클릭된 카테고리 가져오는 함수
   const handleCategory = (clicked: string) => {
     setClickedCategory(clicked);
   };
 
-  const getRoutine = () => {
+  const getRoutine = (name: string) => {
     if (tokenExists()) {
       const url = `todos?day=${days[todayDate]}`;
       fetch(defaultURL + url, {
@@ -46,7 +44,7 @@ const routineList = ({ isCreated }: any) => {
           checkListLength(data);
 
           // routine의 category를 local에 저장
-          data.map((datum: routineData) => {
+          data.map((datum: RoutineData) => {
             if (category) {
               const arr = JSON.parse(category);
               if (!arr.includes(datum.category)) {
@@ -59,14 +57,32 @@ const routineList = ({ isCreated }: any) => {
                 JSON.stringify([datum.category.trim()]),
               );
             }
+
+            // isCompleted in localStorage
+            // localRoutine이 빈 배열이거나 아예 없을 때만 해당 코드 실행
+            const arr: Array<object> = [];
+            if (
+              localRoutine === '[]' ||
+              !localRoutine ||
+              name === 'onClickReload'
+            ) {
+              data.map((datum: RoutineData) => {
+                arr.push({
+                  id: datum.todoId,
+                  isCompleted: false,
+                });
+              });
+              localStorage.setItem('routine', JSON.stringify(arr));
+            }
           });
         });
     }
   };
+
   useEffect(() => {
     if (tokenExists()) {
       setIsLogined(true);
-      getRoutine();
+      getRoutine('created');
     } else {
       setIsLogined(false);
     }
@@ -76,7 +92,7 @@ const routineList = ({ isCreated }: any) => {
     list 길이 확인 함수
     이 함수 안쓰고 바로 filterList.length로 DOM에서 처리하면 배열이 비었을 때 0이 같이 화면에 렌더링 됨
   */
-  const checkListLength = (filtered: routineData[]) => {
+  const checkListLength = (filtered: RoutineData[]) => {
     if (filtered.length) {
       setIsEmpty(false);
     } else {
@@ -84,7 +100,7 @@ const routineList = ({ isCreated }: any) => {
     }
   };
   // 클릭한 필터에 맞게 필터링하는 함수
-  const filterTodayList = () => {
+  const filterRoutineList = () => {
     if (clickedCategory === 'ALL') {
       // 전체 리스트 다 띄우기
       checkListLength(todayRoutineList);
@@ -99,8 +115,9 @@ const routineList = ({ isCreated }: any) => {
     }
   };
   const onClickReload = () => {
-    getRoutine();
+    getRoutine('onClickReload');
     setClickedCategory('ALL');
+    setIsReload(!isReload);
   };
 
   const handleDelete = (bool: boolean) => {
@@ -111,18 +128,9 @@ const routineList = ({ isCreated }: any) => {
     setIsSaved(bool);
   };
 
-  // 새로운 todo가 추가되면 리스트 변경
-  const localToday = localStorage.getItem('today');
-  useEffect(() => {
-    if (localToday) {
-      setTodayRoutineList(JSON.parse(localToday));
-      filterTodayList();
-    }
-  }, [localToday]);
-
   // 선택된 category가 바뀌면 필터링 진행
   useEffect(() => {
-    filterTodayList();
+    filterRoutineList();
   }, [clickedCategory]);
 
   // create 여부 저장
@@ -143,7 +151,7 @@ const routineList = ({ isCreated }: any) => {
         <div className="d-flex justify-content-end align-items-center">
           <FontAwesomeIcon
             icon={faRotateRight}
-            className="me-2 hover"
+            className="me-2 hover rotate"
             onClick={onClickReload}
           />
           <CommonFilterBar handleCategory={handleCategory} />
@@ -160,10 +168,11 @@ const routineList = ({ isCreated }: any) => {
               {!isEmpty && (
                 <div className="container h-100 px-0 py-3">
                   {filteredList != null
-                    ? filteredList.map((item: routineData, idx: number) => {
+                    ? filteredList.map((item: RoutineData, idx: number) => {
                         return (
                           <RoutineListItems
                             listItem={item}
+                            isReload={isReload}
                             key={idx}
                             handleDelete={handleDelete}
                             handleUpdate={handleUpdate}

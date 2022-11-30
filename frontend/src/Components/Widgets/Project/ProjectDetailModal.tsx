@@ -1,41 +1,38 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import Form from 'react-bootstrap/Form';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { defaultURL } from '../../../API';
-import { project, link, inputs } from '../../../Utils/Project';
+import { Project, Link, Inputs } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import Swal from 'sweetalert2';
 
-type projectDetail = {
+type ProjectDetail = {
   handleClose: () => void;
   handleSaved: (bool: boolean) => void;
+  handlePageNo: () => void;
   show: boolean;
-  item: project;
+  item: Project;
 };
 
-const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
+const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
 const ProjectDetailModal = ({
   handleClose,
+  handlePageNo,
   show,
   item,
   handleSaved,
-}: projectDetail) => {
+}: ProjectDetail) => {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [imgHeight, setImgHeight] = useState(0);
-  const [imgWidth, setImgWidth] = useState(0);
-  const [rootHeight, setRootHeight] = useState(0);
-  const [rootWidth, setRootWidth] = useState(0);
-  const accessToken = localStorage.getItem('accessToken');
   const URLNext = 'projects/' + item.id;
-  const [file, setFile] = useState<File>();
-  const [inputs, setInputs] = useState<inputs>({
+  const [file, setFile] = useState<File>(new File([], ''));
+  const [inputs, setInputs] = useState<Inputs>({
     title: '',
     content: '',
     labels: [],
@@ -47,7 +44,7 @@ const ProjectDetailModal = ({
   // 수정으로 모달이 바뀌었을 때
   useEffect(() => {
     const stringLabel: Array<string> = [];
-    const stringLink: Array<link> = [];
+    const stringLink: Array<Link> = [];
 
     item.projectLabels.map((label) => {
       stringLabel.push(label.name);
@@ -69,7 +66,7 @@ const ProjectDetailModal = ({
       endDate: item.endDate.split('.').join('-'),
     });
   }, [isUpdate]);
-  // startDate: new Date(item.startDate).toISOString().slice(0, 10),
+
   useEffect(() => {
     setIsUpdate(false);
   }, [show]);
@@ -78,12 +75,13 @@ const ProjectDetailModal = ({
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const userFile = (target.files as FileList)[0];
+
     if (userFile === undefined) return;
 
     if (userFile.size > FILE_SIZE_MAX_LIMIT) {
       target.value = '';
       Swal.fire({
-        text: '업로드 가능한 최대 용량은 5MB입니다',
+        text: '업로드 가능한 최대 용량은 1MB입니다',
         icon: 'error',
         showConfirmButton: true,
         timer: 1000,
@@ -152,7 +150,7 @@ const ProjectDetailModal = ({
   };
 
   const addNewLink = (event: any) => {
-    const newLink: link = {
+    const newLink: Link = {
       name: '',
       url: 'https://www.',
     };
@@ -199,27 +197,19 @@ const ProjectDetailModal = ({
       'form',
       new Blob([JSON.stringify(inputs)], { type: 'application/json' }),
     );
-    if (file === undefined) {
-      Swal.fire({
-        text: '이미지를 선택해주세요',
-        icon: 'error',
-        showConfirmButton: true,
-        timer: 1000,
+    formData.append('file', file);
+    if (getAccessToken()) {
+      await fetch(defaultURL + URLNext, {
+        method: 'POST',
+        headers: {
+          Authorization: getAccessToken(),
+        },
+        body: formData,
+      }).then((res) => {
+        handleSaved(true);
+        handleClose();
+        setFile(new File([], ''));
       });
-    } else {
-      formData.append('file', file);
-      if (getAccessToken()) {
-        await fetch(defaultURL + URLNext, {
-          method: 'PATCH',
-          headers: {
-            Authorization: getAccessToken(),
-          },
-          body: formData,
-        }).then((res) => {
-          handleSaved(true);
-          handleClose();
-        });
-      }
     }
   };
 
@@ -243,7 +233,10 @@ const ProjectDetailModal = ({
             icon: 'success',
             showConfirmButton: true,
             timer: 1000,
-          }).then(() => handleClose());
+          }).then(() => {
+            handlePageNo();
+            handleClose();
+          });
         });
     } else {
       //

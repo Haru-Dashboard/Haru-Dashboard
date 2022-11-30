@@ -11,7 +11,7 @@ const Time = () => {
   }, []);
 
   return (
-    <div className="datetime w-25 text-white">
+    <div className="datetime select-none w-25 ps-4 text-white">
       <span className="date fs-6">
         {time.toLocaleString('en-US', {
           month: 'short',
