@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-// import TodayFilterBar from './FilterBar/TodayFilterBar';
 import CommonFilterBar from './FilterBar/CommonFilterBar';
 import TodayListItems from './TodayListItems';
-// import TodoMoreModal from './TodoMoreModal';
 
 export type LocalToday = {
   id: number;

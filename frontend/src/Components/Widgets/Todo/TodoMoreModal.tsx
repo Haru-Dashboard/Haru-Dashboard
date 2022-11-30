@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';

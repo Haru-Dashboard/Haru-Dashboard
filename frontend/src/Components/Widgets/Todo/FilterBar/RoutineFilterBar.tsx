@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
-import { TodayFilterBar } from './TodayFilterBar';
 import { RoutineFilterBar } from '../../../../Utils/Todo';
 import { tokenExists, getAccessToken } from '../../../../API/Authentication';
 

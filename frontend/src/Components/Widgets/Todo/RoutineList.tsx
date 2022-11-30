@@ -15,9 +15,7 @@ const routineList = ({ isCreated }: any) => {
   const [todayRoutineList, setTodayRoutineList] = useState<Array<RoutineData>>(
     [],
   );
-  const [routineCompleted, setRoutineCompleted] = useState<Array<object>>([]);
   const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  const [show, setShow] = useState(false);
   const [todayDate] = useState(new Date().getDay());
   const [isLogined, setIsLogined] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -74,7 +72,6 @@ const routineList = ({ isCreated }: any) => {
                   isCompleted: false,
                 });
               });
-              setRoutineCompleted(arr);
               localStorage.setItem('routine', JSON.stringify(arr));
             }
           });

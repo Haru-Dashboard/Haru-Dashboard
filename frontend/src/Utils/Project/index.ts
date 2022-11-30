@@ -30,6 +30,7 @@ export type Link = {
   name: string;
   url: string;
 };
+
 export type Inputs = {
   title: string;
   content: string;

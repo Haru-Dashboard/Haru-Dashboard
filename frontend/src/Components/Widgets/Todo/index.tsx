@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BigTitle from '../../Common/Title/BigTitle';
-import SmallTitle from '../../Common/Title/SmallTitle';
 import RoutineList from './RoutineList';
 import TodayList from './TodayList';
 import CreateTodoModal from './CreateTodoModal';
 import BtnPlus from '../../Common/Button/BtnPlus';
-import Swal from 'sweetalert2';
 import './index.css';
-import { tokenExists } from '../../../API/Authentication';
 
 const Todo = () => {
   const [show, setShow] = useState(false);

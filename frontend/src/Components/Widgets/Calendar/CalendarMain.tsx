@@ -21,13 +21,13 @@ export default function CalendarMain({
     setCalendarSelectedDate(newDate1);
   }
   function pastMonth() {
-    let newMonth = new Date(calendarSelectedDate);
+    const newMonth = new Date(calendarSelectedDate);
     newMonth.setDate(1);
     newMonth.setMonth(newMonth.getMonth() - 1);
     setCalendarSelectedDate(newMonth);
   }
   function nextMonth() {
-    let newMonth = new Date(calendarSelectedDate);
+    const newMonth = new Date(calendarSelectedDate);
     newMonth.setDate(1);
     newMonth.setMonth(newMonth.getMonth() + 1);
     setCalendarSelectedDate(newMonth);

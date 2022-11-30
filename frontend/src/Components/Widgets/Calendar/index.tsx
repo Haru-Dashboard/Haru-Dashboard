@@ -69,19 +69,6 @@ function Calendar() {
     setSelectedNo(parseInt(button.value));
   };
 
-  const monthNext = () => {
-    const newDate = calendarSelectedDate;
-    newDate.setDate(1);
-    newDate.setMonth(newDate.getMonth() + 1);
-    setCalendarSelectedDate(newDate);
-  };
-
-  const monthBeofre = () => {
-    const newDate = calendarSelectedDate;
-    newDate.setDate(1);
-    newDate.setMonth(newDate.getMonth() - 1);
-    setCalendarSelectedDate(newDate);
-  };
   return (
     <div className="calendar-board cursor-default">
       <ScheduleAdd

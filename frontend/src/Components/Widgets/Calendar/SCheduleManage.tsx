@@ -28,7 +28,6 @@ export default function ScheduleManage(props: any) {
     color: -1,
     id: -1,
   });
-  const [outputs, setOutpits] = useState({});
 
   const removeSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

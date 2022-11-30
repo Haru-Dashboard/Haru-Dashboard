@@ -56,9 +56,7 @@ export default function ScheduleAdd(props: any) {
 
     const backURL = process.env.REACT_APP_BACKURL;
     if (tokenExists()) {
-      if (inputs.title == null || inputs.title == '') {
-      } else if (inputs.content == null || inputs.content == '') {
-      } else {
+      if (inputs.title && inputs.content) {
         if (inputs.startDate == null || inputs.startDate == '') {
           setInputs((values) => ({ ...values, startDate: sampleStartTime }));
           inputs.startDate = sampleStartTime;
