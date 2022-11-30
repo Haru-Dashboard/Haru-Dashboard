@@ -16,3 +16,15 @@
 :hover.hover {
   cursor: pointer;
 }
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+:hover.rotate {
+  animation: rotation 2s infinite linear;
+}
