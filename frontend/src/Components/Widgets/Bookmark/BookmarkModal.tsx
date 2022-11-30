@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-type bookmarkModalProps = {
+type BookmarkModalProps = {
   showModal: boolean;
   handleClose: () => void;
   addBookmark: React.FormEventHandler;
@@ -13,7 +13,7 @@ const BookmarkModal = ({
   showModal,
   handleClose,
   addBookmark,
-}: bookmarkModalProps) => {
+}: BookmarkModalProps) => {
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header closeButton>

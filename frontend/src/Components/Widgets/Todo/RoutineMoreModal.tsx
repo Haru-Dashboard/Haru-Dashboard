@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import SelectDayBar from './SelectDayBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
-import { week } from '../../../Utils/Todo';
+import { Week } from '../../../Utils/Todo';
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
@@ -21,7 +21,7 @@ const RoutineMoreModal = ({
   handleUpdateEmit,
   isCompleted,
 }: any) => {
-  const availableDays: Array<week> = [
+  const availableDays: Array<Week> = [
     { id: 'sun', day: '일', isClicked: listItem.sun, color: 'text-danger' },
     { id: 'mon', day: '월', isClicked: listItem.mon, color: 'text-black' },
     { id: 'tue', day: '화', isClicked: listItem.tue, color: 'text-black' },
@@ -32,13 +32,13 @@ const RoutineMoreModal = ({
   ];
 
   const [isUpdate, setIsUpdate] = useState(false);
-  const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
+  const [selectedDayList, setSelectedDayList] = useState<Array<Week>>([]);
   const [clickedCategory, setClickedCategory] = useState<string>();
   const [writtenContent, setWrittenContent] = useState('');
-  const [availableDaysList, setavailableDaysList] = useState<Array<week>>([]);
+  const [availableDaysList, setavailableDaysList] = useState<Array<Week>>([]);
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
-  const handleSelectedDayList = (selectedList: Array<week>) => {
+  const handleSelectedDayList = (selectedList: Array<Week>) => {
     setSelectedDayList(selectedList);
   };
 
@@ -101,7 +101,7 @@ const RoutineMoreModal = ({
   };
 
   useEffect(() => {
-    const filtered = availableDays.filter((item: week) => item.isClicked);
+    const filtered = availableDays.filter((item: Week) => item.isClicked);
     setavailableDaysList(filtered);
     handleSelectedDayList(availableDays);
     setClickedCategory(listItem.category);

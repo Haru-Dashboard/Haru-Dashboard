@@ -4,7 +4,7 @@ import TodayFilterBar from './FilterBar/TodayFilterBar';
 import RoutineFilterBar from './FilterBar/RoutineFilterBar';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import SelectDayBar from './SelectDayBar';
-import { week } from '../../../Utils/Todo';
+import { Week } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   // const [ todayList, setTodayList ] = useState([{}])
   const [clickedCategory, setClickedCategory] = useState('전체');
   const [writtenContent, setWrittenContent] = useState('');
-  const [selectedDayList, setSelectedDayList] = useState<Array<week>>([]);
+  const [selectedDayList, setSelectedDayList] = useState<Array<Week>>([]);
   const [isEmptyInput, setIsEmptyInput] = useState(false);
   const [isEmptyDay, setIsEmptyDay] = useState(false);
   const localRoutine = localStorage.getItem('routine');
@@ -143,7 +143,7 @@ const createTodoModal = ({ handleClose, show, handleSaved }: any) => {
   };
 
   // selectedDayBar에서 선택된 날짜 리스트를 받아오기 위한 함수
-  const handleSelectedDayList = (selectedList: Array<week>) => {
+  const handleSelectedDayList = (selectedList: Array<Week>) => {
     setSelectedDayList(selectedList);
   };
 

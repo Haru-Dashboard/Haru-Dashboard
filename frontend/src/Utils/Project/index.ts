@@ -1,40 +1,40 @@
-export type projectLink = {
+export type ProjectLink = {
   id?: number;
   name: string;
   url: string;
 };
 
-type projectLabel = {
+type ProjectLabel = {
   id?: number;
   name: string;
 };
 
-type imageInfo = {
+type ImageInfo = {
   id?: number;
   originName: string;
   imageUrl: string;
 };
 
-export type project = {
+export type Project = {
   id: number;
   title: string;
   content: string;
   startDate: string;
   endDate: string;
-  projectLinks: projectLink[];
-  projectLabels: projectLabel[];
-  imageInfo: imageInfo;
+  projectLinks: ProjectLink[];
+  projectLabels: ProjectLabel[];
+  imageInfo: ImageInfo;
 };
 
-export type link = {
+export type Link = {
   name: string;
   url: string;
 };
-export type inputs = {
+export type Inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: projectLink[];
+  links: ProjectLink[];
   startDate: Date | string;
   endDate: Date | string;
 };

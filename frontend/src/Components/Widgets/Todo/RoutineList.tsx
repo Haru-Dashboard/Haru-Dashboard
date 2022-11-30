@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SmallTitle from '../../Common/Title/SmallTitle';
 import CommonFilterBar from './FilterBar/CommonFilterBar';
-import { routineData } from '../../../Utils/Todo';
+import { RoutineData } from '../../../Utils/Todo';
 import { defaultURL } from '../../../API';
 import RoutineListItems from './RoutineListItems';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,8 +11,8 @@ import { tokenExists, getAccessToken } from '../../../API/Authentication';
 const routineList = ({ isCreated }: any) => {
   const [clickedCategory, setClickedCategory] = useState('ALL');
   const [isEmpty, setIsEmpty] = useState(false);
-  const [filteredList, setFilteredList] = useState<Array<routineData>>([]);
-  const [todayRoutineList, setTodayRoutineList] = useState<Array<routineData>>(
+  const [filteredList, setFilteredList] = useState<Array<RoutineData>>([]);
+  const [todayRoutineList, setTodayRoutineList] = useState<Array<RoutineData>>(
     [],
   );
   const [routineCompleted, setRoutineCompleted] = useState<Array<object>>([]);
@@ -46,7 +46,7 @@ const routineList = ({ isCreated }: any) => {
           checkListLength(data);
 
           // routine의 category를 local에 저장
-          data.map((datum: routineData) => {
+          data.map((datum: RoutineData) => {
             if (category) {
               const arr = JSON.parse(category);
               if (!arr.includes(datum.category)) {
@@ -68,7 +68,7 @@ const routineList = ({ isCreated }: any) => {
               !localRoutine ||
               name === 'onClickReload'
             ) {
-              data.map((datum: routineData) => {
+              data.map((datum: RoutineData) => {
                 arr.push({
                   id: datum.todoId,
                   isCompleted: false,
@@ -95,7 +95,7 @@ const routineList = ({ isCreated }: any) => {
     list 길이 확인 함수
     이 함수 안쓰고 바로 filterList.length로 DOM에서 처리하면 배열이 비었을 때 0이 같이 화면에 렌더링 됨
   */
-  const checkListLength = (filtered: routineData[]) => {
+  const checkListLength = (filtered: RoutineData[]) => {
     if (filtered.length) {
       setIsEmpty(false);
     } else {
@@ -171,7 +171,7 @@ const routineList = ({ isCreated }: any) => {
               {!isEmpty && (
                 <div className="container h-100 px-0 py-3">
                   {filteredList != null
-                    ? filteredList.map((item: routineData, idx: number) => {
+                    ? filteredList.map((item: RoutineData, idx: number) => {
                         return (
                           <RoutineListItems
                             listItem={item}

@@ -4,7 +4,7 @@ import ProjectDetailModal from './ProjectDetailModal';
 import ProjectCard from './ProjectCard';
 import BigTitle from '../../Common/Title/BigTitle';
 import BtnPlus from '../../Common/Button/BtnPlus';
-import { project } from '../../../Utils/Project';
+import { Project } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -15,8 +15,8 @@ import './index.css';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 
 const Project = () => {
-  const [projectList, setProjectList] = useState<project[]>([]);
-  const [pagedProjectList, setPagedProjectList] = useState<project[]>([]);
+  const [projectList, setProjectList] = useState<Project[]>([]);
+  const [pagedProjectList, setPagedProjectList] = useState<Project[]>([]);
   const [pageNo, setPageNo] = useState(0);
   const [totalPageNo, setTotalPageNo] = useState(5);
   const [isLogined, setIsLogined] = useState(false);
@@ -71,7 +71,7 @@ const Project = () => {
 
   // detail modal
   const [showMore, setShowMore] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<project>({
+  const [selectedProject, setSelectedProject] = useState<Project>({
     id: -1,
     title: '',
     content: '',
@@ -96,7 +96,7 @@ const Project = () => {
       originName: '',
     },
   });
-  function handleShowMore(item: project) {
+  function handleShowMore(item: Project) {
     setSelectedProject(item);
     setShowMore(true);
   }
@@ -157,7 +157,7 @@ const Project = () => {
               />
               <div className="container h-100">
                 <div className="row h-100">
-                  {pagedProjectList.map((item: project, idx: number) => (
+                  {pagedProjectList.map((item: Project, idx: number) => (
                     <div className="col-4" key={idx}>
                       <ProjectCard
                         item={item}

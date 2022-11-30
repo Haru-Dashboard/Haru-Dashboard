@@ -2,7 +2,7 @@ import React from 'react';
 import { isDateBetweenTwoDates } from './ScheduleDataType';
 import BtnPlus from './Button/BtnPlus';
 
-type calendarDetailPorps = {
+type CalendarDetailProps = {
   calendarSelectedDate: Date;
   schedule: {
     id: number;
@@ -20,7 +20,7 @@ export default function CalendarDetail({
   calendarSelectedDate,
   handleManageShow,
   handleAddShow2,
-}: calendarDetailPorps) {
+}: CalendarDetailProps) {
   const calendarDetails =
     schedule != null && schedule.length > 0
       ? schedule.map((index, tmpKey) =>

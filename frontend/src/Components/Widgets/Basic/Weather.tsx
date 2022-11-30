@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchWeather } from '../../../API/Weather';
 import { isWithinHour } from '../../../Utils';
-import { weatherData } from '../../../Utils/Weather';
+import { WeatherData } from '../../../Utils/Weather';
 
 const Weather = () => {
   const [temperature, setTemperature] = useState<number>();
@@ -11,7 +11,7 @@ const Weather = () => {
     let flag = true;
     const tmpWeatherData = localStorage.getItem('weatherData');
     if (tmpWeatherData) {
-      const weatherData: weatherData = JSON.parse(tmpWeatherData);
+      const weatherData: WeatherData = JSON.parse(tmpWeatherData);
       if (isWithinHour(weatherData.time)) {
         flag = false;
         setTemperature(weatherData.main.temp);

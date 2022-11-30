@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
-import { project } from '../../../Utils/Project';
+import { Project } from '../../../Utils/Project';
 
-type projectCardProps = {
-  item: project;
+type ProjectCardProps = {
+  item: Project;
   handleShowMore: (id: number) => void;
 };
 
-const ProjectCard = (props: projectCardProps) => {
+const ProjectCard = (props: ProjectCardProps) => {
   const { item, handleShowMore } = props;
   return (
     <div className="h-100 px-2 py-1" key={item.id}>

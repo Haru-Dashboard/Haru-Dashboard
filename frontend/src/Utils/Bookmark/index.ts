@@ -1,4 +1,4 @@
-export type bookmark = {
+export type Bookmark = {
   title: string;
   url: string;
 };

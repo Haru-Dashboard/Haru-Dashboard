@@ -5,19 +5,19 @@ import Form from 'react-bootstrap/Form';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import BtnPlus from '../../Common/Button/BtnPlus';
 import { defaultURL } from '../../../API';
-import { project, link, inputs } from '../../../Utils/Project';
+import { Project, Link, Inputs } from '../../../Utils/Project';
 import { Badge } from 'react-bootstrap';
 import { getFaviconSrc } from '../../../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import Swal from 'sweetalert2';
 
-type projectDetail = {
+type ProjectDetail = {
   handleClose: () => void;
   handleSaved: (bool: boolean) => void;
   handlePageNo: () => void;
   show: boolean;
-  item: project;
+  item: Project;
 };
 
 const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
@@ -28,11 +28,11 @@ const ProjectDetailModal = ({
   show,
   item,
   handleSaved,
-}: projectDetail) => {
+}: ProjectDetail) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const URLNext = 'projects/' + item.id;
   const [file, setFile] = useState<File>(new File([], ''));
-  const [inputs, setInputs] = useState<inputs>({
+  const [inputs, setInputs] = useState<Inputs>({
     title: '',
     content: '',
     labels: [],
@@ -44,7 +44,7 @@ const ProjectDetailModal = ({
   // 수정으로 모달이 바뀌었을 때
   useEffect(() => {
     const stringLabel: Array<string> = [];
-    const stringLink: Array<link> = [];
+    const stringLink: Array<Link> = [];
 
     item.projectLabels.map((label) => {
       stringLabel.push(label.name);
@@ -150,7 +150,7 @@ const ProjectDetailModal = ({
   };
 
   const addNewLink = (event: any) => {
-    const newLink: link = {
+    const newLink: Link = {
       name: '',
       url: 'https://www.',
     };

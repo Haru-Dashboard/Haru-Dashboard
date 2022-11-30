@@ -5,22 +5,22 @@ import CommonFilterBar from './FilterBar/CommonFilterBar';
 import TodayListItems from './TodayListItems';
 // import TodoMoreModal from './TodoMoreModal';
 
-export type localToday = {
+export type LocalToday = {
   id: number;
   category: string;
   content: string;
   isCompleted: boolean;
 };
 
-type isTodayRemoved = {
+type IsTodayRemoved = {
   isTodayRemoved: boolean;
 };
 
-const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
+const todayList = ({ isTodayRemoved }: IsTodayRemoved) => {
   // clickedCategory는 필터링할 때 사용하기
   const [clickedCategory, setClickedCategory] = useState('ALL');
-  const [localTodayList, setLocalTodayList] = useState<localToday[]>([]);
-  const [filteredList, setFilteredList] = useState<localToday[]>([]);
+  const [localTodayList, setLocalTodayList] = useState<LocalToday[]>([]);
+  const [filteredList, setFilteredList] = useState<LocalToday[]>([]);
   const [isEmpty, setIsEmpty] = useState(false);
   // localStorage에서 저장된 todo 가져오기; localStorage가 갱신되면 바꾸기
   const localToday = localStorage.getItem('today');
@@ -34,7 +34,7 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
     list 길이 확인 함수
     이 함수 안쓰고 바로 filterList.length로 DOM에서 처리하면 배열이 비었을 때 0이 같이 화면에 렌더링 됨
   */
-  const checkListLength = (filtered: localToday[]) => {
+  const checkListLength = (filtered: LocalToday[]) => {
     if (filtered.length) {
       setIsEmpty(false);
     } else {
@@ -103,7 +103,7 @@ const todayList = ({ isTodayRemoved }: isTodayRemoved) => {
           {/* 작성한 todo가 보이는 곳 */}
           {!isEmpty && (
             <div className="container h-100 px-0 py-3">
-              {filteredList.map((filtered: localToday, k: number) => {
+              {filteredList.map((filtered: LocalToday, k: number) => {
                 return (
                   <TodayListItems
                     listItem={filtered}

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { getFaviconSrc } from '../../../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
-import { bookmark } from '../../../Utils/Bookmark';
+import { Bookmark } from '../../../Utils/Bookmark';
 
-type bookmarkItemProps = {
+type BookmarkItemProps = {
   idx: number;
-  bookmark: bookmark;
+  bookmark: Bookmark;
   deleteBookmark: React.MouseEventHandler;
 };
 
-const BookmarkItem = ({ idx, bookmark, deleteBookmark }: bookmarkItemProps) => {
+const BookmarkItem = ({ idx, bookmark, deleteBookmark }: BookmarkItemProps) => {
   const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
   const onMouseEnter = () => {
