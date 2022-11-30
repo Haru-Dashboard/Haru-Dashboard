@@ -121,20 +121,17 @@
   width: 100%;
 }
 
-.calendar-detail-left{
+.calendar-detail-left {
   width: 30%;
   height: 100%;
 }
-.calendar-detail-title{
+.calendar-detail-title {
   width: 40%;
   text-align: center;
   height: 100%;
-
 }
-.calendar-detail-button{
+.calendar-detail-button {
   width: 30%;
-
-
 }
 
 .calendar-detail-details {
