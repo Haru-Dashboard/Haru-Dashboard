@@ -34,14 +34,13 @@ export default function ScheduleAdd(props: any) {
     (calendarSelectedDate.getDate() < 10 ? 0 : '') +
     calendarSelectedDate.getDate() +
     'T' +
-    (calendarSelectedDate.getHours() < 10 ? 0 : '') +
+    (calendarSelectedDate.getHours() + 2 < 10 ? 0 : '') +
     +(calendarSelectedDate.getHours() + 2) +
     ':00';
-
   const [inputs, setInputs] = useState({
     title: '',
-    startDate: sampleStartTime,
-    endDate: sampleEndTime,
+    startDate: '',
+    endDate: '',
     content: '',
     color: -1,
   });
@@ -60,11 +59,11 @@ export default function ScheduleAdd(props: any) {
       if (inputs.title == null || inputs.title == '') {
       } else if (inputs.content == null || inputs.content == '') {
       } else {
-        if (inputs.startDate == null) {
+        if (inputs.startDate == null || inputs.startDate == '') {
           setInputs((values) => ({ ...values, startDate: sampleStartTime }));
           inputs.startDate = sampleStartTime;
         }
-        if (inputs.endDate == null) {
+        if (inputs.endDate == null || inputs.endDate == '') {
           setInputs((values) => ({ ...values, endDate: sampleEndTime }));
           inputs.endDate = sampleEndTime;
         }
