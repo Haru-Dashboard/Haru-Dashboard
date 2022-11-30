@@ -6,46 +6,41 @@ import { connectionfailed } from './ScheduleDataType';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
 import Swal from 'sweetalert2';
 export default function ScheduleAdd(props: any) {
-  const { showModal, handleClose, setSchedule, schedule } = props;
+  const {
+    showModal,
+    handleClose,
+    setSchedule,
+    schedule,
+    calendarSelectedDate,
+  } = props;
   const sampleStartTime =
-    new Date().getFullYear() +
+    calendarSelectedDate.getFullYear() +
     '-' +
-    (new Date().getMonth() + 1) +
+    (calendarSelectedDate.getMonth() + 1 < 10 ? 0 : '') +
+    (calendarSelectedDate.getMonth() + 1) +
     '-' +
-    new Date().getDate() +
+    (calendarSelectedDate.getDate() < 10 ? 0 : '') +
+    calendarSelectedDate.getDate() +
     'T' +
-    +new Date().getHours() +
+    (calendarSelectedDate.getHours() < 10 ? 0 : '') +
+    +calendarSelectedDate.getHours() +
     ':00';
   const sampleEndTime =
-    new Date().getFullYear() +
+    calendarSelectedDate.getFullYear() +
     '-' +
-    (new Date().getMonth() + 1) +
+    (calendarSelectedDate.getMonth() + 1 < 10 ? 0 : '') +
+    (calendarSelectedDate.getMonth() + 1) +
     '-' +
-    new Date().getDate() +
+    (calendarSelectedDate.getDate() < 10 ? 0 : '') +
+    calendarSelectedDate.getDate() +
     'T' +
-    (new Date().getHours() + 2) +
+    (calendarSelectedDate.getHours() + 2 < 10 ? 0 : '') +
+    +(calendarSelectedDate.getHours() + 2) +
     ':00';
-
   const [inputs, setInputs] = useState({
     title: '',
-    startDate:
-      new Date().getFullYear() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getDate() +
-      'T' +
-      +new Date().getHours() +
-      ':00',
-    endDate:
-      new Date().getFullYear() +
-      '-' +
-      (new Date().getMonth() + 1) +
-      '-' +
-      new Date().getDate() +
-      'T' +
-      (+new Date().getHours() + 2) +
-      ':00',
+    startDate: '',
+    endDate: '',
     content: '',
     color: -1,
   });
@@ -64,11 +59,11 @@ export default function ScheduleAdd(props: any) {
       if (inputs.title == null || inputs.title == '') {
       } else if (inputs.content == null || inputs.content == '') {
       } else {
-        if (inputs.startDate == null) {
+        if (inputs.startDate == null || inputs.startDate == '') {
           setInputs((values) => ({ ...values, startDate: sampleStartTime }));
           inputs.startDate = sampleStartTime;
         }
-        if (inputs.endDate == null) {
+        if (inputs.endDate == null || inputs.endDate == '') {
           setInputs((values) => ({ ...values, endDate: sampleEndTime }));
           inputs.endDate = sampleEndTime;
         }
@@ -120,16 +115,7 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="startDate"
               onChange={handleChange}
-              defaultValue={
-                new Date().getFullYear() +
-                '-' +
-                (new Date().getMonth() + 1) +
-                '-' +
-                new Date().getDate() +
-                'T' +
-                +new Date().getHours() +
-                ':00'
-              }
+              defaultValue={sampleStartTime}
             />
           </Form.Group>
           <Form.Group>
@@ -138,16 +124,7 @@ export default function ScheduleAdd(props: any) {
               type="datetime-local"
               name="endDate"
               onChange={handleChange}
-              defaultValue={
-                new Date().getFullYear() +
-                '-' +
-                (new Date().getMonth() + 1) +
-                '-' +
-                new Date().getDate() +
-                'T' +
-                +(new Date().getHours() + 2) +
-                ':00'
-              }
+              defaultValue={sampleEndTime}
             />
           </Form.Group>
           <Form.Group>

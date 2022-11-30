@@ -1,5 +1,6 @@
 import React from 'react';
 import { isDateBetweenTwoDates } from './ScheduleDataType';
+import BtnPlus from './Button/BtnPlus';
 
 type calendarDetailPorps = {
   calendarSelectedDate: Date;
@@ -11,12 +12,14 @@ type calendarDetailPorps = {
     endDate: Date;
   }[];
   handleManageShow: any;
+  handleAddShow2: any;
 };
 //detail에서 보여줄 스케쥴들(5개)
 export default function CalendarDetail({
   schedule,
   calendarSelectedDate,
   handleManageShow,
+  handleAddShow2,
 }: calendarDetailPorps) {
   const calendarDetails =
     schedule != null && schedule.length > 0
@@ -55,7 +58,13 @@ export default function CalendarDetail({
   return (
     <div className="calendar-detail-board">
       <div className="calendar-detail-date">
-        {calendarSelectedDate.getMonth() + 1}.{calendarSelectedDate.getDate()}
+        <div className="calendar-detail-left"></div>
+        <div className="calendar-detail-title">
+          {calendarSelectedDate.getMonth() + 1}.{calendarSelectedDate.getDate()}
+        </div>
+        <div className="calendar-detail-button">
+          <BtnPlus onClick={handleAddShow2} />
+        </div>
       </div>
       <div className="calendar-detail-details">{calendarDetails}</div>
     </div>

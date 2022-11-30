@@ -15,6 +15,7 @@ export default function CalendarMain({
 
   function ClickedCalendar(month: number, date: number) {
     const newDate1 = new Date();
+    newDate1.setFullYear(calendarSelectedDate.getFullYear());
     newDate1.setMonth(calendarSelectedDate.getMonth() + month);
     newDate1.setDate(date);
     setCalendarSelectedDate(newDate1);

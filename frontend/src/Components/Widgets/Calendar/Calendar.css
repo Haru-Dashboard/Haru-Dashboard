@@ -117,7 +117,23 @@
 .calendar-detail-date {
   height: 10%;
   font-weight: bold;
+  display: flex;
+  width: 100%;
 }
+
+.calendar-detail-left {
+  width: 30%;
+  height: 100%;
+}
+.calendar-detail-title {
+  width: 40%;
+  text-align: center;
+  height: 100%;
+}
+.calendar-detail-button {
+  width: 30%;
+}
+
 .calendar-detail-details {
   height: 90%;
   overflow: auto;
