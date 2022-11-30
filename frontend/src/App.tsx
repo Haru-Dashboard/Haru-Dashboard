@@ -8,7 +8,7 @@ import Dashboard from './Components/Dashboard';
 import Basic from './Components/Widgets/Basic';
 
 function App() {
-  const [clickedImg, setClickedImg] = useState('');
+  const [clickedImg, setClickedImg] = useState('Sunset.png');
   const localImg = localStorage.getItem('img');
 
   const changeBg = () => {
@@ -35,6 +35,7 @@ function App() {
     })();
     changeBg();
   }, []);
+  console.log(clickedImg);
 
   return (
     <div
