@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import RoutineMoreModal from './RoutineMoreModal';
 import { defaultURL } from '../../../API';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
-import { localRoutine } from '../../../Utils/Todo';
+import { LocalRoutine } from '../../../Utils/Todo';
 
 const RoutineListItems = ({
   listItem,
@@ -64,9 +64,9 @@ any) => {
     const localRoutine = localStorage.getItem('routine');
 
     if (localRoutine) {
-      const localRoutineList: Array<localRoutine> = JSON.parse(localRoutine);
+      const localRoutineList: Array<LocalRoutine> = JSON.parse(localRoutine);
 
-      localRoutineList.map((routine: localRoutine, idx: number) => {
+      localRoutineList.map((routine: LocalRoutine, idx: number) => {
         if (routine.id === listItem.todoId) {
           localRoutineList.splice(idx, 1, {
             id: routine.id,
@@ -79,10 +79,10 @@ any) => {
     }
   };
 
-  const handleIsCompleted = (localRoutineList: Array<localRoutine>) => {
+  const handleIsCompleted = (localRoutineList: Array<LocalRoutine>) => {
     // console.log('handleiscompleted');
 
-    localRoutineList.map((routine: localRoutine) => {
+    localRoutineList.map((routine: LocalRoutine) => {
       if (routine.id === listItem.todoId) {
         setIsCompleted(routine.isCompleted);
       }

@@ -1,10 +1,10 @@
-import { weatherData } from '../../Utils/Weather';
+import { WeatherData } from '../../Utils/Weather';
 
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 export function fetchWeather(
   coords: GeolocationCoordinates,
-): Promise<weatherData> {
+): Promise<WeatherData> {
   return new Promise((resolve, reject) => {
     const { latitude, longitude } = coords;
     fetch(
@@ -19,7 +19,7 @@ export function fetchWeather(
         });
       })
       .then((data) => {
-        const weatherData: weatherData = {
+        const weatherData: WeatherData = {
           ...data,
           time: new Date().toString(),
         };

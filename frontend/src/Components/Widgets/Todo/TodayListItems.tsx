@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { localToday } from './TodayList';
+import { LocalToday } from './TodayList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSquareMinus,
@@ -30,7 +30,7 @@ const TodayListItems = ({
       // 리스트 전체
       const list = JSON.parse(localToday);
       // 지우고자 하는 요소의 인덱스 찾기
-      const index = list.findIndex(function (item: localToday) {
+      const index = list.findIndex(function (item: LocalToday) {
         return item.id === id;
       });
       list.splice(index, 1);
@@ -56,7 +56,7 @@ const TodayListItems = ({
      */
     if (localToday) {
       const localTodayList = JSON.parse(localToday);
-      localTodayList.map((today: localToday, idx: number) => {
+      localTodayList.map((today: LocalToday, idx: number) => {
         if (today.id === listItem.id) {
           localTodayList.splice(idx, 1, {
             id: today.id,

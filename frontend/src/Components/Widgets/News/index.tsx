@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import { fetchNews } from '../../../API/News';
 import { isWithinDay } from '../../../Utils';
-import { newsData, newsItem } from '../../../Utils/News';
+import { NewsData, NewsItem } from '../../../Utils/News';
 import BigTitle from '../../Common/Title/BigTitle';
 import './index.css';
 
 const News = () => {
   const [index, setIndex] = useState<number>(0);
-  const [newsItemList, setNewsItemList] = useState<newsItem[]>([]);
+  const [newsItemList, setNewsItemList] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     let flag = true;
     const tmpNewsData = localStorage.getItem('newsData');
     if (tmpNewsData) {
-      const newsData: newsData = JSON.parse(tmpNewsData);
+      const newsData: NewsData = JSON.parse(tmpNewsData);
       if (isWithinDay(newsData.time)) {
         flag = false;
         setNewsItemList(newsData.newsItemList);

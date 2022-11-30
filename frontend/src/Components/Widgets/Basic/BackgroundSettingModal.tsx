@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import SmallTitle from '../../Common/Title/SmallTitle';
 
 const BackgroundSettingModal = ({ show, handleClose, handleImg }: any) => {
@@ -29,22 +29,20 @@ const BackgroundSettingModal = ({ show, handleClose, handleImg }: any) => {
         </Modal.Header>
         <Modal.Body className="w-100 h-100 container">
           <div className="row">
-            {imgs.map((img: string) => {
-              return (
-                <div className="w-40 col-6">
-                  <img
-                    src={`../img/${img}`}
-                    alt={`${img}`}
-                    className="w-100 m-1 hover"
-                    style={{
-                      opacity: `${clickedImg === img ? '0.5' : '1'}`,
-                    }}
-                    onClick={(e) => onClickImg(img)}
-                  />
-                  <p className="text-center">{img.split('.')[0]}</p>
-                </div>
-              );
-            })}
+            {imgs.map((img: string, idx: number) => (
+              <div className="w-40 col-6" key={idx}>
+                <img
+                  src={`../img/${img}`}
+                  alt={`${img}`}
+                  className="w-100 m-1 hover"
+                  style={{
+                    opacity: `${clickedImg === img ? '0.5' : '1'}`,
+                  }}
+                  onClick={(e) => onClickImg(img)}
+                />
+                <p className="text-center">{img.split('.')[0]}</p>
+              </div>
+            ))}
           </div>
         </Modal.Body>
       </Modal>

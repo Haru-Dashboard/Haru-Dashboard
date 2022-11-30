@@ -1,32 +1,32 @@
 // type for create todo modal
-export interface today {
+export interface Today {
   title: string;
   category: string;
 }
 
-export interface routine extends today {
+export interface Routine extends Today {
   day: Array<string>;
 }
 
-export interface createTodo {
-  routine: routine;
-  today: today;
+export interface CreateTodo {
+  routine: Routine;
+  today: Today;
 }
 
-export type localToday = {
+export type LocalToday = {
   id: number;
   category: string;
   title: string;
 };
 
-export type week = {
+export type Week = {
   id: string;
   day: string;
   isClicked: boolean;
   color: string;
 };
 
-export type routineData = {
+export type RoutineData = {
   todoId?: number;
   category: string;
   content: string;
@@ -40,12 +40,12 @@ export type routineData = {
   sun: boolean;
 };
 
-export type routineFilterBar = {
+export type RoutineFilterBar = {
   handleCategory: (clicked: string) => void;
   clicked?: string;
 };
 
-export type localRoutine = {
+export type LocalRoutine = {
   id: number;
   isCompleted: boolean;
 };

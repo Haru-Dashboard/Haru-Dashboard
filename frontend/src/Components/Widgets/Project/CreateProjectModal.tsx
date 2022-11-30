@@ -5,22 +5,22 @@ import BtnPlus from '../../Common/Button/BtnPlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import { tokenExists, getAccessToken } from '../../../API/Authentication';
-import { projectLink } from '../../../Utils/Project';
+import { ProjectLink } from '../../../Utils/Project';
 import Swal from 'sweetalert2';
 const FILE_SIZE_MAX_LIMIT = 1 * 1024 * 1024;
 
-type inputs = {
+type Inputs = {
   title: string;
   content: string;
   labels: string[];
-  links: projectLink[];
+  links: ProjectLink[];
   startDate: Date;
   endDate: Date;
 };
 
 const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   const [file, setFile] = useState<File>();
-  const [inputs, setInputs] = useState<inputs>({
+  const [inputs, setInputs] = useState<Inputs>({
     title: '',
     content: '',
     labels: [],
@@ -101,7 +101,7 @@ const CreateProjectModal = ({ handleClose, show, handleSaved }: any) => {
   };
 
   const addNewLink = (event: any) => {
-    const newLink: projectLink = {
+    const newLink: ProjectLink = {
       name: '',
       url: '',
     };

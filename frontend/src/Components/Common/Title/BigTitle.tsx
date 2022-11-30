@@ -1,11 +1,11 @@
 import React from 'react';
 import './BigTitle.css';
 
-type bigTitleProps = {
+type BigTitleProps = {
   title: string;
 };
 
-const BigTitle = ({ title }: bigTitleProps) => {
+const BigTitle = ({ title }: BigTitleProps) => {
   return (
     <div className="big-title text-center d-flex align-items-center select-none">
       <img
