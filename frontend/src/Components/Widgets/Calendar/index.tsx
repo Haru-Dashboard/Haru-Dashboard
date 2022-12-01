@@ -111,7 +111,6 @@ function Calendar() {
         <BtnPlus onClick={handleAddShow} />
       </div>
       <div className="w-100 h-100 d-flex">
-        {/*        <Button onClick={monthBeofre}>Preview</Button>*/}
         <div className="calendar-main">
           <CalendarMain
             schedule={schedule}

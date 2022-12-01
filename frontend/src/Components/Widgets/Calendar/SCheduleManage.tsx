@@ -11,10 +11,13 @@ export default function ScheduleManage(props: any) {
   const sampledatetime = new Date(
     new Date().getFullYear() +
       '-' +
+      (new Date().getMonth() + 1 < 10 ? 0 : '') +
       (new Date().getMonth() + 1) +
       '-' +
+      (new Date().getDate() < 10 ? 0 : '') +
       new Date().getDate() +
       'T' +
+      (new Date().getHours() < 10 ? 0 : '') +
       +(new Date().getHours() + 2) +
       ':00',
   )
